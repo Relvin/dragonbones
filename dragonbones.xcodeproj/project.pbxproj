@@ -1,0 +1,844 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD7E85201C0C2816007FD5FF /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84CA1C0C2816007FD5FF /* Animation.cpp */; };
+		AD7E85211C0C2816007FD5FF /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84CA1C0C2816007FD5FF /* Animation.cpp */; };
+		AD7E85221C0C2816007FD5FF /* Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84CB1C0C2816007FD5FF /* Animation.h */; };
+		AD7E85231C0C2816007FD5FF /* Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84CB1C0C2816007FD5FF /* Animation.h */; };
+		AD7E85241C0C2816007FD5FF /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84CC1C0C2816007FD5FF /* AnimationState.cpp */; };
+		AD7E85251C0C2816007FD5FF /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84CC1C0C2816007FD5FF /* AnimationState.cpp */; };
+		AD7E85261C0C2816007FD5FF /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84CD1C0C2816007FD5FF /* AnimationState.h */; };
+		AD7E85271C0C2816007FD5FF /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84CD1C0C2816007FD5FF /* AnimationState.h */; };
+		AD7E85281C0C2816007FD5FF /* IAnimatable.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84CE1C0C2816007FD5FF /* IAnimatable.h */; };
+		AD7E85291C0C2816007FD5FF /* IAnimatable.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84CE1C0C2816007FD5FF /* IAnimatable.h */; };
+		AD7E852A1C0C2816007FD5FF /* TimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84CF1C0C2816007FD5FF /* TimelineState.cpp */; };
+		AD7E852B1C0C2816007FD5FF /* TimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84CF1C0C2816007FD5FF /* TimelineState.cpp */; };
+		AD7E852C1C0C2816007FD5FF /* TimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D01C0C2816007FD5FF /* TimelineState.h */; };
+		AD7E852D1C0C2816007FD5FF /* TimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D01C0C2816007FD5FF /* TimelineState.h */; };
+		AD7E852E1C0C2816007FD5FF /* WorldClock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D11C0C2816007FD5FF /* WorldClock.cpp */; };
+		AD7E852F1C0C2816007FD5FF /* WorldClock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D11C0C2816007FD5FF /* WorldClock.cpp */; };
+		AD7E85301C0C2816007FD5FF /* WorldClock.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D21C0C2816007FD5FF /* WorldClock.h */; };
+		AD7E85311C0C2816007FD5FF /* WorldClock.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D21C0C2816007FD5FF /* WorldClock.h */; };
+		AD7E85321C0C2816007FD5FF /* Armature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D41C0C2816007FD5FF /* Armature.cpp */; };
+		AD7E85331C0C2816007FD5FF /* Armature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D41C0C2816007FD5FF /* Armature.cpp */; };
+		AD7E85341C0C2816007FD5FF /* Armature.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D51C0C2816007FD5FF /* Armature.h */; };
+		AD7E85351C0C2816007FD5FF /* Armature.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D51C0C2816007FD5FF /* Armature.h */; };
+		AD7E85361C0C2816007FD5FF /* Bone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D61C0C2816007FD5FF /* Bone.cpp */; };
+		AD7E85371C0C2816007FD5FF /* Bone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D61C0C2816007FD5FF /* Bone.cpp */; };
+		AD7E85381C0C2816007FD5FF /* Bone.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D71C0C2816007FD5FF /* Bone.h */; };
+		AD7E85391C0C2816007FD5FF /* Bone.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D71C0C2816007FD5FF /* Bone.h */; };
+		AD7E853A1C0C2816007FD5FF /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D81C0C2816007FD5FF /* Object.cpp */; };
+		AD7E853B1C0C2816007FD5FF /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84D81C0C2816007FD5FF /* Object.cpp */; };
+		AD7E853C1C0C2816007FD5FF /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D91C0C2816007FD5FF /* Object.h */; };
+		AD7E853D1C0C2816007FD5FF /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84D91C0C2816007FD5FF /* Object.h */; };
+		AD7E853E1C0C2816007FD5FF /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84DA1C0C2816007FD5FF /* Slot.cpp */; };
+		AD7E853F1C0C2816007FD5FF /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84DA1C0C2816007FD5FF /* Slot.cpp */; };
+		AD7E85401C0C2816007FD5FF /* Slot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84DB1C0C2816007FD5FF /* Slot.h */; };
+		AD7E85411C0C2816007FD5FF /* Slot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84DB1C0C2816007FD5FF /* Slot.h */; };
+		AD7E85421C0C2816007FD5FF /* DragonBones.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84DC1C0C2816007FD5FF /* DragonBones.h */; };
+		AD7E85431C0C2816007FD5FF /* DragonBones.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84DC1C0C2816007FD5FF /* DragonBones.h */; };
+		AD7E85441C0C2816007FD5FF /* DragonBonesHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84DD1C0C2816007FD5FF /* DragonBonesHeaders.h */; };
+		AD7E85451C0C2816007FD5FF /* DragonBonesHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84DD1C0C2816007FD5FF /* DragonBonesHeaders.h */; };
+		AD7E85461C0C2816007FD5FF /* EventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84DF1C0C2816007FD5FF /* EventData.cpp */; };
+		AD7E85471C0C2816007FD5FF /* EventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84DF1C0C2816007FD5FF /* EventData.cpp */; };
+		AD7E85481C0C2816007FD5FF /* EventData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E01C0C2816007FD5FF /* EventData.h */; };
+		AD7E85491C0C2816007FD5FF /* EventData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E01C0C2816007FD5FF /* EventData.h */; };
+		AD7E854A1C0C2816007FD5FF /* IEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E11C0C2816007FD5FF /* IEventDispatcher.h */; };
+		AD7E854B1C0C2816007FD5FF /* IEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E11C0C2816007FD5FF /* IEventDispatcher.h */; };
+		AD7E854C1C0C2816007FD5FF /* BaseFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84E31C0C2816007FD5FF /* BaseFactory.cpp */; };
+		AD7E854D1C0C2816007FD5FF /* BaseFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84E31C0C2816007FD5FF /* BaseFactory.cpp */; };
+		AD7E854E1C0C2816007FD5FF /* BaseFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E41C0C2816007FD5FF /* BaseFactory.h */; };
+		AD7E854F1C0C2816007FD5FF /* BaseFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E41C0C2816007FD5FF /* BaseFactory.h */; };
+		AD7E85501C0C2816007FD5FF /* ColorTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E61C0C2816007FD5FF /* ColorTransform.h */; };
+		AD7E85511C0C2816007FD5FF /* ColorTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E61C0C2816007FD5FF /* ColorTransform.h */; };
+		AD7E85521C0C2816007FD5FF /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E71C0C2816007FD5FF /* Matrix.h */; };
+		AD7E85531C0C2816007FD5FF /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E71C0C2816007FD5FF /* Matrix.h */; };
+		AD7E85541C0C2816007FD5FF /* Point.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E81C0C2816007FD5FF /* Point.h */; };
+		AD7E85551C0C2816007FD5FF /* Point.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E81C0C2816007FD5FF /* Point.h */; };
+		AD7E85561C0C2816007FD5FF /* Rectangle.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E91C0C2816007FD5FF /* Rectangle.h */; };
+		AD7E85571C0C2816007FD5FF /* Rectangle.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84E91C0C2816007FD5FF /* Rectangle.h */; };
+		AD7E85581C0C2816007FD5FF /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EA1C0C2816007FD5FF /* Transform.h */; };
+		AD7E85591C0C2816007FD5FF /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EA1C0C2816007FD5FF /* Transform.h */; };
+		AD7E855A1C0C2816007FD5FF /* AnimationData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EC1C0C2816007FD5FF /* AnimationData.h */; };
+		AD7E855B1C0C2816007FD5FF /* AnimationData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EC1C0C2816007FD5FF /* AnimationData.h */; };
+		AD7E855C1C0C2816007FD5FF /* ArmatureData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84ED1C0C2816007FD5FF /* ArmatureData.h */; };
+		AD7E855D1C0C2816007FD5FF /* ArmatureData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84ED1C0C2816007FD5FF /* ArmatureData.h */; };
+		AD7E855E1C0C2816007FD5FF /* BoneData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EE1C0C2816007FD5FF /* BoneData.h */; };
+		AD7E855F1C0C2816007FD5FF /* BoneData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EE1C0C2816007FD5FF /* BoneData.h */; };
+		AD7E85601C0C2816007FD5FF /* DisplayData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EF1C0C2816007FD5FF /* DisplayData.h */; };
+		AD7E85611C0C2816007FD5FF /* DisplayData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84EF1C0C2816007FD5FF /* DisplayData.h */; };
+		AD7E85621C0C2816007FD5FF /* DragonBonesData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F01C0C2816007FD5FF /* DragonBonesData.h */; };
+		AD7E85631C0C2816007FD5FF /* DragonBonesData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F01C0C2816007FD5FF /* DragonBonesData.h */; };
+		AD7E85641C0C2816007FD5FF /* EllipseData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F11C0C2816007FD5FF /* EllipseData.h */; };
+		AD7E85651C0C2816007FD5FF /* EllipseData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F11C0C2816007FD5FF /* EllipseData.h */; };
+		AD7E85661C0C2816007FD5FF /* Frame.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F21C0C2816007FD5FF /* Frame.h */; };
+		AD7E85671C0C2816007FD5FF /* Frame.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F21C0C2816007FD5FF /* Frame.h */; };
+		AD7E85681C0C2816007FD5FF /* IAreaData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F31C0C2816007FD5FF /* IAreaData.h */; };
+		AD7E85691C0C2816007FD5FF /* IAreaData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F31C0C2816007FD5FF /* IAreaData.h */; };
+		AD7E856A1C0C2816007FD5FF /* RectangleData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F41C0C2816007FD5FF /* RectangleData.h */; };
+		AD7E856B1C0C2816007FD5FF /* RectangleData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F41C0C2816007FD5FF /* RectangleData.h */; };
+		AD7E856C1C0C2816007FD5FF /* SkinData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F51C0C2816007FD5FF /* SkinData.h */; };
+		AD7E856D1C0C2816007FD5FF /* SkinData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F51C0C2816007FD5FF /* SkinData.h */; };
+		AD7E856E1C0C2816007FD5FF /* SlotData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F61C0C2816007FD5FF /* SlotData.h */; };
+		AD7E856F1C0C2816007FD5FF /* SlotData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F61C0C2816007FD5FF /* SlotData.h */; };
+		AD7E85701C0C2816007FD5FF /* TextData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F71C0C2816007FD5FF /* TextData.h */; };
+		AD7E85711C0C2816007FD5FF /* TextData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F71C0C2816007FD5FF /* TextData.h */; };
+		AD7E85721C0C2816007FD5FF /* Timeline.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F81C0C2816007FD5FF /* Timeline.h */; };
+		AD7E85731C0C2816007FD5FF /* Timeline.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F81C0C2816007FD5FF /* Timeline.h */; };
+		AD7E85741C0C2816007FD5FF /* TransformFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F91C0C2816007FD5FF /* TransformFrame.h */; };
+		AD7E85751C0C2816007FD5FF /* TransformFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84F91C0C2816007FD5FF /* TransformFrame.h */; };
+		AD7E85761C0C2816007FD5FF /* TransformTimeline.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84FA1C0C2816007FD5FF /* TransformTimeline.h */; };
+		AD7E85771C0C2816007FD5FF /* TransformTimeline.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84FA1C0C2816007FD5FF /* TransformTimeline.h */; };
+		AD7E85781C0C2816007FD5FF /* BaseDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84FC1C0C2816007FD5FF /* BaseDataParser.cpp */; };
+		AD7E85791C0C2816007FD5FF /* BaseDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84FC1C0C2816007FD5FF /* BaseDataParser.cpp */; };
+		AD7E857A1C0C2816007FD5FF /* BaseDataParser.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84FD1C0C2816007FD5FF /* BaseDataParser.h */; };
+		AD7E857B1C0C2816007FD5FF /* BaseDataParser.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84FD1C0C2816007FD5FF /* BaseDataParser.h */; };
+		AD7E857C1C0C2816007FD5FF /* ConstValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84FE1C0C2816007FD5FF /* ConstValues.cpp */; };
+		AD7E857D1C0C2816007FD5FF /* ConstValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E84FE1C0C2816007FD5FF /* ConstValues.cpp */; };
+		AD7E857E1C0C2816007FD5FF /* ConstValues.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84FF1C0C2816007FD5FF /* ConstValues.h */; };
+		AD7E857F1C0C2816007FD5FF /* ConstValues.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E84FF1C0C2816007FD5FF /* ConstValues.h */; };
+		AD7E85801C0C2816007FD5FF /* dbtinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85001C0C2816007FD5FF /* dbtinyxml2.cpp */; };
+		AD7E85811C0C2816007FD5FF /* dbtinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85001C0C2816007FD5FF /* dbtinyxml2.cpp */; };
+		AD7E85821C0C2816007FD5FF /* dbtinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85011C0C2816007FD5FF /* dbtinyxml2.h */; };
+		AD7E85831C0C2816007FD5FF /* dbtinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85011C0C2816007FD5FF /* dbtinyxml2.h */; };
+		AD7E85841C0C2816007FD5FF /* XMLDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85021C0C2816007FD5FF /* XMLDataParser.cpp */; };
+		AD7E85851C0C2816007FD5FF /* XMLDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85021C0C2816007FD5FF /* XMLDataParser.cpp */; };
+		AD7E85861C0C2816007FD5FF /* XMLDataParser.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85031C0C2816007FD5FF /* XMLDataParser.h */; };
+		AD7E85871C0C2816007FD5FF /* XMLDataParser.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85031C0C2816007FD5FF /* XMLDataParser.h */; };
+		AD7E858C1C0C2816007FD5FF /* DBCCArmature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85091C0C2816007FD5FF /* DBCCArmature.cpp */; };
+		AD7E858D1C0C2816007FD5FF /* DBCCArmature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85091C0C2816007FD5FF /* DBCCArmature.cpp */; };
+		AD7E858E1C0C2816007FD5FF /* DBCCArmature.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850A1C0C2816007FD5FF /* DBCCArmature.h */; };
+		AD7E858F1C0C2816007FD5FF /* DBCCArmature.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850A1C0C2816007FD5FF /* DBCCArmature.h */; };
+		AD7E85901C0C2816007FD5FF /* DBCCArmatureNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E850B1C0C2816007FD5FF /* DBCCArmatureNode.cpp */; };
+		AD7E85911C0C2816007FD5FF /* DBCCArmatureNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E850B1C0C2816007FD5FF /* DBCCArmatureNode.cpp */; };
+		AD7E85921C0C2816007FD5FF /* DBCCArmatureNode.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850C1C0C2816007FD5FF /* DBCCArmatureNode.h */; };
+		AD7E85931C0C2816007FD5FF /* DBCCArmatureNode.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850C1C0C2816007FD5FF /* DBCCArmatureNode.h */; };
+		AD7E85941C0C2816007FD5FF /* DBCCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850D1C0C2816007FD5FF /* DBCCEventDispatcher.h */; };
+		AD7E85951C0C2816007FD5FF /* DBCCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850D1C0C2816007FD5FF /* DBCCEventDispatcher.h */; };
+		AD7E85961C0C2816007FD5FF /* DBCCFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E850E1C0C2816007FD5FF /* DBCCFactory.cpp */; };
+		AD7E85971C0C2816007FD5FF /* DBCCFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E850E1C0C2816007FD5FF /* DBCCFactory.cpp */; };
+		AD7E85981C0C2816007FD5FF /* DBCCFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850F1C0C2816007FD5FF /* DBCCFactory.h */; };
+		AD7E85991C0C2816007FD5FF /* DBCCFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E850F1C0C2816007FD5FF /* DBCCFactory.h */; };
+		AD7E859A1C0C2816007FD5FF /* dbccMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85101C0C2816007FD5FF /* dbccMacro.h */; };
+		AD7E859B1C0C2816007FD5FF /* dbccMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85101C0C2816007FD5FF /* dbccMacro.h */; };
+		AD7E859C1C0C2816007FD5FF /* DBCCRenderHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85111C0C2816007FD5FF /* DBCCRenderHeaders.h */; };
+		AD7E859D1C0C2816007FD5FF /* DBCCRenderHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85111C0C2816007FD5FF /* DBCCRenderHeaders.h */; };
+		AD7E859E1C0C2816007FD5FF /* DBCCSlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85121C0C2816007FD5FF /* DBCCSlot.cpp */; };
+		AD7E859F1C0C2816007FD5FF /* DBCCSlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85121C0C2816007FD5FF /* DBCCSlot.cpp */; };
+		AD7E85A01C0C2816007FD5FF /* DBCCSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85131C0C2816007FD5FF /* DBCCSlot.h */; };
+		AD7E85A11C0C2816007FD5FF /* DBCCSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85131C0C2816007FD5FF /* DBCCSlot.h */; };
+		AD7E85A21C0C2816007FD5FF /* DBCCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85141C0C2816007FD5FF /* DBCCTextureAtlas.h */; };
+		AD7E85A31C0C2816007FD5FF /* DBCCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85141C0C2816007FD5FF /* DBCCTextureAtlas.h */; };
+		AD7E85A41C0C2816007FD5FF /* DBCCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85151C0C2816007FD5FF /* DBCCUtils.cpp */; };
+		AD7E85A51C0C2816007FD5FF /* DBCCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7E85151C0C2816007FD5FF /* DBCCUtils.cpp */; };
+		AD7E85A61C0C2816007FD5FF /* DBCCUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85161C0C2816007FD5FF /* DBCCUtils.h */; };
+		AD7E85A71C0C2816007FD5FF /* DBCCUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E85161C0C2816007FD5FF /* DBCCUtils.h */; };
+		AD7E85A81C0C2816007FD5FF /* ITextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E851D1C0C2816007FD5FF /* ITextureAtlas.h */; };
+		AD7E85A91C0C2816007FD5FF /* ITextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E851D1C0C2816007FD5FF /* ITextureAtlas.h */; };
+		AD7E85AA1C0C2816007FD5FF /* TextureAtlasData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E851E1C0C2816007FD5FF /* TextureAtlasData.h */; };
+		AD7E85AB1C0C2816007FD5FF /* TextureAtlasData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E851E1C0C2816007FD5FF /* TextureAtlasData.h */; };
+		AD7E85AC1C0C2816007FD5FF /* TextureData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E851F1C0C2816007FD5FF /* TextureData.h */; };
+		AD7E85AD1C0C2816007FD5FF /* TextureData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E851F1C0C2816007FD5FF /* TextureData.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD525BB71C076906000D5586 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AD525BAA1C0768DB000D5586 /* libDragonbones_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDragonbones_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD525BB91C076906000D5586 /* libDragonbones_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDragonbones_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD7E84CA1C0C2816007FD5FF /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
+		AD7E84CB1C0C2816007FD5FF /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
+		AD7E84CC1C0C2816007FD5FF /* AnimationState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationState.cpp; sourceTree = "<group>"; };
+		AD7E84CD1C0C2816007FD5FF /* AnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationState.h; sourceTree = "<group>"; };
+		AD7E84CE1C0C2816007FD5FF /* IAnimatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAnimatable.h; sourceTree = "<group>"; };
+		AD7E84CF1C0C2816007FD5FF /* TimelineState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineState.cpp; sourceTree = "<group>"; };
+		AD7E84D01C0C2816007FD5FF /* TimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineState.h; sourceTree = "<group>"; };
+		AD7E84D11C0C2816007FD5FF /* WorldClock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldClock.cpp; sourceTree = "<group>"; };
+		AD7E84D21C0C2816007FD5FF /* WorldClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldClock.h; sourceTree = "<group>"; };
+		AD7E84D41C0C2816007FD5FF /* Armature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Armature.cpp; sourceTree = "<group>"; };
+		AD7E84D51C0C2816007FD5FF /* Armature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Armature.h; sourceTree = "<group>"; };
+		AD7E84D61C0C2816007FD5FF /* Bone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bone.cpp; sourceTree = "<group>"; };
+		AD7E84D71C0C2816007FD5FF /* Bone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bone.h; sourceTree = "<group>"; };
+		AD7E84D81C0C2816007FD5FF /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
+		AD7E84D91C0C2816007FD5FF /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
+		AD7E84DA1C0C2816007FD5FF /* Slot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Slot.cpp; sourceTree = "<group>"; };
+		AD7E84DB1C0C2816007FD5FF /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slot.h; sourceTree = "<group>"; };
+		AD7E84DC1C0C2816007FD5FF /* DragonBones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBones.h; sourceTree = "<group>"; };
+		AD7E84DD1C0C2816007FD5FF /* DragonBonesHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBonesHeaders.h; sourceTree = "<group>"; };
+		AD7E84DF1C0C2816007FD5FF /* EventData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventData.cpp; sourceTree = "<group>"; };
+		AD7E84E01C0C2816007FD5FF /* EventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventData.h; sourceTree = "<group>"; };
+		AD7E84E11C0C2816007FD5FF /* IEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEventDispatcher.h; sourceTree = "<group>"; };
+		AD7E84E31C0C2816007FD5FF /* BaseFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseFactory.cpp; sourceTree = "<group>"; };
+		AD7E84E41C0C2816007FD5FF /* BaseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseFactory.h; sourceTree = "<group>"; };
+		AD7E84E61C0C2816007FD5FF /* ColorTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTransform.h; sourceTree = "<group>"; };
+		AD7E84E71C0C2816007FD5FF /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		AD7E84E81C0C2816007FD5FF /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
+		AD7E84E91C0C2816007FD5FF /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rectangle.h; sourceTree = "<group>"; };
+		AD7E84EA1C0C2816007FD5FF /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform.h; sourceTree = "<group>"; };
+		AD7E84EC1C0C2816007FD5FF /* AnimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationData.h; sourceTree = "<group>"; };
+		AD7E84ED1C0C2816007FD5FF /* ArmatureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureData.h; sourceTree = "<group>"; };
+		AD7E84EE1C0C2816007FD5FF /* BoneData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoneData.h; sourceTree = "<group>"; };
+		AD7E84EF1C0C2816007FD5FF /* DisplayData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayData.h; sourceTree = "<group>"; };
+		AD7E84F01C0C2816007FD5FF /* DragonBonesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBonesData.h; sourceTree = "<group>"; };
+		AD7E84F11C0C2816007FD5FF /* EllipseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EllipseData.h; sourceTree = "<group>"; };
+		AD7E84F21C0C2816007FD5FF /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		AD7E84F31C0C2816007FD5FF /* IAreaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAreaData.h; sourceTree = "<group>"; };
+		AD7E84F41C0C2816007FD5FF /* RectangleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleData.h; sourceTree = "<group>"; };
+		AD7E84F51C0C2816007FD5FF /* SkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkinData.h; sourceTree = "<group>"; };
+		AD7E84F61C0C2816007FD5FF /* SlotData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotData.h; sourceTree = "<group>"; };
+		AD7E84F71C0C2816007FD5FF /* TextData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextData.h; sourceTree = "<group>"; };
+		AD7E84F81C0C2816007FD5FF /* Timeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timeline.h; sourceTree = "<group>"; };
+		AD7E84F91C0C2816007FD5FF /* TransformFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformFrame.h; sourceTree = "<group>"; };
+		AD7E84FA1C0C2816007FD5FF /* TransformTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformTimeline.h; sourceTree = "<group>"; };
+		AD7E84FC1C0C2816007FD5FF /* BaseDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseDataParser.cpp; sourceTree = "<group>"; };
+		AD7E84FD1C0C2816007FD5FF /* BaseDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDataParser.h; sourceTree = "<group>"; };
+		AD7E84FE1C0C2816007FD5FF /* ConstValues.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConstValues.cpp; sourceTree = "<group>"; };
+		AD7E84FF1C0C2816007FD5FF /* ConstValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstValues.h; sourceTree = "<group>"; };
+		AD7E85001C0C2816007FD5FF /* dbtinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbtinyxml2.cpp; sourceTree = "<group>"; };
+		AD7E85011C0C2816007FD5FF /* dbtinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbtinyxml2.h; sourceTree = "<group>"; };
+		AD7E85021C0C2816007FD5FF /* XMLDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLDataParser.cpp; sourceTree = "<group>"; };
+		AD7E85031C0C2816007FD5FF /* XMLDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDataParser.h; sourceTree = "<group>"; };
+		AD7E85091C0C2816007FD5FF /* DBCCArmature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBCCArmature.cpp; sourceTree = "<group>"; };
+		AD7E850A1C0C2816007FD5FF /* DBCCArmature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCArmature.h; sourceTree = "<group>"; };
+		AD7E850B1C0C2816007FD5FF /* DBCCArmatureNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBCCArmatureNode.cpp; sourceTree = "<group>"; };
+		AD7E850C1C0C2816007FD5FF /* DBCCArmatureNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCArmatureNode.h; sourceTree = "<group>"; };
+		AD7E850D1C0C2816007FD5FF /* DBCCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCEventDispatcher.h; sourceTree = "<group>"; };
+		AD7E850E1C0C2816007FD5FF /* DBCCFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBCCFactory.cpp; sourceTree = "<group>"; };
+		AD7E850F1C0C2816007FD5FF /* DBCCFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCFactory.h; sourceTree = "<group>"; };
+		AD7E85101C0C2816007FD5FF /* dbccMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbccMacro.h; sourceTree = "<group>"; };
+		AD7E85111C0C2816007FD5FF /* DBCCRenderHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCRenderHeaders.h; sourceTree = "<group>"; };
+		AD7E85121C0C2816007FD5FF /* DBCCSlot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBCCSlot.cpp; sourceTree = "<group>"; };
+		AD7E85131C0C2816007FD5FF /* DBCCSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCSlot.h; sourceTree = "<group>"; };
+		AD7E85141C0C2816007FD5FF /* DBCCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCTextureAtlas.h; sourceTree = "<group>"; };
+		AD7E85151C0C2816007FD5FF /* DBCCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBCCUtils.cpp; sourceTree = "<group>"; };
+		AD7E85161C0C2816007FD5FF /* DBCCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCCUtils.h; sourceTree = "<group>"; };
+		AD7E851D1C0C2816007FD5FF /* ITextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITextureAtlas.h; sourceTree = "<group>"; };
+		AD7E851E1C0C2816007FD5FF /* TextureAtlasData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasData.h; sourceTree = "<group>"; };
+		AD7E851F1C0C2816007FD5FF /* TextureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureData.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD525BA71C0768DB000D5586 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD525BB61C076906000D5586 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD525AF11C075AB9000D5586 = {
+			isa = PBXGroup;
+			children = (
+				AD525BF01C076B02000D5586 /* Dragonbones */,
+				AD525AFB1C075AB9000D5586 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD525AFB1C075AB9000D5586 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD525BAA1C0768DB000D5586 /* libDragonbones_mac.a */,
+				AD525BB91C076906000D5586 /* libDragonbones_ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD525BF01C076B02000D5586 /* Dragonbones */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84C91C0C2816007FD5FF /* animation */,
+				AD7E84D31C0C2816007FD5FF /* core */,
+				AD7E84DC1C0C2816007FD5FF /* DragonBones.h */,
+				AD7E84DD1C0C2816007FD5FF /* DragonBonesHeaders.h */,
+				AD7E84DE1C0C2816007FD5FF /* events */,
+				AD7E84E21C0C2816007FD5FF /* factories */,
+				AD7E84E51C0C2816007FD5FF /* geoms */,
+				AD7E84EB1C0C2816007FD5FF /* objects */,
+				AD7E84FB1C0C2816007FD5FF /* parsers */,
+				AD7E85041C0C2816007FD5FF /* renderer */,
+				AD7E851C1C0C2816007FD5FF /* textures */,
+			);
+			path = Dragonbones;
+			sourceTree = "<group>";
+		};
+		AD7E84C91C0C2816007FD5FF /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84CA1C0C2816007FD5FF /* Animation.cpp */,
+				AD7E84CB1C0C2816007FD5FF /* Animation.h */,
+				AD7E84CC1C0C2816007FD5FF /* AnimationState.cpp */,
+				AD7E84CD1C0C2816007FD5FF /* AnimationState.h */,
+				AD7E84CE1C0C2816007FD5FF /* IAnimatable.h */,
+				AD7E84CF1C0C2816007FD5FF /* TimelineState.cpp */,
+				AD7E84D01C0C2816007FD5FF /* TimelineState.h */,
+				AD7E84D11C0C2816007FD5FF /* WorldClock.cpp */,
+				AD7E84D21C0C2816007FD5FF /* WorldClock.h */,
+			);
+			path = animation;
+			sourceTree = "<group>";
+		};
+		AD7E84D31C0C2816007FD5FF /* core */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84D41C0C2816007FD5FF /* Armature.cpp */,
+				AD7E84D51C0C2816007FD5FF /* Armature.h */,
+				AD7E84D61C0C2816007FD5FF /* Bone.cpp */,
+				AD7E84D71C0C2816007FD5FF /* Bone.h */,
+				AD7E84D81C0C2816007FD5FF /* Object.cpp */,
+				AD7E84D91C0C2816007FD5FF /* Object.h */,
+				AD7E84DA1C0C2816007FD5FF /* Slot.cpp */,
+				AD7E84DB1C0C2816007FD5FF /* Slot.h */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		AD7E84DE1C0C2816007FD5FF /* events */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84DF1C0C2816007FD5FF /* EventData.cpp */,
+				AD7E84E01C0C2816007FD5FF /* EventData.h */,
+				AD7E84E11C0C2816007FD5FF /* IEventDispatcher.h */,
+			);
+			path = events;
+			sourceTree = "<group>";
+		};
+		AD7E84E21C0C2816007FD5FF /* factories */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84E31C0C2816007FD5FF /* BaseFactory.cpp */,
+				AD7E84E41C0C2816007FD5FF /* BaseFactory.h */,
+			);
+			path = factories;
+			sourceTree = "<group>";
+		};
+		AD7E84E51C0C2816007FD5FF /* geoms */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84E61C0C2816007FD5FF /* ColorTransform.h */,
+				AD7E84E71C0C2816007FD5FF /* Matrix.h */,
+				AD7E84E81C0C2816007FD5FF /* Point.h */,
+				AD7E84E91C0C2816007FD5FF /* Rectangle.h */,
+				AD7E84EA1C0C2816007FD5FF /* Transform.h */,
+			);
+			path = geoms;
+			sourceTree = "<group>";
+		};
+		AD7E84EB1C0C2816007FD5FF /* objects */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84EC1C0C2816007FD5FF /* AnimationData.h */,
+				AD7E84ED1C0C2816007FD5FF /* ArmatureData.h */,
+				AD7E84EE1C0C2816007FD5FF /* BoneData.h */,
+				AD7E84EF1C0C2816007FD5FF /* DisplayData.h */,
+				AD7E84F01C0C2816007FD5FF /* DragonBonesData.h */,
+				AD7E84F11C0C2816007FD5FF /* EllipseData.h */,
+				AD7E84F21C0C2816007FD5FF /* Frame.h */,
+				AD7E84F31C0C2816007FD5FF /* IAreaData.h */,
+				AD7E84F41C0C2816007FD5FF /* RectangleData.h */,
+				AD7E84F51C0C2816007FD5FF /* SkinData.h */,
+				AD7E84F61C0C2816007FD5FF /* SlotData.h */,
+				AD7E84F71C0C2816007FD5FF /* TextData.h */,
+				AD7E84F81C0C2816007FD5FF /* Timeline.h */,
+				AD7E84F91C0C2816007FD5FF /* TransformFrame.h */,
+				AD7E84FA1C0C2816007FD5FF /* TransformTimeline.h */,
+			);
+			path = objects;
+			sourceTree = "<group>";
+		};
+		AD7E84FB1C0C2816007FD5FF /* parsers */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E84FC1C0C2816007FD5FF /* BaseDataParser.cpp */,
+				AD7E84FD1C0C2816007FD5FF /* BaseDataParser.h */,
+				AD7E84FE1C0C2816007FD5FF /* ConstValues.cpp */,
+				AD7E84FF1C0C2816007FD5FF /* ConstValues.h */,
+				AD7E85001C0C2816007FD5FF /* dbtinyxml2.cpp */,
+				AD7E85011C0C2816007FD5FF /* dbtinyxml2.h */,
+				AD7E85021C0C2816007FD5FF /* XMLDataParser.cpp */,
+				AD7E85031C0C2816007FD5FF /* XMLDataParser.h */,
+			);
+			path = parsers;
+			sourceTree = "<group>";
+		};
+		AD7E85041C0C2816007FD5FF /* renderer */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E85091C0C2816007FD5FF /* DBCCArmature.cpp */,
+				AD7E850A1C0C2816007FD5FF /* DBCCArmature.h */,
+				AD7E850B1C0C2816007FD5FF /* DBCCArmatureNode.cpp */,
+				AD7E850C1C0C2816007FD5FF /* DBCCArmatureNode.h */,
+				AD7E850D1C0C2816007FD5FF /* DBCCEventDispatcher.h */,
+				AD7E850E1C0C2816007FD5FF /* DBCCFactory.cpp */,
+				AD7E850F1C0C2816007FD5FF /* DBCCFactory.h */,
+				AD7E85101C0C2816007FD5FF /* dbccMacro.h */,
+				AD7E85111C0C2816007FD5FF /* DBCCRenderHeaders.h */,
+				AD7E85121C0C2816007FD5FF /* DBCCSlot.cpp */,
+				AD7E85131C0C2816007FD5FF /* DBCCSlot.h */,
+				AD7E85141C0C2816007FD5FF /* DBCCTextureAtlas.h */,
+				AD7E85151C0C2816007FD5FF /* DBCCUtils.cpp */,
+				AD7E85161C0C2816007FD5FF /* DBCCUtils.h */,
+			);
+			path = renderer;
+			sourceTree = "<group>";
+		};
+		AD7E851C1C0C2816007FD5FF /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E851D1C0C2816007FD5FF /* ITextureAtlas.h */,
+				AD7E851E1C0C2816007FD5FF /* TextureAtlasData.h */,
+				AD7E851F1C0C2816007FD5FF /* TextureData.h */,
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AD525BA81C0768DB000D5586 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD7E85661C0C2816007FD5FF /* Frame.h in Headers */,
+				AD7E85501C0C2816007FD5FF /* ColorTransform.h in Headers */,
+				AD7E859C1C0C2816007FD5FF /* DBCCRenderHeaders.h in Headers */,
+				AD7E85221C0C2816007FD5FF /* Animation.h in Headers */,
+				AD7E85A01C0C2816007FD5FF /* DBCCSlot.h in Headers */,
+				AD7E857A1C0C2816007FD5FF /* BaseDataParser.h in Headers */,
+				AD7E85481C0C2816007FD5FF /* EventData.h in Headers */,
+				AD7E85641C0C2816007FD5FF /* EllipseData.h in Headers */,
+				AD7E85521C0C2816007FD5FF /* Matrix.h in Headers */,
+				AD7E854E1C0C2816007FD5FF /* BaseFactory.h in Headers */,
+				AD7E85AA1C0C2816007FD5FF /* TextureAtlasData.h in Headers */,
+				AD7E855C1C0C2816007FD5FF /* ArmatureData.h in Headers */,
+				AD7E856E1C0C2816007FD5FF /* SlotData.h in Headers */,
+				AD7E85681C0C2816007FD5FF /* IAreaData.h in Headers */,
+				AD7E85761C0C2816007FD5FF /* TransformTimeline.h in Headers */,
+				AD7E85A61C0C2816007FD5FF /* DBCCUtils.h in Headers */,
+				AD7E85AC1C0C2816007FD5FF /* TextureData.h in Headers */,
+				AD7E852C1C0C2816007FD5FF /* TimelineState.h in Headers */,
+				AD7E85441C0C2816007FD5FF /* DragonBonesHeaders.h in Headers */,
+				AD7E85701C0C2816007FD5FF /* TextData.h in Headers */,
+				AD7E859A1C0C2816007FD5FF /* dbccMacro.h in Headers */,
+				AD7E85541C0C2816007FD5FF /* Point.h in Headers */,
+				AD7E856A1C0C2816007FD5FF /* RectangleData.h in Headers */,
+				AD7E85581C0C2816007FD5FF /* Transform.h in Headers */,
+				AD7E85921C0C2816007FD5FF /* DBCCArmatureNode.h in Headers */,
+				AD7E857E1C0C2816007FD5FF /* ConstValues.h in Headers */,
+				AD7E85561C0C2816007FD5FF /* Rectangle.h in Headers */,
+				AD7E85301C0C2816007FD5FF /* WorldClock.h in Headers */,
+				AD7E85941C0C2816007FD5FF /* DBCCEventDispatcher.h in Headers */,
+				AD7E85A21C0C2816007FD5FF /* DBCCTextureAtlas.h in Headers */,
+				AD7E85821C0C2816007FD5FF /* dbtinyxml2.h in Headers */,
+				AD7E855A1C0C2816007FD5FF /* AnimationData.h in Headers */,
+				AD7E85A81C0C2816007FD5FF /* ITextureAtlas.h in Headers */,
+				AD7E85281C0C2816007FD5FF /* IAnimatable.h in Headers */,
+				AD7E85261C0C2816007FD5FF /* AnimationState.h in Headers */,
+				AD7E853C1C0C2816007FD5FF /* Object.h in Headers */,
+				AD7E85601C0C2816007FD5FF /* DisplayData.h in Headers */,
+				AD7E85721C0C2816007FD5FF /* Timeline.h in Headers */,
+				AD7E855E1C0C2816007FD5FF /* BoneData.h in Headers */,
+				AD7E85861C0C2816007FD5FF /* XMLDataParser.h in Headers */,
+				AD7E854A1C0C2816007FD5FF /* IEventDispatcher.h in Headers */,
+				AD7E85621C0C2816007FD5FF /* DragonBonesData.h in Headers */,
+				AD7E85981C0C2816007FD5FF /* DBCCFactory.h in Headers */,
+				AD7E858E1C0C2816007FD5FF /* DBCCArmature.h in Headers */,
+				AD7E85741C0C2816007FD5FF /* TransformFrame.h in Headers */,
+				AD7E85381C0C2816007FD5FF /* Bone.h in Headers */,
+				AD7E856C1C0C2816007FD5FF /* SkinData.h in Headers */,
+				AD7E85421C0C2816007FD5FF /* DragonBones.h in Headers */,
+				AD7E85341C0C2816007FD5FF /* Armature.h in Headers */,
+				AD7E85401C0C2816007FD5FF /* Slot.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD525CAE1C076C0F000D5586 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD7E85671C0C2816007FD5FF /* Frame.h in Headers */,
+				AD7E85511C0C2816007FD5FF /* ColorTransform.h in Headers */,
+				AD7E859D1C0C2816007FD5FF /* DBCCRenderHeaders.h in Headers */,
+				AD7E85231C0C2816007FD5FF /* Animation.h in Headers */,
+				AD7E85A11C0C2816007FD5FF /* DBCCSlot.h in Headers */,
+				AD7E857B1C0C2816007FD5FF /* BaseDataParser.h in Headers */,
+				AD7E85491C0C2816007FD5FF /* EventData.h in Headers */,
+				AD7E85651C0C2816007FD5FF /* EllipseData.h in Headers */,
+				AD7E85531C0C2816007FD5FF /* Matrix.h in Headers */,
+				AD7E854F1C0C2816007FD5FF /* BaseFactory.h in Headers */,
+				AD7E85AB1C0C2816007FD5FF /* TextureAtlasData.h in Headers */,
+				AD7E855D1C0C2816007FD5FF /* ArmatureData.h in Headers */,
+				AD7E856F1C0C2816007FD5FF /* SlotData.h in Headers */,
+				AD7E85691C0C2816007FD5FF /* IAreaData.h in Headers */,
+				AD7E85771C0C2816007FD5FF /* TransformTimeline.h in Headers */,
+				AD7E85A71C0C2816007FD5FF /* DBCCUtils.h in Headers */,
+				AD7E85AD1C0C2816007FD5FF /* TextureData.h in Headers */,
+				AD7E852D1C0C2816007FD5FF /* TimelineState.h in Headers */,
+				AD7E85451C0C2816007FD5FF /* DragonBonesHeaders.h in Headers */,
+				AD7E85711C0C2816007FD5FF /* TextData.h in Headers */,
+				AD7E859B1C0C2816007FD5FF /* dbccMacro.h in Headers */,
+				AD7E85551C0C2816007FD5FF /* Point.h in Headers */,
+				AD7E856B1C0C2816007FD5FF /* RectangleData.h in Headers */,
+				AD7E85591C0C2816007FD5FF /* Transform.h in Headers */,
+				AD7E85931C0C2816007FD5FF /* DBCCArmatureNode.h in Headers */,
+				AD7E857F1C0C2816007FD5FF /* ConstValues.h in Headers */,
+				AD7E85571C0C2816007FD5FF /* Rectangle.h in Headers */,
+				AD7E85311C0C2816007FD5FF /* WorldClock.h in Headers */,
+				AD7E85951C0C2816007FD5FF /* DBCCEventDispatcher.h in Headers */,
+				AD7E85A31C0C2816007FD5FF /* DBCCTextureAtlas.h in Headers */,
+				AD7E85831C0C2816007FD5FF /* dbtinyxml2.h in Headers */,
+				AD7E855B1C0C2816007FD5FF /* AnimationData.h in Headers */,
+				AD7E85A91C0C2816007FD5FF /* ITextureAtlas.h in Headers */,
+				AD7E85291C0C2816007FD5FF /* IAnimatable.h in Headers */,
+				AD7E85271C0C2816007FD5FF /* AnimationState.h in Headers */,
+				AD7E853D1C0C2816007FD5FF /* Object.h in Headers */,
+				AD7E85611C0C2816007FD5FF /* DisplayData.h in Headers */,
+				AD7E85731C0C2816007FD5FF /* Timeline.h in Headers */,
+				AD7E855F1C0C2816007FD5FF /* BoneData.h in Headers */,
+				AD7E85871C0C2816007FD5FF /* XMLDataParser.h in Headers */,
+				AD7E854B1C0C2816007FD5FF /* IEventDispatcher.h in Headers */,
+				AD7E85631C0C2816007FD5FF /* DragonBonesData.h in Headers */,
+				AD7E85991C0C2816007FD5FF /* DBCCFactory.h in Headers */,
+				AD7E858F1C0C2816007FD5FF /* DBCCArmature.h in Headers */,
+				AD7E85751C0C2816007FD5FF /* TransformFrame.h in Headers */,
+				AD7E85391C0C2816007FD5FF /* Bone.h in Headers */,
+				AD7E856D1C0C2816007FD5FF /* SkinData.h in Headers */,
+				AD7E85431C0C2816007FD5FF /* DragonBones.h in Headers */,
+				AD7E85351C0C2816007FD5FF /* Armature.h in Headers */,
+				AD7E85411C0C2816007FD5FF /* Slot.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AD525BA91C0768DB000D5586 /* Dragonbones_mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD525BB21C0768DB000D5586 /* Build configuration list for PBXNativeTarget "Dragonbones_mac" */;
+			buildPhases = (
+				AD525BA61C0768DB000D5586 /* Sources */,
+				AD525BA71C0768DB000D5586 /* Frameworks */,
+				AD525BA81C0768DB000D5586 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dragonbones_mac;
+			productName = Dragonbones_mac;
+			productReference = AD525BAA1C0768DB000D5586 /* libDragonbones_mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AD525BB81C076906000D5586 /* Dragonbones_ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD525BBF1C076906000D5586 /* Build configuration list for PBXNativeTarget "Dragonbones_ios" */;
+			buildPhases = (
+				AD525BB51C076906000D5586 /* Sources */,
+				AD525BB61C076906000D5586 /* Frameworks */,
+				AD525BB71C076906000D5586 /* CopyFiles */,
+				AD525CAE1C076C0F000D5586 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dragonbones_ios;
+			productName = Dragonbones_ios;
+			productReference = AD525BB91C076906000D5586 /* libDragonbones_ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD525AF21C075AB9000D5586 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Relvin;
+				TargetAttributes = {
+					AD525BA91C0768DB000D5586 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+					AD525BB81C076906000D5586 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = AD525AF51C075AB9000D5586 /* Build configuration list for PBXProject "dragonbones" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AD525AF11C075AB9000D5586;
+			productRefGroup = AD525AFB1C075AB9000D5586 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD525BA91C0768DB000D5586 /* Dragonbones_mac */,
+				AD525BB81C076906000D5586 /* Dragonbones_ios */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD525BA61C0768DB000D5586 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD7E852A1C0C2816007FD5FF /* TimelineState.cpp in Sources */,
+				AD7E85241C0C2816007FD5FF /* AnimationState.cpp in Sources */,
+				AD7E85801C0C2816007FD5FF /* dbtinyxml2.cpp in Sources */,
+				AD7E85321C0C2816007FD5FF /* Armature.cpp in Sources */,
+				AD7E85961C0C2816007FD5FF /* DBCCFactory.cpp in Sources */,
+				AD7E85841C0C2816007FD5FF /* XMLDataParser.cpp in Sources */,
+				AD7E857C1C0C2816007FD5FF /* ConstValues.cpp in Sources */,
+				AD7E85A41C0C2816007FD5FF /* DBCCUtils.cpp in Sources */,
+				AD7E859E1C0C2816007FD5FF /* DBCCSlot.cpp in Sources */,
+				AD7E854C1C0C2816007FD5FF /* BaseFactory.cpp in Sources */,
+				AD7E853E1C0C2816007FD5FF /* Slot.cpp in Sources */,
+				AD7E85361C0C2816007FD5FF /* Bone.cpp in Sources */,
+				AD7E853A1C0C2816007FD5FF /* Object.cpp in Sources */,
+				AD7E85901C0C2816007FD5FF /* DBCCArmatureNode.cpp in Sources */,
+				AD7E85461C0C2816007FD5FF /* EventData.cpp in Sources */,
+				AD7E85781C0C2816007FD5FF /* BaseDataParser.cpp in Sources */,
+				AD7E85201C0C2816007FD5FF /* Animation.cpp in Sources */,
+				AD7E858C1C0C2816007FD5FF /* DBCCArmature.cpp in Sources */,
+				AD7E852E1C0C2816007FD5FF /* WorldClock.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD525BB51C076906000D5586 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD7E852B1C0C2816007FD5FF /* TimelineState.cpp in Sources */,
+				AD7E85251C0C2816007FD5FF /* AnimationState.cpp in Sources */,
+				AD7E85811C0C2816007FD5FF /* dbtinyxml2.cpp in Sources */,
+				AD7E85331C0C2816007FD5FF /* Armature.cpp in Sources */,
+				AD7E85971C0C2816007FD5FF /* DBCCFactory.cpp in Sources */,
+				AD7E85851C0C2816007FD5FF /* XMLDataParser.cpp in Sources */,
+				AD7E857D1C0C2816007FD5FF /* ConstValues.cpp in Sources */,
+				AD7E85A51C0C2816007FD5FF /* DBCCUtils.cpp in Sources */,
+				AD7E859F1C0C2816007FD5FF /* DBCCSlot.cpp in Sources */,
+				AD7E854D1C0C2816007FD5FF /* BaseFactory.cpp in Sources */,
+				AD7E853F1C0C2816007FD5FF /* Slot.cpp in Sources */,
+				AD7E85371C0C2816007FD5FF /* Bone.cpp in Sources */,
+				AD7E853B1C0C2816007FD5FF /* Object.cpp in Sources */,
+				AD7E85911C0C2816007FD5FF /* DBCCArmatureNode.cpp in Sources */,
+				AD7E85471C0C2816007FD5FF /* EventData.cpp in Sources */,
+				AD7E85791C0C2816007FD5FF /* BaseDataParser.cpp in Sources */,
+				AD7E85211C0C2816007FD5FF /* Animation.cpp in Sources */,
+				AD7E858D1C0C2816007FD5FF /* DBCCArmature.cpp in Sources */,
+				AD7E852F1C0C2816007FD5FF /* WorldClock.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AD525B011C075AB9000D5586 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Dragonbones $(SRCROOT)/../cocos2d-x/cocos $(SRCROOT)/ $(SRCROOT)/../cocos2d-x/external";
+			};
+			name = Debug;
+		};
+		AD525B021C075AB9000D5586 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Dragonbones $(SRCROOT)/../cocos2d-x/cocos $(SRCROOT)/ $(SRCROOT)/../cocos2d-x/external";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AD525BB31C0768DB000D5586 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/boost/1.58.0/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/external/glfw3/include/mac";
+			};
+			name = Debug;
+		};
+		AD525BB41C0768DB000D5586 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/boost/1.58.0/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d-x/external/glfw3/include/mac";
+			};
+			name = Release;
+		};
+		AD525BC01C076906000D5586 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		AD525BC11C076906000D5586 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_IPHONE;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD525AF51C075AB9000D5586 /* Build configuration list for PBXProject "dragonbones" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD525B011C075AB9000D5586 /* Debug */,
+				AD525B021C075AB9000D5586 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD525BB21C0768DB000D5586 /* Build configuration list for PBXNativeTarget "Dragonbones_mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD525BB31C0768DB000D5586 /* Debug */,
+				AD525BB41C0768DB000D5586 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD525BBF1C076906000D5586 /* Build configuration list for PBXNativeTarget "Dragonbones_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD525BC01C076906000D5586 /* Debug */,
+				AD525BC11C076906000D5586 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD525AF21C075AB9000D5586 /* Project object */;
+}
