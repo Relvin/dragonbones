@@ -237,9 +237,9 @@ void DBCCSlot::updateDisplayColor(int aOffset, int rOffset, int gOffset, int bOf
 
 void DBCCSlot::updateDisplayVisible(bool visible)
 {
-    if (_nodeDisplay && _parent)
+    if (_nodeDisplay && _parentBone)
     {
-        _nodeDisplay->setVisible(_parent->getVisible() && _visible && visible);
+        _nodeDisplay->setVisible(_parentBone->getVisible() && _visible && visible);
 //        _nodeDisplay->setVisible(false);
     }
 }

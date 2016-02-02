@@ -124,7 +124,7 @@ bool Bone::contains(const DBObject *object) const
     const DBObject *ancestor = object;    
     while (!(ancestor == this || ancestor == nullptr))
     {
-        ancestor = ancestor->getParent();
+        ancestor = ancestor->getParentBone();
     }
     return ancestor == this;
 }
@@ -138,18 +138,18 @@ void Bone::addChildBone(Bone *childBone, bool updateLater)
         DBASSERT(false, "An Bone cannot be added as a child to itself or one of its children (or children's children, etc.)");
     }
 
-	if (this == childBone->getParent())
+	if (this == childBone->getParentBone())
 	{
 		return;
 	}
 
-    if (childBone->getParent())
+    if (childBone->getParentBone())
     {
-        childBone->getParent()->removeChildBone(childBone);
+        childBone->getParentBone()->removeChildBone(childBone);
     }
    
 	_boneList.push_back(childBone);
-	childBone->setParent(this);
+	childBone->setParentBone(this);
 	childBone->setArmature(_armature);
 
     if (_armature && !updateLater)
@@ -166,7 +166,7 @@ void Bone::removeChildBone(Bone *childBone, bool updateLater)
     if (iterator != _boneList.end())
     {
         _boneList.erase(iterator);
-        childBone->setParent(nullptr);
+        childBone->setParentBone(nullptr);
         childBone->setArmature(nullptr);
 
 		if (_armature && !updateLater)
@@ -179,13 +179,13 @@ void Bone::removeChildBone(Bone *childBone, bool updateLater)
 void Bone::addSlot(Slot *childSlot)
 {
 	if (!childSlot) return;
-	if (childSlot && childSlot->getParent())
+	if (childSlot && childSlot->getParentBone())
 	{
-		childSlot->getParent()->removeSlot(childSlot);
+		childSlot->getParentBone()->removeSlot(childSlot);
 	}
 	
 	_slotList.push_back(childSlot);
-	childSlot->setParent(this);
+	childSlot->setParentBone(this);
 	childSlot->setArmature(_armature);
     
 }
@@ -198,7 +198,7 @@ void Bone::removeSlot(Slot *childSlot)
 	if (iterator != _slotList.end())
 	{
 		_slotList.erase(iterator);
-		childSlot->setParent(nullptr);
+		childSlot->setParentBone(nullptr);
 		childSlot->setArmature(nullptr);
 	}
 }
@@ -208,7 +208,7 @@ void Bone::update(bool needUpdate)
     
     static int boneCount = 0;
     _needUpdate --;
-    if (needUpdate || _needUpdate > 0 || (_parent && _parent->_needUpdate > 0))
+    if (needUpdate || _needUpdate > 0 || (_parentBone && _parentBone->_needUpdate > 0))
     {
         _needUpdate = 1;
     }

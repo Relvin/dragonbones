@@ -166,7 +166,7 @@ Bone* Armature::getBoneByDisplay(const cocos2d::Node *display) const
     }
     
     Slot *slot = getSlotByDisplay(display);
-    return slot ? slot->_parent : nullptr;
+    return slot ? slot->_parentBone : nullptr;
 }
 
 void Armature::addBone(Bone *bone)
@@ -176,9 +176,9 @@ void Armature::addBone(Bone *bone)
         return;
     }
     
-    if (bone->_parent)
+    if (bone->_parentBone)
     {
-        bone->_parent->removeChildBone(bone);
+        bone->_parentBone->removeChildBone(bone);
     }
     
     bone->setArmature(this);
@@ -198,9 +198,9 @@ void Armature::addBone(Bone *bone, const std::string &parentBoneName, bool updat
     }
 	else
 	{
-		if (bone->getParent())
+		if (bone->getParentBone())
 		{
-			bone->getParent()->removeChildBone(bone, updateLater);
+			bone->getParentBone()->removeChildBone(bone, updateLater);
 		}
 		bone->setArmature(this);
 		if (!updateLater)
@@ -217,9 +217,9 @@ void Armature::removeBone(Bone *bone, bool updateLater)
         return;
     }
     
-    if (bone->_parent)
+    if (bone->_parentBone)
     {
-        bone->_parent->removeChildBone(bone, updateLater);
+        bone->_parentBone->removeChildBone(bone, updateLater);
     }
     else
     {
@@ -295,7 +295,7 @@ void Armature::removeSlot(Slot *slot)
     {
         return;
     }
-    slot->getParent()->removeSlot(slot);
+    slot->getParentBone()->removeSlot(slot);
 }
 
 Slot* Armature::removeSlotByName(const std::string &slotName)
@@ -399,7 +399,7 @@ void Armature::sortBonesList()
         
         while (parentBone)
         {
-            parentBone = parentBone->_parent;
+            parentBone = parentBone->_parentBone;
             ++level;
         }
         sortedList.push_back(std::make_pair(level , bone));

@@ -1,14 +1,64 @@
 #include "dbccMacro.h"
 #include "DBCCArmatureNode.h"
+#include "DBCCFactory.h"
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
-DBCCArmatureNode* DBCCArmatureNode::create(DBCCArmature *armature)
+DBCCArmatureNode* DBCCArmatureNode::createWithName(const std::string& name)
+{
+    DBCCArmatureNode* ret = new (std::nothrow) DBCCArmatureNode();
+    if (ret && ret->initWithName(name))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+
+
+
+bool DBCCArmatureNode::initWithName(const std::string& name)
+{
+//    dragonBones::DBCCArmatureNode* armNode = dragonBones::DBCCFactory::getInstance()->buildArmatureNode(name,name);
+
+    return true;
+}
+
+#if 0
+DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName) const
+{
+    auto armature = buildArmature(armatureName);
+    return DBCCArmatureNode::create(armature);
+}
+
+DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName, const std::string &dragonBonesName) const
+{
+    auto armature = buildArmature(armatureName, dragonBonesName);
+    return DBCCArmatureNode::create(armature);
+}
+
+DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName, const std::string &skinName, const std::string &animationName,
+                                                 const std::string &dragonBonesName, const std::string &textureAtlasName) const
+{
+    auto armature = buildArmature(armatureName, skinName, animationName, dragonBonesName, textureAtlasName);
+    return DBCCArmatureNode::create(armature);
+}
+#endif
+
+
+
+
+
+
+
+DBCCArmatureNode* DBCCArmatureNode::createWithArmature(DBCCArmature *armature)
 {
     DBCCArmatureNode *ret = new DBCCArmatureNode();
     
-    if (ret && ret->initWithDBCCArmature(armature, nullptr))
+    if (ret && ret->initWithArmature(armature))
     {
         ret->autorelease();
     }
@@ -20,36 +70,13 @@ DBCCArmatureNode* DBCCArmatureNode::create(DBCCArmature *armature)
     return ret;
 }
 
-DBCCArmatureNode* DBCCArmatureNode::createWithWorldClock(DBCCArmature *armature, WorldClock *clock)
-{
-    DBCCArmatureNode *ret = new DBCCArmatureNode();
-    if (!clock)
-        clock = WorldClock::getInstance();
-
-    if (ret && ret->initWithDBCCArmature(armature, clock))
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-
-    return ret;
-}
-
-bool DBCCArmatureNode::initWithDBCCArmature(DBCCArmature *armature, WorldClock *clock)
+bool DBCCArmatureNode::initWithArmature(DBCCArmature *armature)
 {
     if (armature != nullptr)
     {
         _armature = armature;
         _armature->setArmatureNode(this);
-
-        _clock = clock;
-        if (clock)
-        {
-            clock->add(this);
-        }else
+        
         {
             scheduleUpdate();
         }
@@ -65,16 +92,11 @@ bool DBCCArmatureNode::initWithDBCCArmature(DBCCArmature *armature, WorldClock *
 
 DBCCArmatureNode::DBCCArmatureNode()
     :_armature(nullptr)
-    ,_clock(nullptr)
 {
 }
 DBCCArmatureNode::~DBCCArmatureNode()
 {
-    if (_clock)
-    {
-        _clock->remove(this);
-        _clock = nullptr;
-    } else 
+    
     {
         unscheduleUpdate();
     }
@@ -98,12 +120,6 @@ cocos2d::Rect DBCCArmatureNode::getInnerBoundingBox() const
 }
 
 void DBCCArmatureNode::update(float dt)
-{
-    DBASSERT(!_clock, "can not has clock when update!");
-    advanceTime(dt);
-}
-
-void DBCCArmatureNode::advanceTime(float dt)
 {
     retain();
     _armature->advanceTime(dt);

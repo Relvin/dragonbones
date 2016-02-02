@@ -21,11 +21,11 @@ public:
 	virtual void setVisible(bool vislble);
 
 	virtual Armature* getArmature() const;
-	virtual Bone* getParent() const;
+	virtual Bone* getParentBone() const;
 
 protected:
 	virtual void setArmature(Armature *armature);
-	virtual void setParent(Bone *bone);
+	virtual void setParentBone(Bone *bone);
 	// change
 	virtual void calculateRelativeParentTransform();
 	virtual void calculateParentTransform(Transform &transform, Matrix &matrix);
@@ -50,7 +50,7 @@ protected:
     bool _visible;
 
     Armature *_armature;
-    Bone *_parent;
+    Bone *_parentBone;
     
 
 private:

@@ -13,14 +13,20 @@
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
-class DBCCArmatureNode : public cocos2d::Node, public IAnimatable
+class DBCCArmatureNode : public cocos2d::Node
 {
 public:
-    virtual DBCCSlot* getCCSlot(const std::string &slotName) const { return _armature->getCCSlot(slotName); };
-	virtual cocos2d::Node* getCCDisplay() const { return _armature->getCCDisplay(); };
-	virtual cocos2d::EventDispatcher* getCCEventDispatcher() const { return _armature->getCCEventDispatcher(); };
-	virtual cocos2d::Rect getBoundingBox() const override;
-    virtual cocos2d::Rect getInnerBoundingBox() const;
+    static DBCCArmatureNode* createWithFile(const std::string& name);
+    bool initWithFile(const std::string& name);
+    static DBCCArmatureNode* createWithName(const std::string& name);
+    bool initWithName(const std::string& name);
+    
+    
+    DBCCSlot* getCCSlot(const std::string &slotName) const { return _armature->getCCSlot(slotName); };
+	cocos2d::Node* getCCDisplay() const { return _armature->getCCDisplay(); };
+	cocos2d::EventDispatcher* getCCEventDispatcher() const { return _armature->getCCEventDispatcher(); };
+	cocos2d::Rect getBoundingBox() const override;
+    cocos2d::Rect getInnerBoundingBox() const;
 
 #if (DRAGON_BONES_ENABLE_LUA == 1)
 	virtual void registerFrameEventHandler(cocos2d::LUA_FUNCTION func);
@@ -32,15 +38,14 @@ public:
 
 public:
     // create DBCCArmatureNode without WorldClock
-    static DBCCArmatureNode* create(DBCCArmature *armature);
+    static DBCCArmatureNode* createWithArmature(DBCCArmature *armature);
     /**
      * create DDCCArmatureNode with WorldClock
      * @param armature
      * @param clock if null, use WorldClock::getInstance()
      * @return 
      */
-    static DBCCArmatureNode* createWithWorldClock(DBCCArmature *armature, WorldClock *clock);
-    virtual bool initWithDBCCArmature(DBCCArmature *armature, WorldClock *clock);
+    virtual bool initWithArmature(DBCCArmature *armature);
     
     DBCCArmatureNode();
     virtual ~DBCCArmatureNode();
@@ -50,11 +55,9 @@ public:
 	Animation* getAnimation() { return _armature->getAnimation(); };
 
 	virtual void update(float dt) override;
-    virtual void advanceTime(float dt) override;
 
 protected:
     DBCCArmature *_armature;
-    WorldClock *_clock;
     
 private:
     DRAGON_BONES_DISALLOW_COPY_AND_ASSIGN(DBCCArmatureNode);

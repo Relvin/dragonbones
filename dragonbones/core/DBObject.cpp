@@ -12,7 +12,7 @@ DBObject::DBObject() :
 	,userData(nullptr)
 	,_visible(true)
 	,_armature(nullptr)
-	,_parent(nullptr)
+	,_parentBone(nullptr)
 {
 	offset.scaleX = offset.scaleY = 1.f;
 }
@@ -25,7 +25,7 @@ DBObject::~DBObject()
 void DBObject::dispose()
 {
 	_armature = nullptr;
-	_parent = nullptr;
+	_parentBone = nullptr;
 
 	if (userData)
 	{
@@ -49,9 +49,9 @@ Armature* DBObject::getArmature() const
     return _armature;
 }
 
-Bone* DBObject::getParent() const
+Bone* DBObject::getParentBone() const
 {
-    return _parent;
+    return _parentBone;
 }
 
 void DBObject::setArmature(Armature *armature)
@@ -59,9 +59,9 @@ void DBObject::setArmature(Armature *armature)
     _armature = armature;
 }
 
-void DBObject::setParent(Bone *bone)
+void DBObject::setParentBone(Bone *bone)
 {
-    _parent = bone;
+    _parentBone = bone;
 }
 
 void DBObject::calculateRelativeParentTransform()
@@ -70,10 +70,10 @@ void DBObject::calculateRelativeParentTransform()
 
 void DBObject::calculateParentTransform( Transform &transform, Matrix &matrix )
 {
-	if (_parent && (inheritTranslation || inheritRotation || inheritScale))
+	if (_parentBone && (inheritTranslation || inheritRotation || inheritScale))
 	{
-		transform = _parent->_globalTransformForChild;
-		matrix = _parent->_globalTransformMatrixForChild;
+		transform = _parentBone->_globalTransformForChild;
+		matrix = _parentBone->_globalTransformMatrixForChild;
 
 		if (!inheritTranslation || !inheritRotation || !inheritScale)
 		{

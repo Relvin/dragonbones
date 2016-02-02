@@ -162,7 +162,7 @@ void Slot::dispose()
 
 void Slot::update()
 {
-    if (_parent->_needUpdate <= 0 && _needUpdate == false)
+    if (_parentBone->_needUpdate <= 0 && _needUpdate == false)
     {
         return;
     }
@@ -173,16 +173,16 @@ void Slot::update()
 //	updateDisplayTransform();
 //    _needUpdate = false;
 //    return;
-	const float x = origin.x + offset.x + _parent->_tweenPivot.x;
-	const float y = origin.y + offset.y + _parent->_tweenPivot.y;
-	const Matrix &parentMatrix = _parent->globalTransformMatrix;
+	const float x = origin.x + offset.x + _parentBone->_tweenPivot.x;
+	const float y = origin.y + offset.y + _parentBone->_tweenPivot.y;
+	const Matrix &parentMatrix = _parentBone->globalTransformMatrix;
 	globalTransformMatrix.tx = global.x = parentMatrix.a * x + parentMatrix.c * y + parentMatrix.tx;
 	globalTransformMatrix.ty = global.y = parentMatrix.d * y + parentMatrix.b * x + parentMatrix.ty;
 
 	if (inheritRotation)
 	{
-		global.skewX = origin.skewX + offset.skewX + _parent->global.skewX;
-		global.skewY = origin.skewY + offset.skewY + _parent->global.skewY;
+		global.skewX = origin.skewX + offset.skewX + _parentBone->global.skewX;
+		global.skewY = origin.skewY + offset.skewY + _parentBone->global.skewY;
 	}
 	else
 	{
@@ -192,8 +192,8 @@ void Slot::update()
 
 	if (inheritScale)
 	{
-		global.scaleX = origin.scaleX * offset.scaleX * _parent->global.scaleX;
-		global.scaleY = origin.scaleY * offset.scaleY * _parent->global.scaleY;
+		global.scaleX = origin.scaleX * offset.scaleX * _parentBone->global.scaleX;
+		global.scaleY = origin.scaleY * offset.scaleY * _parentBone->global.scaleY;
 	}
 	else
 	{
