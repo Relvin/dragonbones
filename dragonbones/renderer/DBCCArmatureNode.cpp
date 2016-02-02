@@ -17,28 +17,29 @@ DBCCArmatureNode* DBCCArmatureNode::createWithName(const std::string& name)
     return nullptr;
 }
 
-
-
-
 bool DBCCArmatureNode::initWithName(const std::string& name)
 {
-//    dragonBones::DBCCArmatureNode* armNode = dragonBones::DBCCFactory::getInstance()->buildArmatureNode(name,name);
+    return this->initWithName(name,name);
+}
 
+bool DBCCArmatureNode::initWithName(const std::string& armatureName,const std::string& dragonBonesName)
+{
+    this->initWithName(armatureName, "", armatureName, dragonBonesName, dragonBonesName);
     return true;
 }
 
+bool DBCCArmatureNode::initWithName(const std::string &armatureName, const std::string &skinName, const std::string &animationName,
+                                    const std::string &dragonBonesName, const std::string &textureAtlasName)
+{
+    auto armature = DBCCFactory::getInstance()->buildArmature(armatureName, skinName, animationName, dragonBonesName, textureAtlasName);
+    if (armature && initWithArmature(armature))
+    {
+        return true;
+    }
+    return false;
+}
 #if 0
-DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName) const
-{
-    auto armature = buildArmature(armatureName);
-    return DBCCArmatureNode::create(armature);
-}
 
-DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName, const std::string &dragonBonesName) const
-{
-    auto armature = buildArmature(armatureName, dragonBonesName);
-    return DBCCArmatureNode::create(armature);
-}
 
 DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName, const std::string &skinName, const std::string &animationName,
                                                  const std::string &dragonBonesName, const std::string &textureAtlasName) const

@@ -20,7 +20,9 @@ public:
     bool initWithFile(const std::string& name);
     static DBCCArmatureNode* createWithName(const std::string& name);
     bool initWithName(const std::string& name);
-    
+    bool initWithName(const std::string& armatureName,const std::string& dragonName);
+    bool initWithName(const std::string &armatureName, const std::string &skinName, const std::string &animationName,
+                      const std::string &dragonBonesName, const std::string &textureAtlasName);
     
     DBCCSlot* getCCSlot(const std::string &slotName) const { return _armature->getCCSlot(slotName); };
 	cocos2d::Node* getCCDisplay() const { return _armature->getCCDisplay(); };
