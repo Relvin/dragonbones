@@ -1,0 +1,27 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6b6bfbb1-a04d-5143-909c-8bb4bbcd218b",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "6b6bfbb1-a04d-5143-909c-8bb4bbcd218b" : {
+      "DVTSourceControlWorkingCopyRepositoryBranchesLocationKey" : "branches",
+      "DVTSourceControlWorkingCopyRepositoryTagsLocationKey" : "tags",
+      "DVTSourceControlWorkingCopyRepositoryPrimaryBranchLocationKey" : "trunk"
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6b6bfbb1-a04d-5143-909c-8bb4bbcd218b" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2E0C785F-390C-4FB7-91E5-1EBA8898A3FC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6b6bfbb1-a04d-5143-909c-8bb4bbcd218b" : "ThreeArt\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "xmlToBinary",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "trunk\/tools\/xmlToBinary\/xmlToBinary\/xmlToBinary.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/172.16.0.2\/svn\/three_art",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6b6bfbb1-a04d-5143-909c-8bb4bbcd218b"
+    }
+  ]
+}

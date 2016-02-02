@@ -1,0 +1,396 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ADA71B0E1C1029F500D1C1BD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B0D1C1029F500D1C1BD /* main.cpp */; };
+		ADA71B451C102A3A00D1C1BD /* idl_gen_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1C1C102A3A00D1C1BD /* idl_gen_cpp.cpp */; };
+		ADA71B461C102A3A00D1C1BD /* idl_gen_fbs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1D1C102A3A00D1C1BD /* idl_gen_fbs.cpp */; };
+		ADA71B471C102A3A00D1C1BD /* idl_gen_general.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1E1C102A3A00D1C1BD /* idl_gen_general.cpp */; };
+		ADA71B481C102A3A00D1C1BD /* idl_gen_go.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B1F1C102A3A00D1C1BD /* idl_gen_go.cpp */; };
+		ADA71B491C102A3A00D1C1BD /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B201C102A3A00D1C1BD /* idl_gen_text.cpp */; };
+		ADA71B4A1C102A3A00D1C1BD /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B211C102A3A00D1C1BD /* idl_parser.cpp */; };
+		ADA71B4B1C102A3A00D1C1BD /* BaseDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B3A1C102A3A00D1C1BD /* BaseDataParser.cpp */; };
+		ADA71B4C1C102A3A00D1C1BD /* ConstValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B3C1C102A3A00D1C1BD /* ConstValues.cpp */; };
+		ADA71B4D1C102A3A00D1C1BD /* dbtinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B3E1C102A3A00D1C1BD /* dbtinyxml2.cpp */; };
+		ADA71B4E1C102A3A00D1C1BD /* XMLDataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B401C102A3A00D1C1BD /* XMLDataParser.cpp */; };
+		ADA71B4F1C102A3A00D1C1BD /* xmlToBinary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B421C102A3A00D1C1BD /* xmlToBinary.cpp */; };
+		ADA71B521C1031AF00D1C1BD /* Platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADA71B501C1031AF00D1C1BD /* Platform.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ADA71B081C1029F500D1C1BD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		ADA71B0A1C1029F500D1C1BD /* xmlToBinary */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xmlToBinary; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADA71B0D1C1029F500D1C1BD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		ADA71B141C102A3A00D1C1BD /* dragonbones_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dragonbones_generated.h; sourceTree = "<group>"; };
+		ADA71B151C102A3A00D1C1BD /* DragonBones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBones.h; sourceTree = "<group>"; };
+		ADA71B191C102A3A00D1C1BD /* flatbuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flatbuffers.h; sourceTree = "<group>"; };
+		ADA71B1A1C102A3A00D1C1BD /* flatc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flatc.cpp; sourceTree = "<group>"; };
+		ADA71B1B1C102A3A00D1C1BD /* idl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idl.h; sourceTree = "<group>"; };
+		ADA71B1C1C102A3A00D1C1BD /* idl_gen_cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_cpp.cpp; sourceTree = "<group>"; };
+		ADA71B1D1C102A3A00D1C1BD /* idl_gen_fbs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_fbs.cpp; sourceTree = "<group>"; };
+		ADA71B1E1C102A3A00D1C1BD /* idl_gen_general.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_general.cpp; sourceTree = "<group>"; };
+		ADA71B1F1C102A3A00D1C1BD /* idl_gen_go.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_go.cpp; sourceTree = "<group>"; };
+		ADA71B201C102A3A00D1C1BD /* idl_gen_text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_text.cpp; sourceTree = "<group>"; };
+		ADA71B211C102A3A00D1C1BD /* idl_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_parser.cpp; sourceTree = "<group>"; };
+		ADA71B221C102A3A00D1C1BD /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		ADA71B241C102A3A00D1C1BD /* ColorTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTransform.h; sourceTree = "<group>"; };
+		ADA71B251C102A3A00D1C1BD /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		ADA71B261C102A3A00D1C1BD /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
+		ADA71B271C102A3A00D1C1BD /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rectangle.h; sourceTree = "<group>"; };
+		ADA71B281C102A3A00D1C1BD /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform.h; sourceTree = "<group>"; };
+		ADA71B2A1C102A3A00D1C1BD /* AnimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationData.h; sourceTree = "<group>"; };
+		ADA71B2B1C102A3A00D1C1BD /* ArmatureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmatureData.h; sourceTree = "<group>"; };
+		ADA71B2C1C102A3A00D1C1BD /* BoneData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoneData.h; sourceTree = "<group>"; };
+		ADA71B2D1C102A3A00D1C1BD /* DisplayData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayData.h; sourceTree = "<group>"; };
+		ADA71B2E1C102A3A00D1C1BD /* DragonBonesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBonesData.h; sourceTree = "<group>"; };
+		ADA71B2F1C102A3A00D1C1BD /* EllipseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EllipseData.h; sourceTree = "<group>"; };
+		ADA71B301C102A3A00D1C1BD /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		ADA71B311C102A3A00D1C1BD /* IAreaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAreaData.h; sourceTree = "<group>"; };
+		ADA71B321C102A3A00D1C1BD /* RectangleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleData.h; sourceTree = "<group>"; };
+		ADA71B331C102A3A00D1C1BD /* SkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkinData.h; sourceTree = "<group>"; };
+		ADA71B341C102A3A00D1C1BD /* SlotData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotData.h; sourceTree = "<group>"; };
+		ADA71B351C102A3A00D1C1BD /* TextData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextData.h; sourceTree = "<group>"; };
+		ADA71B361C102A3A00D1C1BD /* Timeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timeline.h; sourceTree = "<group>"; };
+		ADA71B371C102A3A00D1C1BD /* TransformFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformFrame.h; sourceTree = "<group>"; };
+		ADA71B381C102A3A00D1C1BD /* TransformTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformTimeline.h; sourceTree = "<group>"; };
+		ADA71B3A1C102A3A00D1C1BD /* BaseDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseDataParser.cpp; sourceTree = "<group>"; };
+		ADA71B3B1C102A3A00D1C1BD /* BaseDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDataParser.h; sourceTree = "<group>"; };
+		ADA71B3C1C102A3A00D1C1BD /* ConstValues.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConstValues.cpp; sourceTree = "<group>"; };
+		ADA71B3D1C102A3A00D1C1BD /* ConstValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstValues.h; sourceTree = "<group>"; };
+		ADA71B3E1C102A3A00D1C1BD /* dbtinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbtinyxml2.cpp; sourceTree = "<group>"; };
+		ADA71B3F1C102A3A00D1C1BD /* dbtinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbtinyxml2.h; sourceTree = "<group>"; };
+		ADA71B401C102A3A00D1C1BD /* XMLDataParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLDataParser.cpp; sourceTree = "<group>"; };
+		ADA71B411C102A3A00D1C1BD /* XMLDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDataParser.h; sourceTree = "<group>"; };
+		ADA71B421C102A3A00D1C1BD /* xmlToBinary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlToBinary.cpp; sourceTree = "<group>"; };
+		ADA71B431C102A3A00D1C1BD /* xmlToBinary.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xmlToBinary.hpp; sourceTree = "<group>"; };
+		ADA71B501C1031AF00D1C1BD /* Platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Platform.cpp; sourceTree = "<group>"; };
+		ADA71B511C1031AF00D1C1BD /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platform.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ADA71B071C1029F500D1C1BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ADA71B011C1029F500D1C1BD = {
+			isa = PBXGroup;
+			children = (
+				ADA71B0C1C1029F500D1C1BD /* xmlToBinary */,
+				ADA71B0B1C1029F500D1C1BD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ADA71B0B1C1029F500D1C1BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADA71B0A1C1029F500D1C1BD /* xmlToBinary */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADA71B0C1C1029F500D1C1BD /* xmlToBinary */ = {
+			isa = PBXGroup;
+			children = (
+				ADA71B501C1031AF00D1C1BD /* Platform.cpp */,
+				ADA71B511C1031AF00D1C1BD /* Platform.h */,
+				ADA71B141C102A3A00D1C1BD /* dragonbones_generated.h */,
+				ADA71B151C102A3A00D1C1BD /* DragonBones.h */,
+				ADA71B161C102A3A00D1C1BD /* flatbuffers */,
+				ADA71B231C102A3A00D1C1BD /* geoms */,
+				ADA71B291C102A3A00D1C1BD /* objects */,
+				ADA71B391C102A3A00D1C1BD /* parsers */,
+				ADA71B421C102A3A00D1C1BD /* xmlToBinary.cpp */,
+				ADA71B431C102A3A00D1C1BD /* xmlToBinary.hpp */,
+				ADA71B0D1C1029F500D1C1BD /* main.cpp */,
+			);
+			path = xmlToBinary;
+			sourceTree = "<group>";
+		};
+		ADA71B161C102A3A00D1C1BD /* flatbuffers */ = {
+			isa = PBXGroup;
+			children = (
+				ADA71B191C102A3A00D1C1BD /* flatbuffers.h */,
+				ADA71B1A1C102A3A00D1C1BD /* flatc.cpp */,
+				ADA71B1B1C102A3A00D1C1BD /* idl.h */,
+				ADA71B1C1C102A3A00D1C1BD /* idl_gen_cpp.cpp */,
+				ADA71B1D1C102A3A00D1C1BD /* idl_gen_fbs.cpp */,
+				ADA71B1E1C102A3A00D1C1BD /* idl_gen_general.cpp */,
+				ADA71B1F1C102A3A00D1C1BD /* idl_gen_go.cpp */,
+				ADA71B201C102A3A00D1C1BD /* idl_gen_text.cpp */,
+				ADA71B211C102A3A00D1C1BD /* idl_parser.cpp */,
+				ADA71B221C102A3A00D1C1BD /* util.h */,
+			);
+			path = flatbuffers;
+			sourceTree = "<group>";
+		};
+		ADA71B231C102A3A00D1C1BD /* geoms */ = {
+			isa = PBXGroup;
+			children = (
+				ADA71B241C102A3A00D1C1BD /* ColorTransform.h */,
+				ADA71B251C102A3A00D1C1BD /* Matrix.h */,
+				ADA71B261C102A3A00D1C1BD /* Point.h */,
+				ADA71B271C102A3A00D1C1BD /* Rectangle.h */,
+				ADA71B281C102A3A00D1C1BD /* Transform.h */,
+			);
+			path = geoms;
+			sourceTree = "<group>";
+		};
+		ADA71B291C102A3A00D1C1BD /* objects */ = {
+			isa = PBXGroup;
+			children = (
+				ADA71B2A1C102A3A00D1C1BD /* AnimationData.h */,
+				ADA71B2B1C102A3A00D1C1BD /* ArmatureData.h */,
+				ADA71B2C1C102A3A00D1C1BD /* BoneData.h */,
+				ADA71B2D1C102A3A00D1C1BD /* DisplayData.h */,
+				ADA71B2E1C102A3A00D1C1BD /* DragonBonesData.h */,
+				ADA71B2F1C102A3A00D1C1BD /* EllipseData.h */,
+				ADA71B301C102A3A00D1C1BD /* Frame.h */,
+				ADA71B311C102A3A00D1C1BD /* IAreaData.h */,
+				ADA71B321C102A3A00D1C1BD /* RectangleData.h */,
+				ADA71B331C102A3A00D1C1BD /* SkinData.h */,
+				ADA71B341C102A3A00D1C1BD /* SlotData.h */,
+				ADA71B351C102A3A00D1C1BD /* TextData.h */,
+				ADA71B361C102A3A00D1C1BD /* Timeline.h */,
+				ADA71B371C102A3A00D1C1BD /* TransformFrame.h */,
+				ADA71B381C102A3A00D1C1BD /* TransformTimeline.h */,
+			);
+			path = objects;
+			sourceTree = "<group>";
+		};
+		ADA71B391C102A3A00D1C1BD /* parsers */ = {
+			isa = PBXGroup;
+			children = (
+				ADA71B3A1C102A3A00D1C1BD /* BaseDataParser.cpp */,
+				ADA71B3B1C102A3A00D1C1BD /* BaseDataParser.h */,
+				ADA71B3C1C102A3A00D1C1BD /* ConstValues.cpp */,
+				ADA71B3D1C102A3A00D1C1BD /* ConstValues.h */,
+				ADA71B3E1C102A3A00D1C1BD /* dbtinyxml2.cpp */,
+				ADA71B3F1C102A3A00D1C1BD /* dbtinyxml2.h */,
+				ADA71B401C102A3A00D1C1BD /* XMLDataParser.cpp */,
+				ADA71B411C102A3A00D1C1BD /* XMLDataParser.h */,
+			);
+			path = parsers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ADA71B091C1029F500D1C1BD /* xmlToBinary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADA71B111C1029F500D1C1BD /* Build configuration list for PBXNativeTarget "xmlToBinary" */;
+			buildPhases = (
+				ADA71B061C1029F500D1C1BD /* Sources */,
+				ADA71B071C1029F500D1C1BD /* Frameworks */,
+				ADA71B081C1029F500D1C1BD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = xmlToBinary;
+			productName = xmlToBinary;
+			productReference = ADA71B0A1C1029F500D1C1BD /* xmlToBinary */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ADA71B021C1029F500D1C1BD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Relvin;
+				TargetAttributes = {
+					ADA71B091C1029F500D1C1BD = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = ADA71B051C1029F500D1C1BD /* Build configuration list for PBXProject "xmlToBinary" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ADA71B011C1029F500D1C1BD;
+			productRefGroup = ADA71B0B1C1029F500D1C1BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ADA71B091C1029F500D1C1BD /* xmlToBinary */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ADA71B061C1029F500D1C1BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADA71B481C102A3A00D1C1BD /* idl_gen_go.cpp in Sources */,
+				ADA71B491C102A3A00D1C1BD /* idl_gen_text.cpp in Sources */,
+				ADA71B461C102A3A00D1C1BD /* idl_gen_fbs.cpp in Sources */,
+				ADA71B521C1031AF00D1C1BD /* Platform.cpp in Sources */,
+				ADA71B4A1C102A3A00D1C1BD /* idl_parser.cpp in Sources */,
+				ADA71B471C102A3A00D1C1BD /* idl_gen_general.cpp in Sources */,
+				ADA71B4E1C102A3A00D1C1BD /* XMLDataParser.cpp in Sources */,
+				ADA71B4B1C102A3A00D1C1BD /* BaseDataParser.cpp in Sources */,
+				ADA71B451C102A3A00D1C1BD /* idl_gen_cpp.cpp in Sources */,
+				ADA71B0E1C1029F500D1C1BD /* main.cpp in Sources */,
+				ADA71B4F1C102A3A00D1C1BD /* xmlToBinary.cpp in Sources */,
+				ADA71B4C1C102A3A00D1C1BD /* ConstValues.cpp in Sources */,
+				ADA71B4D1C102A3A00D1C1BD /* dbtinyxml2.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		ADA71B0F1C1029F500D1C1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		ADA71B101C1029F500D1C1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		ADA71B121C1029F500D1C1BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					CC_TARGET_OS_MAC,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/xmlToBinary";
+			};
+			name = Debug;
+		};
+		ADA71B131C1029F500D1C1BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/xmlToBinary";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ADA71B051C1029F500D1C1BD /* Build configuration list for PBXProject "xmlToBinary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADA71B0F1C1029F500D1C1BD /* Debug */,
+				ADA71B101C1029F500D1C1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADA71B111C1029F500D1C1BD /* Build configuration list for PBXNativeTarget "xmlToBinary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADA71B121C1029F500D1C1BD /* Debug */,
+				ADA71B131C1029F500D1C1BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ADA71B021C1029F500D1C1BD /* Project object */;
+}

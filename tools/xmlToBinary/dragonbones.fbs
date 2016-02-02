@@ -1,0 +1,186 @@
+// example IDL file
+
+namespace dragonBones;
+
+//enum Color:byte { Red = 0, Green, Blue = 2 }
+//enum AreaType:byte { AT_ELLIPSE = 0, AT_RECTANGLE}
+
+
+struct Vec2Option {
+  x: float;
+  y: float;
+}
+
+struct TransformOption {
+  x:float;
+  y:float;
+  skewX:float;
+  skewY:float;
+  scaleX:float;
+  scaleY:float;
+}
+
+table AreaDataOption {
+  areaType: byte;
+  name: string;
+}
+
+table RectangleDataOption {
+  width: float;
+  height: float;
+  transform: TransformOption;
+  pivot: Vec2Option;
+  areaData: AreaDataOption;
+}
+
+table TextDataOption {
+  bold: bool;
+  italic: bool;
+  htmlText: bool;
+  size: ubyte;
+
+  alpha:ubyte;
+  red:ubyte;
+  green:ubyte;
+  blue:ubyte;
+
+  width:ushort;
+  height:ushort;
+
+  letterSpacing:short;
+  lineSpacing:short;
+  maxCharacters:short;
+
+  face:string;
+  text:string;
+
+  alignH:ubyte;
+  alignV:ubyte;
+  textType:ubyte;
+  lineType:ubyte;
+}
+
+table DisplayOption {
+  name:string;
+  type:ubyte;
+  scalingGrid: bool;
+  scalingGridLeft:int;
+  scalingGridRight:int;
+  scalingGridTop:int;
+  scalingGridBottom:int;
+  point:Vec2Option;
+  transform:TransformOption;
+  textData:TextDataOption;
+}
+
+table SlotOption {
+  zOrder: int;
+  name: string;
+  parent: string;
+  blendMode: ubyte;
+  displays: [DisplayOption];
+}
+
+table SkinOption {
+  name: string;
+  slots: [SlotOption];
+}
+
+table BoneOption {
+  name: string;
+  parent: string;
+  length: int;
+  inheritScale: bool;
+  inheritRotation: bool;
+  global: TransformOption;
+  transform: TransformOption;
+  areaDatas: [RectangleDataOption];
+}
+
+table ColorTransformOption {
+  alphaMultiplier: float;
+  redMultiplier: float;
+  greenMultiplier: float;
+  blueMultiplier: float;
+    
+  alphaOffset: int;
+  redOffset: int;
+  greenOffset: int;
+  blueOffset: int;
+}
+
+table FrameOption {
+  position: int;
+  duration: int;
+    
+  frameType: ubyte;
+  action: string;
+  event: string;
+  sound: string;
+  eventParameters: string;
+}
+
+table TransformFrameOption{
+  visible: bool;
+  tweenScale: bool;
+  tweenRotate: int;
+  displayIndex: int;
+  zOrder: float;
+  tweenEasing: float;
+    
+  global: TransformOption;
+  transform: TransformOption;
+  pivot: Vec2Option;
+  scaleOffset: Vec2Option;
+  color: ColorTransformOption;
+  frame: FrameOption;
+}
+
+table TimelineOption {
+  duration: int;
+  scale: float;
+  transformFrameList: [TransformFrameOption];
+}
+
+table NormalTimelineOption{
+  duration: int;
+  scale: float;
+  frameList: [FrameOption];
+}
+
+table TransformTimelineOption {
+  transformed: bool;
+  offset: float;
+  name: string;
+  originTransform: TransformOption;
+  point: Vec2Option;
+  timeline : TimelineOption;
+}
+
+table AnimationOption {
+  autoTween: bool;
+  frameRate: byte;
+  playTimes: int;
+  fadeTime: float;
+  tweenEasing: float;
+  name: string;
+  timeline: NormalTimelineOption;
+  timelineList: [TransformTimelineOption];
+  hideTimelineList: [string];
+}
+
+table ArmatureOption {
+  skins: [SkinOption];
+  animations: [AnimationOption];
+  name: string;
+  bones: [BoneOption];
+  areaDatas:[RectangleDataOption];
+}
+
+table DragonBones {
+  name: string;
+  autoSearch: bool;
+  armatures: [ArmatureOption];
+}
+
+root_type DragonBones;
