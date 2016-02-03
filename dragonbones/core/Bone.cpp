@@ -65,7 +65,7 @@ const std::vector<Bone*>& Bone::getBones() const
 	return _boneList;
 }
 
-void Bone::setVisible(bool visible)
+void Bone::setBoneVisible(bool visible)
 {
 	if (_visible != visible)
 	{

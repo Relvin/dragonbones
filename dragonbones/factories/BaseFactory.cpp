@@ -138,21 +138,17 @@ void BaseFactory::dispose(bool disposeData)
 
 Armature* BaseFactory::buildArmature(const std::string &armatureName) const
 {
-    return buildArmature(armatureName, "", armatureName, "", "");
+    return buildArmature(armatureName, "", "", armatureName, "");
 }
 
 Armature* BaseFactory::buildArmature(const std::string &armatureName, const std::string &dragonBonesName) const
 {
-    return buildArmature(armatureName, "", armatureName, dragonBonesName, dragonBonesName);
+    return buildArmature(armatureName, "", "", dragonBonesName, "");
 }
 
 Armature* BaseFactory::buildArmature(const std::string &armatureName, const std::string &skinName, const std::string &animationName, const std::string &dragonBonesName, const std::string &textureAtlasName) const
 {
     DragonBonesData *dragonBonesData = nullptr;
-    ArmatureData *armatureData = nullptr;
-    ArmatureData *animationArmatureData = nullptr;
-    SkinData *skinData = nullptr;
-    SkinData *skinDataCopy = nullptr;
     
     if (!dragonBonesName.empty())
     {
@@ -161,10 +157,55 @@ Armature* BaseFactory::buildArmature(const std::string &armatureName, const std:
         if (iterator != _dragonBonesDataMap.end())
         {
             dragonBonesData = iterator->second;
-            armatureData = dragonBonesData->getArmatureData(armatureName);
-            _currentDragonBonesDataName = dragonBonesName;
-            _currentTextureAtlasName = textureAtlasName.empty() ? _currentDragonBonesDataName : textureAtlasName;
+            return this->buildArmatureByData(dragonBonesData,armatureName,skinName,animationName,dragonBonesName,textureAtlasName);
         }
+    }
+    return nullptr;
+    
+}
+
+Armature* BaseFactory::buildArmatureByData(DragonBonesData *dragonBonesData) const
+{
+    if (!dragonBonesData)
+    {
+        return nullptr;
+    }
+    std::string armatureName = dragonBonesData->name;
+    return this->buildArmatureByData(dragonBonesData,armatureName,"","",armatureName,"");
+
+}
+
+Armature* BaseFactory::buildArmatureByData(DragonBonesData *dragonBonesData,const std::string &armatureName, const std::string &skinName, const std::string &animationName, const std::string &dragonBonesName, const std::string &textureAtlasName) const
+{
+    ArmatureData *armatureData = nullptr;
+    ArmatureData *animationArmatureData = nullptr;
+    SkinData *skinData = nullptr;
+    SkinData *skinDataCopy = nullptr;
+    if (!dragonBonesData)
+    {
+        if (!dragonBonesName.empty())
+        {
+            auto iterator = _dragonBonesDataMap.find(dragonBonesName);
+            
+            if (iterator != _dragonBonesDataMap.end())
+            {
+                dragonBonesData = iterator->second;
+                armatureData = dragonBonesData->getArmatureData(armatureName);
+                _currentDragonBonesDataName = dragonBonesName;
+                _currentTextureAtlasName = textureAtlasName.empty() ? _currentDragonBonesDataName : textureAtlasName;
+                
+            }
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+    else
+    {
+        armatureData = dragonBonesData->getArmatureData(armatureName);
+        _currentDragonBonesDataName = dragonBonesName;
+        _currentTextureAtlasName = textureAtlasName.empty() ? _currentDragonBonesDataName : textureAtlasName;
     }
     
     if (!armatureData)
@@ -247,7 +288,9 @@ Armature* BaseFactory::buildArmature(const std::string &armatureName, const std:
     armature->getAnimation()->play();
     armature->advanceTime(0);
     armature->getAnimation()->stop();
+    
     return armature;
+    
 }
 
 cocos2d::Node* BaseFactory::getTextureDisplay(const std::string &textureName, const std::string &textureAtlasName, const DisplayData *displayData) const

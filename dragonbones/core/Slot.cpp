@@ -98,7 +98,7 @@ void Slot::setDisplayList(const std::vector<std::pair<cocos2d::Node*, DisplayTyp
     changeDisplay(displayIndexBackup);
 }
 
-void Slot::setVisible(bool visible)
+void Slot::setBoneVisible(bool visible)
 {
     if (_visible != visible)
     {

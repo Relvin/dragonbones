@@ -17,8 +17,12 @@ class DBCCArmatureNode : public cocos2d::Node
 {
 public:
     static DBCCArmatureNode* createWithFile(const std::string& name);
+    static DBCCArmatureNode* createWithFile(const std::string& dragonBonesFileName,const std::string& textureFileName);
+
     bool initWithFile(const std::string& name);
+    bool initWithFile(const std::string& dragonBonesFileName,const std::string& textureFileName);
     static DBCCArmatureNode* createWithName(const std::string& name);
+    static DBCCArmatureNode* createWithName(const std::string& armatureName,const std::string& dragonBonesName);
     bool initWithName(const std::string& name);
     bool initWithName(const std::string& armatureName,const std::string& dragonName);
     bool initWithName(const std::string &armatureName, const std::string &skinName, const std::string &animationName,

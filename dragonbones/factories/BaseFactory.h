@@ -38,6 +38,8 @@ public:
     virtual void removeTextureAtlas(const std::string &name, bool disposeData = true);
     
     virtual Armature* buildArmature(const std::string &armatureName) const;
+    virtual Armature* buildArmatureByData(DragonBonesData *dragonBonesData) const;
+    virtual Armature* buildArmatureByData(DragonBonesData *dragonBonesData,const std::string &armatureName, const std::string &skinName, const std::string &animationName, const std::string &dragonBonesName, const std::string &textureAtlasName) const;
     virtual Armature* buildArmature(const std::string &armatureName, const std::string &dragonBonesName) const;
     virtual Armature* buildArmature(const std::string &armatureName, const std::string &skinName, const std::string &animationName, const std::string &dragonBonesName, const std::string &textureAtlasName) const;
     virtual cocos2d::Node* getTextureDisplay(const std::string &textureName, const std::string &textureAtlasName = "", const DisplayData *displayData = nullptr) const;

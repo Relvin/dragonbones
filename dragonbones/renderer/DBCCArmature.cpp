@@ -67,7 +67,7 @@ cocos2d::Rect DBCCArmature::getCCBoundingBox()
     bool first = true;
     for (const auto slot : _slotList)
     {
-        if (!slot->getVisible() || !slot->isShowDisplay()) { continue; }
+        if (!slot->getBoneVisible() || !slot->isShowDisplay()) { continue; }
         auto r = slot->getBoundingBox();
         if (first)
         {

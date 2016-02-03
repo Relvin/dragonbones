@@ -48,7 +48,7 @@ public:
 	virtual const std::vector<std::pair<cocos2d::Node*, DisplayType>>& getDisplayList() const;
 	virtual void setDisplayList(const std::vector<std::pair<cocos2d::Node*, DisplayType>> &displayList, bool disposeExisting = true);
 
-	virtual void setVisible(bool vislble) override;
+	virtual void setBoneVisible(bool vislble) override;
 	virtual void updateDisplayColor(int aOffset, int rOffset, int gOffset, int bOffset, float aMultiplier, float rMultiplier, float gMultiplier, float bMultiplier, bool colorChanged = false);
 
 protected:

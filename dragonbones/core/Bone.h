@@ -35,7 +35,7 @@ public:
 	virtual Slot* getSlot() const;
 	virtual const std::vector<Slot*>& getSlots() const;
 	virtual const std::vector<Bone*>& getBones() const;
-	virtual void setVisible(bool vislble) override;
+	virtual void setBoneVisible(bool vislble) override;
 
 	virtual void removeAllStates();
     cocos2d::Node* getDisplayNode();

@@ -4,11 +4,47 @@
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
+DBCCArmatureNode* DBCCArmatureNode::createWithFile(const std::string& dragonBonesFileName,const std::string& textureFileName)
+{
+    DBCCArmatureNode* ret = new (std::nothrow) DBCCArmatureNode();
+    if (ret && ret->initWithFile(dragonBonesFileName,textureFileName))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+bool DBCCArmatureNode::initWithFile(const std::string& dragonBonesFileName,const std::string& textureFileName)
+{
+    DragonBonesData* dragonBonesdata =  DBCCFactory::getInstance()->loadDragonBonesData(dragonBonesFileName);
+    DBCCFactory::getInstance()->loadTextureAtlas(textureFileName);
+    auto armature = (DBCCArmature*)DBCCFactory::getInstance()->buildArmatureByData(dragonBonesdata);
+    if (!this->initWithArmature(armature))
+    {
+        return false;
+    }
+    return true;
+}
+
 
 DBCCArmatureNode* DBCCArmatureNode::createWithName(const std::string& name)
 {
     DBCCArmatureNode* ret = new (std::nothrow) DBCCArmatureNode();
     if (ret && ret->initWithName(name))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+DBCCArmatureNode* DBCCArmatureNode::createWithName(const std::string& armatureName,const std::string& dragonBonesName)
+{
+    DBCCArmatureNode* ret = new (std::nothrow) DBCCArmatureNode();
+    if (ret && ret->initWithName(armatureName,dragonBonesName))
     {
         ret->autorelease();
         return ret;

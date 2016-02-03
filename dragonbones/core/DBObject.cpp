@@ -34,12 +34,12 @@ void DBObject::dispose()
 	}
 }
 
-bool DBObject::getVisible() const
+bool DBObject::getBoneVisible() const
 {
     return _visible;
 }
 
-void DBObject::setVisible(bool visible)
+void DBObject::setBoneVisible(bool visible)
 {
     _visible = visible;
 }
