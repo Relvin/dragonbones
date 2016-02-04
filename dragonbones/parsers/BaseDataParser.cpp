@@ -122,33 +122,6 @@ void BaseDataParser::transformAnimationData(AnimationData *animationData, const 
             frame->transform.scaleX /= boneData->transform.scaleX;
             frame->transform.scaleY /= boneData->transform.scaleY;
             
-            //if (!timeline->transformed && slotData)
-            //{
-            //    frame->zOrder -= slotData->zOrder;
-            //}
-            //if (!originTransform)
-            //{
-            //    // copy
-            //    timeline->originTransform = frame->transform;
-            //    originTransform = &timeline->originTransform;
-            //    originTransform->skewX = formatRadian(originTransform->skewX);
-            //    originTransform->skewY = formatRadian(originTransform->skewY);
-            //    // copy
-            //    timeline->originPivot = frame->pivot;
-            //    originPivot = &timeline->originPivot;
-            //}
-            //
-            //frame->transform.x -= originTransform->x;
-            //frame->transform.y -= originTransform->y;
-            //frame->transform.skewX = formatRadian(frame->transform.skewX - originTransform->skewX);
-            //frame->transform.skewY = formatRadian(frame->transform.skewY - originTransform->skewY);
-            //frame->transform.scaleX -= originTransform->scaleX;
-            //frame->transform.scaleY -= originTransform->scaleY;            
-            //if (!timeline->transformed)
-            //{
-            //    frame->pivot.x -= originPivot->x;
-            //    frame->pivot.y -= originPivot->y;
-            //}
             
             if (prevFrame)
             {

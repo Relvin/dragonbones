@@ -20,6 +20,8 @@ class Slot;
 class Animation;
 class AnimationState;
 
+class DBAnimation;
+
 class Armature
 : public IAnimatable
 , public cocos2d::Node
@@ -28,6 +30,8 @@ class Armature
     friend class Slot;
 	friend class Animation;
 	friend class AnimationState;
+    
+    friend class DBAnimation;
 
 public:
 	Armature(ArmatureData *armatureData, Animation *animation, IEventDispatcher *eventDispatcher, cocos2d::Node *display);

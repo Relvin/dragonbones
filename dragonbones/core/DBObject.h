@@ -4,7 +4,6 @@
 #include "DragonBones.h"
 #include "geoms/Matrix.h"
 #include "geoms/Transform.h"
-#include "base/CCRef.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -12,7 +11,6 @@ class Armature;
 class Bone;
 
 class DBObject
-: public cocos2d::Ref
 {
 public:
 	DBObject();

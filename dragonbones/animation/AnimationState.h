@@ -9,6 +9,7 @@ class AnimationData;
 class SlotTimelineState;
 class TimelineState;
 class Armature;
+class DBAnimation;
 
 class AnimationState
 {
@@ -16,6 +17,8 @@ class AnimationState
     friend class Animation;
     friend class TimelineState;
     friend class SlotTimelineState;
+    
+    friend class DBAnimation;
 
 	enum class FadeState {FADE_BEFORE, FADING, FADE_COMPLETE};
 
