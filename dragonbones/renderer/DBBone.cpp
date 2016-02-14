@@ -50,7 +50,7 @@ void DBBone::addChildBone(DBBone *child)
 {
     CCASSERT( nullptr != child, "Argument must be non-nil");
     CCASSERT( nullptr == child->_parentBone, "child already added. It can't be added again");
-    
+    //need rewrite (not use _childern)
     if(_children.empty())
     {
         _children.reserve(4);
