@@ -24,11 +24,12 @@ class DBArmature
 : public Node
 {
 public:
+    static DBArmature* create(const std::string &dragonBonesName);
+    
     
     DBArmature();
     virtual ~DBArmature();
     
-    static DBArmature* create(const std::string &dragonBonesName);
     bool initWithName(const std::string &name);
     
     void setDragonBonesData(dragonBones::DragonBonesData* data);

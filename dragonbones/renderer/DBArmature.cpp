@@ -9,6 +9,7 @@
 #include "DBArmature.h"
 #include "DBCCFactory.h"
 #include "objects/SkinData.h"
+#include "DBSlot.h"
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
@@ -195,31 +196,35 @@ void DBArmature::createSkin()
 {
     m_pSkinData = m_pArmatureData->getSkinData("");
     
-
     
     if (!m_pSkinData)
     {
         return;
     }
     m_pArmatureData->setSkinData(m_pSkinData->name);
-    
-#if 0
-    //auto slotDataList = skinData->slotDataList;
-    auto slotDataList = armature->getArmatureData()->slotDataList;
+    auto slotDataList = m_pArmatureData->slotDataList;
     for (size_t i = 0, l = slotDataList.size(); i < l; ++i)
     {
         SlotData *slotData = slotDataList[i];
-        Bone *bone = armature->getBone(slotData->parent);
+        DBBone *bone = this->getBone(slotData->parent);
         if (!bone)
         {
             continue;
         }
         
-        Slot *slot = generateSlot(slotData);
-        slot->name = slotData->name;
-        slot->_originZOrder = slotData->zOrder;
-        slot->_slotData = slotData;
-        bone->addSlot(slot);
+        DBSlot* slot = DBSlot::create(slotData);
+//        DBSlot *slot = generateSlot(slotData);
+//        slot->name = slotData->name;
+//        slot->_originZOrder = slotData->zOrder;
+//        slot->_slotData = slotData;
+//        bone->addSlot(slot);
+        
+    }
+#if 0
+    //auto slotDataList = skinData->slotDataList;
+    
+    
+    
         
         std::vector<std::pair<cocos2d::Node*, DisplayType>> displayList;
         
@@ -282,7 +287,7 @@ void DBArmature::createSkin()
             // change
             slot->changeDisplay(slotData->displayIndex);
         }
-    }
+    
 #endif
 }
 

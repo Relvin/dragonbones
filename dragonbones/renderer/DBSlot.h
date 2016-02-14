@@ -11,14 +11,16 @@
 
 #include "DragonBones.h"
 #include "2d/CCSprite.h"
+#include "objects/SlotData.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 class DBSlot
 : public cocos2d::Sprite
 {
 public:
-    static DBSlot* create();
+    static DBSlot* create(SlotData* slotData);
     bool init();
+    bool initWithSlotData(SlotData* slotData);
     
     DBSlot();
     virtual ~DBSlot();
