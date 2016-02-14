@@ -51,27 +51,27 @@ void DBBone::addChildBone(DBBone *child)
     CCASSERT( nullptr != child, "Argument must be non-nil");
     CCASSERT( nullptr == child->_parentBone, "child already added. It can't be added again");
     //need rewrite (not use _childern)
-    if(_children.empty())
+    if(_childBones.empty())
     {
-        _children.reserve(4);
+        _childBones.reserve(4);
     }
     
     
     
-    if (_children.getIndex(child) == cocos2d::CC_INVALID_INDEX)
+    if (_childBones.getIndex(child) == cocos2d::CC_INVALID_INDEX)
     {
-        _children.pushBack(child);
-//        child->setParentBone(this);
+        _childBones.pushBack(child);
+        child->setParentBone(this);
     }
 }
 
 void DBBone::removeChildBone(DBBone *bone, bool recursion)
 {
-    if (!_children.empty() && _children.getIndex(bone) != cocos2d::CC_INVALID_INDEX )
+    if (!_childBones.empty() && _childBones.getIndex(bone) != cocos2d::CC_INVALID_INDEX )
     {
         if(recursion)
         {
-            auto ccbones = bone->_children;
+            auto ccbones = bone->_childBones;
             
             for(auto& object : ccbones)
             {
@@ -84,13 +84,14 @@ void DBBone::removeChildBone(DBBone *bone, bool recursion)
         
 //        bone->getDisplayManager()->setCurrentDecorativeDisplay(nullptr);
         
-        _children.eraseObject(bone);
+        _childBones.eraseObject(bone);
     }
 }
 
 void DBBone::setArmature(DBArmature *armature)
 {
-    if (m_pArmature == armature) return;
+    if (m_pArmature == armature)
+        return;
     if (_armature)
     {
         
@@ -99,6 +100,36 @@ void DBBone::setArmature(DBArmature *armature)
     m_pArmature = armature;
 }
 
+void DBBone::calculateParentTransform( Transform &transform, Matrix &matrix )
+{
+    DBBone* parentBone = dynamic_cast<DBBone* >(_parentBone);
+    if (parentBone && (inheritTranslation || inheritRotation || inheritScale))
+    {
+        
+        transform = parentBone->_globalTransformForChild;
+        matrix = parentBone->_globalTransformMatrixForChild;
+
+        if (!inheritTranslation || !inheritRotation || !inheritScale)
+        {
+            if (!inheritTranslation)
+            {
+                transform.x = 0.f;
+                transform.y = 0.f;
+            }
+            if (!inheritScale)
+            {
+                transform.scaleX = 1.f;
+                transform.scaleY = 1.f;
+            }
+            if (!inheritRotation)
+            {
+                transform.skewX = 0.f;
+                transform.skewY = 0.f;
+            }
+            transform.toMatrix(matrix, true);
+        }
+    }
+}
 
 
 NAME_SPACE_DRAGON_BONES_END

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD0B5A031C7061BB007F2C1F /* DBBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD0B5A011C7061BB007F2C1F /* DBBase.cpp */; };
+		AD0B5A041C7061BB007F2C1F /* DBBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD0B5A011C7061BB007F2C1F /* DBBase.cpp */; };
+		AD0B5A051C7061BB007F2C1F /* DBBase.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0B5A021C7061BB007F2C1F /* DBBase.h */; };
+		AD0B5A061C7061BB007F2C1F /* DBBase.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0B5A021C7061BB007F2C1F /* DBBase.h */; };
 		AD13ECF81C5F39F700562146 /* flatbuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = AD13EC7D1C5F39F700562146 /* flatbuffers.h */; };
 		AD13ECF91C5F39F700562146 /* flatbuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = AD13EC7D1C5F39F700562146 /* flatbuffers.h */; };
 		AD13ECFA1C5F39F700562146 /* allocators.h in Headers */ = {isa = PBXBuildFile; fileRef = AD13EC7F1C5F39F700562146 /* allocators.h */; };
@@ -242,6 +246,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD0B5A011C7061BB007F2C1F /* DBBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBBase.cpp; sourceTree = "<group>"; };
+		AD0B5A021C7061BB007F2C1F /* DBBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBase.h; sourceTree = "<group>"; };
 		AD13EC7D1C5F39F700562146 /* flatbuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flatbuffers.h; sourceTree = "<group>"; };
 		AD13EC7F1C5F39F700562146 /* allocators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allocators.h; sourceTree = "<group>"; };
 		AD13EC801C5F39F700562146 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
@@ -484,6 +490,8 @@
 				AD13ECB41C5F39F700562146 /* DBObject.h */,
 				AD13ECB51C5F39F700562146 /* Slot.cpp */,
 				AD13ECB61C5F39F700562146 /* Slot.h */,
+				AD0B5A011C7061BB007F2C1F /* DBBase.cpp */,
+				AD0B5A021C7061BB007F2C1F /* DBBase.h */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -694,6 +702,7 @@
 				AD13ED981C5F39F700562146 /* ConstValues.h in Headers */,
 				AD13ED761C5F39F700562146 /* AnimationData.h in Headers */,
 				AD13ED6E1C5F39F700562146 /* Matrix.h in Headers */,
+				AD0B5A051C7061BB007F2C1F /* DBBase.h in Headers */,
 				AD13ED6A1C5F39F700562146 /* BaseFactory.h in Headers */,
 				ADADA1AA1C62E93C00B15A4F /* SlotTimelineState.h in Headers */,
 				AD13ED601C5F39F700562146 /* DragonBonesHeaders.h in Headers */,
@@ -785,6 +794,7 @@
 				AD13ED991C5F39F700562146 /* ConstValues.h in Headers */,
 				AD13ED771C5F39F700562146 /* AnimationData.h in Headers */,
 				AD13ED6F1C5F39F700562146 /* Matrix.h in Headers */,
+				AD0B5A061C7061BB007F2C1F /* DBBase.h in Headers */,
 				AD13ED6B1C5F39F700562146 /* BaseFactory.h in Headers */,
 				ADADA1AB1C62E93C00B15A4F /* SlotTimelineState.h in Headers */,
 				AD13ED611C5F39F700562146 /* DragonBonesHeaders.h in Headers */,
@@ -936,6 +946,7 @@
 				AD13EDAC1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
 				AD13ED341C5F39F700562146 /* dbtinyxml2.cpp in Sources */,
 				ADADA19A1C62E93C00B15A4F /* Animation.cpp in Sources */,
+				AD0B5A031C7061BB007F2C1F /* DBBase.cpp in Sources */,
 				AD13ED5A1C5F39F700562146 /* Slot.cpp in Sources */,
 				AD13ED621C5F39F700562146 /* EventData.cpp in Sources */,
 				AD13ED921C5F39F700562146 /* BaseDataParser.cpp in Sources */,
@@ -969,6 +980,7 @@
 				AD13EDAD1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
 				AD13ED351C5F39F700562146 /* dbtinyxml2.cpp in Sources */,
 				ADADA19B1C62E93C00B15A4F /* Animation.cpp in Sources */,
+				AD0B5A041C7061BB007F2C1F /* DBBase.cpp in Sources */,
 				AD13ED5B1C5F39F700562146 /* Slot.cpp in Sources */,
 				AD13ED631C5F39F700562146 /* EventData.cpp in Sources */,
 				AD13ED931C5F39F700562146 /* BaseDataParser.cpp in Sources */,

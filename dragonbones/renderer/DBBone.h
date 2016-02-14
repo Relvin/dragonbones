@@ -12,7 +12,7 @@
 #include "2d/CCNode.h"
 #include "DragonBones.h"
 #include "objects/BoneData.h"
-#include "core/DBObject.h"
+#include "core/DBBase.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -20,7 +20,7 @@ class DBArmature;
 
 class DBBone
 : public cocos2d::Node
-, public DBObject
+, public DBBase
 {
 public:
     static DBBone* create(BoneData* boneData);
@@ -32,7 +32,7 @@ public:
     void removeChildBone(DBBone *bone, bool recursion);
     
     void setArmature(DBArmature *armature);
-    
+    void calculateParentTransform( Transform &transform, Matrix &matrix );
 public:
     std::string displayController;
     bool applyOffsetTranslationToChild;
@@ -43,6 +43,7 @@ public:
     Matrix _globalTransformMatrixForChild;
     
 protected:
+    cocos2d::Vector<DBBone*> _childBones;        ///< array of children nodes
 //    std::vector<Slot*> _slotList;
 //    std::vector<TimelineState*> _timelineStateList;
     
