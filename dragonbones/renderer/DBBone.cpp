@@ -56,6 +56,8 @@ void DBBone::addChildBone(DBBone *child)
         _children.reserve(4);
     }
     
+    
+    
     if (_children.getIndex(child) == cocos2d::CC_INVALID_INDEX)
     {
         _children.pushBack(child);
