@@ -7,6 +7,7 @@
 //
 
 #include "DBSlot.h"
+#include "DBArmature.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -30,6 +31,38 @@ bool DBSlot::init()
 
 bool DBSlot::initWithSlotData(SlotData* slotData)
 {
+    if (!Node::init())
+    {
+        return false;
+    }
+    
+    this->_slotData = slotData;
+    int displayIndex = slotData->displayIndex;
+    
+    displayIndex = displayIndex < 0 ? 0 : displayIndex;
+    displayIndex = displayIndex > slotData->displayDataList.size() ? slotData->displayDataList.size() - 1 : displayIndex;
+    DisplayData *displayData = nullptr;
+    if (displayIndex >= 0)
+    {
+        displayData = slotData->displayDataList[slotData->displayIndex];
+    }
+    
+    if (displayData)
+    {
+        if (displayData->type == DisplayType::DT_IMAGE)
+        {
+            _display = DBSkin::create();
+        }
+        else if (displayData->type == DisplayType::DT_ARMATURE)
+        {
+//            _display = DBArmature::create("");
+        }
+        if (_display)
+        {
+            this->addChild(_display);
+        }
+        
+    }
     
 #if 0
     std::vector<std::pair<cocos2d::Node*, DisplayType>> displayList;
@@ -100,6 +133,7 @@ bool DBSlot::initWithSlotData(SlotData* slotData)
 
 
 DBSlot::DBSlot()
+: _slotData (nullptr)
 {
     
 }

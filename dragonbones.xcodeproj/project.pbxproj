@@ -231,6 +231,10 @@
 		ADADA1B71C62FEDD00B15A4F /* DBBone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADADA1B41C62FEDD00B15A4F /* DBBone.cpp */; };
 		ADADA1B81C62FEDD00B15A4F /* DBBone.h in Headers */ = {isa = PBXBuildFile; fileRef = ADADA1B51C62FEDD00B15A4F /* DBBone.h */; };
 		ADADA1B91C62FEDD00B15A4F /* DBBone.h in Headers */ = {isa = PBXBuildFile; fileRef = ADADA1B51C62FEDD00B15A4F /* DBBone.h */; };
+		ADAF1F621C7F252200000F53 /* DBSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADAF1F601C7F252200000F53 /* DBSkin.cpp */; };
+		ADAF1F631C7F252200000F53 /* DBSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADAF1F601C7F252200000F53 /* DBSkin.cpp */; };
+		ADAF1F641C7F252200000F53 /* DBSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAF1F611C7F252200000F53 /* DBSkin.h */; };
+		ADAF1F651C7F252200000F53 /* DBSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAF1F611C7F252200000F53 /* DBSkin.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -363,6 +367,8 @@
 		ADADA1991C62E93C00B15A4F /* WorldClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldClock.h; sourceTree = "<group>"; };
 		ADADA1B41C62FEDD00B15A4F /* DBBone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBBone.cpp; sourceTree = "<group>"; };
 		ADADA1B51C62FEDD00B15A4F /* DBBone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBone.h; sourceTree = "<group>"; };
+		ADAF1F601C7F252200000F53 /* DBSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBSkin.cpp; sourceTree = "<group>"; };
+		ADAF1F611C7F252200000F53 /* DBSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSkin.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -590,6 +596,8 @@
 				ADADA1B51C62FEDD00B15A4F /* DBBone.h */,
 				AD2290F01C63361E0017A24D /* DBSlot.cpp */,
 				AD2290F11C63361E0017A24D /* DBSlot.h */,
+				ADAF1F601C7F252200000F53 /* DBSkin.cpp */,
+				ADAF1F611C7F252200000F53 /* DBSkin.h */,
 			);
 			path = renderer;
 			sourceTree = "<group>";
@@ -674,6 +682,7 @@
 				AD13EDB41C5F39F700562146 /* dbccMacro.h in Headers */,
 				ADADA1A61C62E93C00B15A4F /* IAnimatable.h in Headers */,
 				AD13EDC21C5F39F700562146 /* ITextureAtlas.h in Headers */,
+				ADAF1F641C7F252200000F53 /* DBSkin.h in Headers */,
 				AD13ED0E1C5F39F700562146 /* dtoa.h in Headers */,
 				AD13EDC01C5F39F700562146 /* DBCCUtils.h in Headers */,
 				AD13ED121C5F39F700562146 /* itoa.h in Headers */,
@@ -766,6 +775,7 @@
 				AD13EDB51C5F39F700562146 /* dbccMacro.h in Headers */,
 				ADADA1A71C62E93C00B15A4F /* IAnimatable.h in Headers */,
 				AD13EDC31C5F39F700562146 /* ITextureAtlas.h in Headers */,
+				ADAF1F651C7F252200000F53 /* DBSkin.h in Headers */,
 				AD13ED0F1C5F39F700562146 /* dtoa.h in Headers */,
 				AD13EDC11C5F39F700562146 /* DBCCUtils.h in Headers */,
 				AD13ED131C5F39F700562146 /* itoa.h in Headers */,
@@ -941,6 +951,7 @@
 				AD2290F21C63361E0017A24D /* DBSlot.cpp in Sources */,
 				AD13ED9E1C5F39F700562146 /* XMLDataParser.cpp in Sources */,
 				ADADA1A21C62E93C00B15A4F /* DBAnimation.cpp in Sources */,
+				ADAF1F621C7F252200000F53 /* DBSkin.cpp in Sources */,
 				AD13EDB81C5F39F700562146 /* DBCCSlot.cpp in Sources */,
 				AD13EDA21C5F39F700562146 /* DBCCArmature.cpp in Sources */,
 				AD13EDAC1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
@@ -975,6 +986,7 @@
 				AD2290F31C63361E0017A24D /* DBSlot.cpp in Sources */,
 				AD13ED9F1C5F39F700562146 /* XMLDataParser.cpp in Sources */,
 				ADADA1A31C62E93C00B15A4F /* DBAnimation.cpp in Sources */,
+				ADAF1F631C7F252200000F53 /* DBSkin.cpp in Sources */,
 				AD13EDB91C5F39F700562146 /* DBCCSlot.cpp in Sources */,
 				AD13EDA31C5F39F700562146 /* DBCCArmature.cpp in Sources */,
 				AD13EDAD1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
