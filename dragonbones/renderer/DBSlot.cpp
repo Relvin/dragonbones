@@ -46,10 +46,12 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     if (displayIndex >= 0)
     {
         displayData = slotData->displayDataList[slotData->displayIndex];
+        
     }
     
     if (displayData)
     {
+        origin = displayData->transform;
         if (displayData->type == DisplayType::DT_IMAGE)
         {
             _display = DBSkin::create(displayData->name,textureAtlasName);

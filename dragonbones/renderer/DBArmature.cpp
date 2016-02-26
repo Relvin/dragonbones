@@ -187,7 +187,7 @@ void DBArmature::addBone(DBBone *bone, const std::string& parentName)
     bone->setArmature(this);
     
     _boneDic.insert(bone->getName(), bone);
-    addChild(bone);
+    this->addChild(bone);
 }
 
 void DBArmature::createSkin(const std::string &textureName)
@@ -211,23 +211,10 @@ void DBArmature::createSkin(const std::string &textureName)
         }
         
         DBSlot* slot = DBSlot::create(slotData,textureName);
-//        DBSlot *slot = generateSlot(slotData);
-//        slot->name = slotData->name;
-//        slot->_originZOrder = slotData->zOrder;
-//        slot->_slotData = slotData;
-//        bone->addSlot(slot);
-        this->addChild(slot);
+        this->addChild(slot,slotData->zOrder);
         slot->setParentBone(bone);
         _slotList.pushBack(slot);
     }
-#if 0
-    //auto slotDataList = skinData->slotDataList;
-    
-    
-    
-        
-            
-#endif
 }
 
 void DBArmature::update(float delta)
