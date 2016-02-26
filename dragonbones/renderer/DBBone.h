@@ -13,6 +13,7 @@
 #include "DragonBones.h"
 #include "objects/BoneData.h"
 #include "core/DBBase.h"
+#include "animation/TimelineState.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -33,6 +34,9 @@ public:
     
     void setArmature(DBArmature *armature);
     void calculateParentTransform( Transform &transform, Matrix &matrix );
+    
+    void update(float needUpdate);
+    void blendingTimeline();
 public:
     std::string displayController;
     bool applyOffsetTranslationToChild;
@@ -42,10 +46,12 @@ public:
     Transform _globalTransformForChild;
     Matrix _globalTransformMatrixForChild;
     
+    virtual const Point& getTweenPivot() const;
+    int getNeedUpdate();
 protected:
     cocos2d::Vector<DBBone*> _childBones;        ///< array of children nodes
 //    std::vector<Slot*> _slotList;
-//    std::vector<TimelineState*> _timelineStateList;
+    std::vector<TimelineState*> _timelineStateList;
     
     int _needUpdate;
     bool _isColorChanged;
@@ -56,9 +62,9 @@ protected:
 private:
     Transform _tempGlobalTransformForChild;
     Matrix _tempGlobalTransformMatrixForChild;
-    BoneData* m_boneData;
+    BoneData* _boneData;
     
-    DBArmature* m_pArmature;
+    DBArmature* _pArmature;
     
 };
 

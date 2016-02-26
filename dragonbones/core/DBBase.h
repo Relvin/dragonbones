@@ -29,7 +29,6 @@ public:
     virtual cocos2d::Node* getArmature() const;
     virtual cocos2d::Node* getParentBone() const;
     
-protected:
     virtual void setArmature(cocos2d::Node *armature);
     virtual void setParentBone(cocos2d::Node *bone);
     // change
@@ -42,7 +41,7 @@ public:
     bool inheritScale;
     bool inheritTranslation;
     
-    std::string name;
+//    std::string name;
     Transform global;
     Transform origin;
     Transform offset;

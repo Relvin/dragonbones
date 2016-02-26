@@ -260,17 +260,6 @@ void Bone::update(bool needUpdate)
 	}
 	else
 	{
-		//if(!_tempGlobalTransformForChild)
-		//{
-		//	_tempGlobalTransformForChild = new DBTransform();
-		//}
-		//_globalTransformForChild = _tempGlobalTransformForChild;
-
-		//if(!_tempGlobalTransformMatrixForChild)
-		//{
-		//	_tempGlobalTransformMatrixForChild = new Matrix();
-		//}
-		//_globalTransformMatrixForChild = _tempGlobalTransformMatrixForChild;
 
 		_globalTransformForChild.x = origin.x + _tween.x;
 		_globalTransformForChild.y = origin.y + _tween.y;

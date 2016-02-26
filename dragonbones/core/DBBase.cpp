@@ -16,7 +16,6 @@ DBBase::DBBase() :
 inheritRotation(true)
 ,inheritScale(true)
 ,inheritTranslation(true)
-,name("")
 ,userData(nullptr)
 ,_visible(true)
 ,_armature(nullptr)

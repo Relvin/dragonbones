@@ -377,7 +377,7 @@ cocos2d::Node* BaseFactory::getTextureDisplay(const std::string &textureName, co
                     }
                 }
                 
-                if (displayData)
+        if (displayData)
                 {
                     break;
                 }

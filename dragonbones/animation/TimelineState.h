@@ -13,11 +13,14 @@ class CurveData;
 class TransformTimeline;
 class Bone;
 class AnimationState;
+class DBBone;
+
 
 class TimelineState
 {
     friend class AnimationState;
     friend class Bone;
+    friend class DBBone;
     
 	enum class UpdateState {UPDATE, UPDATE_ONCE, UNUPDATE};
 

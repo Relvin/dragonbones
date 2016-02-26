@@ -11,6 +11,7 @@
 
 #include "2d/CCSprite.h"
 #include "DragonBones.h"
+#include "renderer/DBCCTextureAtlas.h"
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 
@@ -22,8 +23,9 @@ public:
     DBSkin();
     virtual ~DBSkin();
     
-    static DBSkin* create();
-    virtual bool init();
+    static DBSkin* create(const std::string &name,const std::string & textureAtlasName);
+    virtual bool initWithTextureName(const std::string &name,const std::string & textureAtlasName);
+    virtual bool initWithTextureData(const ITextureAtlas *textureAtlas, const TextureData *textureData);
     
     
 private:

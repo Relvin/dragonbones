@@ -17,6 +17,7 @@
 #include "objects/SkinData.h"
 #include "animation/DBAnimation.h"
 #include "DBBone.h"
+#include "DBSlot.h"
 
 USING_NS_CC;
 NAME_SPACE_DRAGON_BONES_BEGIN
@@ -26,11 +27,14 @@ class DBArmature
 public:
     static DBArmature* create(const std::string &dragonBonesName);
     
+    static DBArmature* create(const std::string &dragonBonesName,const std::string &texture);
+    
     
     DBArmature();
     virtual ~DBArmature();
     
-    bool initWithName(const std::string &name);
+    virtual bool initWithName(const std::string &name);
+    virtual bool initWithName(const std::string &name,const std::string &textureName);
     
     void setDragonBonesData(dragonBones::DragonBonesData* data);
     
@@ -42,7 +46,11 @@ public:
     void addBone(DBBone *bone, const std::string& parentName = "");
     DBBone* getBone(const std::string& boneName);
     
-    void createSkin();
+    void createSkin(const std::string &textureName);
+    
+    void update(float delta);
+    
+    virtual void onEnter();
 private:
     
     DragonBonesData* m_pDragonBonesData;
@@ -52,6 +60,7 @@ private:
     
     cocos2d::Map<std::string, DBBone*> _boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
     cocos2d::Vector<DBBone*> _topBoneList;
+    cocos2d::Vector<DBSlot*> _slotList;
     
 };
 

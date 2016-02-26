@@ -22,6 +22,7 @@ DBArmature::DBArmature()
 {
     _boneDic.clear();
     _topBoneList.clear();
+    _slotList.clear();
 }
 
 
@@ -30,6 +31,7 @@ DBArmature::~DBArmature()
     CC_SAFE_RELEASE_NULL(m_pDragonBonesData);
     _boneDic.clear();
     _topBoneList.clear();
+    _slotList.clear();
 }
 
 DBArmature* DBArmature::create(const std::string &dragonBonesName)
@@ -44,7 +46,25 @@ DBArmature* DBArmature::create(const std::string &dragonBonesName)
     return nullptr;
 }
 
+DBArmature* DBArmature::create(const std::string &dragonBonesName,const std::string &texture)
+{
+    DBArmature* armature = new (std::nothrow) DBArmature();
+    if (armature && armature->initWithName(dragonBonesName,texture))
+    {
+        armature->autorelease();
+        return armature;
+    }
+    CC_SAFE_DELETE(armature);
+    return nullptr;
+}
+
+
 bool DBArmature::initWithName(const std::string &name)
+{
+    return this->initWithName(name, name);
+}
+
+bool DBArmature::initWithName(const std::string &name,const std::string &textureName)
 {
     DragonBonesData* dragonBonesData = DBCCFactory::getInstance()->getDragonBonesData(name);
     if (!dragonBonesData)
@@ -67,7 +87,7 @@ bool DBArmature::initWithName(const std::string &name)
         createBone(m_pArmatureData->boneDataList.at(i));
     }
 
-    
+    createSkin(textureName);
 //    SkinData *skinData = nullptr;
 //    
 //    skinData = armatureData->getSkinData("");
@@ -81,28 +101,6 @@ bool DBArmature::initWithName(const std::string &name)
     this->setCascadeOpacityEnabled(true);
     
 #if 0
-    
-    ArmatureData *animationArmatureData = nullptr;
-    
-    SkinData *skinDataCopy = nullptr;
-    
-   
-    Armature *armature = generateArmature(armatureData);
-    armature->name = armatureName;
-    
-    if (animationArmatureData)
-    {
-        armature->getAnimation()->setAnimationDataList(animationArmatureData->animationDataList);
-    }
-    else
-    {
-        armature->getAnimation()->setAnimationDataList(armatureData->animationDataList);
-    }
-    
-    //
-    buildBones(armature, armatureData);
-    
-    //
     
     
     // update armature pose
@@ -161,7 +159,7 @@ DBBone* DBArmature::createBone(BoneData* boneData)
 DBBone* DBArmature::getBone(const std::string& boneName)
 {
     
-    return nullptr;
+    return _boneDic.at(boneName);
 }
 
 void DBArmature::addBone(DBBone *bone, const std::string& parentName)
@@ -192,7 +190,7 @@ void DBArmature::addBone(DBBone *bone, const std::string& parentName)
     addChild(bone);
 }
 
-void DBArmature::createSkin()
+void DBArmature::createSkin(const std::string &textureName)
 {
     m_pSkinData = m_pArmatureData->getSkinData("");
     
@@ -212,14 +210,15 @@ void DBArmature::createSkin()
             continue;
         }
         
-        DBSlot* slot = DBSlot::create(slotData);
+        DBSlot* slot = DBSlot::create(slotData,textureName);
 //        DBSlot *slot = generateSlot(slotData);
 //        slot->name = slotData->name;
 //        slot->_originZOrder = slotData->zOrder;
 //        slot->_slotData = slotData;
 //        bone->addSlot(slot);
         this->addChild(slot);
-        
+        slot->setParentBone(bone);
+        _slotList.pushBack(slot);
     }
 #if 0
     //auto slotDataList = skinData->slotDataList;
@@ -229,6 +228,41 @@ void DBArmature::createSkin()
         
             
 #endif
+}
+
+void DBArmature::update(float delta)
+{
+//    _animation->update(delta);
+    
+    for(const auto &bone : _topBoneList) {
+        bone->update(delta);
+    }
+    
+    
+    for (size_t i = _slotList.size(); i--;)
+    {
+        DBSlot *slot = _slotList.at(i);
+        slot->update(delta);
+        
+//        if (slot->_isShowDisplay && slot->_childArmature)
+//        {
+//            slot->_childArmature->advanceTime(passedTime);
+//        }
+    }
+//
+//    if (_slotsZOrderChanged)
+//    {
+//        sortSlotsByZOrder();
+//        
+//    }
+    
+    
+}
+
+void DBArmature::onEnter()
+{
+    Node::onEnter();
+    this->scheduleUpdate();
 }
 
 
