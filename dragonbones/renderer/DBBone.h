@@ -33,9 +33,11 @@ public:
     void removeChildBone(DBBone *bone, bool recursion);
     
     void setArmature(DBArmature *armature);
-    void calculateParentTransform( Transform &transform, Matrix &matrix );
+    void calculateParentTransform( Transform &transform, Matrix &matrix ) override;
     
-    void update(float needUpdate);
+    virtual void calculateRelativeParentTransform() override;
+    
+    void update(float needUpdate) override;
     void blendingTimeline();
 public:
     std::string displayController;

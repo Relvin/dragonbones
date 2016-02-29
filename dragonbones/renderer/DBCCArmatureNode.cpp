@@ -159,7 +159,7 @@ cocos2d::Rect DBCCArmatureNode::getInnerBoundingBox() const
 void DBCCArmatureNode::update(float dt)
 {
     retain();
-    _armature->advanceTime(dt);
+//    _armature->advanceTime(dt);
     release();
 }
 

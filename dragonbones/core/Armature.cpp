@@ -331,7 +331,7 @@ void Armature::invalidUpdate(const std::string &boneName)
 void Armature::advanceTime(float passedTime)
 {
     _lockDispose = true;
-    _animation->advanceTime(passedTime);
+//    _animation->advanceTime(passedTime);
     passedTime *= _animation->_timeScale;
     const bool isFading = _animation->_isFading;
     

@@ -158,7 +158,8 @@ void DBBone::update(float delta)
     if (!boneSprite)
     {
         boneSprite = cocos2d::Sprite::create("res/bone.png");
-        this->addChild(boneSprite,100);
+        this->addChild(boneSprite);
+        boneSprite->setGlobalZOrder(100);
         boneSprite->setTag(1001);
         boneSprite->setAnchorPoint(cocos2d::Vec2(0,0));
         boneSprite->setColor(cocos2d::Color3B(172,172,172));
@@ -329,6 +330,16 @@ const Point& DBBone::getTweenPivot() const
 int DBBone::getNeedUpdate()
 {
     return this->_needUpdate;
+}
+
+void DBBone::calculateRelativeParentTransform()
+{
+    global.scaleX = origin.scaleX * _tween.scaleX * offset.scaleX;
+    global.scaleY = origin.scaleY * _tween.scaleY * offset.scaleY;
+    global.skewX = origin.skewX + _tween.skewX + offset.skewX;
+    global.skewY = origin.skewY + _tween.skewY + offset.skewY;
+    global.x = origin.x + _tween.x + offset.x;
+    global.y = origin.y + _tween.y + offset.y;
 }
 
 

@@ -285,9 +285,9 @@ Armature* BaseFactory::buildArmatureByData(DragonBonesData *dragonBonesData,cons
     }
     
     // update armature pose
-    armature->getAnimation()->play();
+//    armature->getAnimation()->play();
     armature->advanceTime(0);
-    armature->getAnimation()->stop();
+//    armature->getAnimation()->stop();
     
     return armature;
     

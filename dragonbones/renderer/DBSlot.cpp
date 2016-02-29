@@ -73,14 +73,14 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
                 pivotY = displayData->pivot.y;
             }
             
-            if (pivotX > 0.000001f || pivotY != 0.000001f)
+            if ((pivotX > 0.000001f && pivotX >= -0.000001f) || (pivotY <= 0.000001f && pivotY >= -0.000001f))
             {
-                cocos2d::Size size = _display->getContentSize();
-                _display->setAnchorPoint(cocos2d::Vec2(pivotX / size.width, 1.f - pivotY / size.height));
+                _display->setAnchorPoint(cocos2d::Vec2(0.5f, 0.5f));
             }
             else
             {
-                _display->setAnchorPoint(cocos2d::Vec2(0.5f, 0.5f));
+                cocos2d::Size size = _display->getContentSize();
+                _display->setAnchorPoint(cocos2d::Vec2(pivotX / size.width, 1.f - pivotY / size.height));
             }
         }
         
