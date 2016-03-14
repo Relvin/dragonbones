@@ -39,6 +39,9 @@ public:
     
     void update(float needUpdate) override;
     void blendingTimeline();
+    
+    virtual cocos2d::Vector<DBBone*>& getBones() { return _childBones; }
+    virtual const cocos2d::Vector<DBBone*>& getBones() const { return _childBones; }
 public:
     std::string displayController;
     bool applyOffsetTranslationToChild;

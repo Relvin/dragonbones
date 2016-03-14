@@ -46,6 +46,8 @@ public:
     void addBone(DBBone *bone, const std::string& parentName = "");
     DBBone* getBone(const std::string& boneName);
     
+    DBSlot* getSlot(const std::string& slotName);
+    
     void createSkin(const std::string &textureName);
     
     void update(float delta);
@@ -60,7 +62,7 @@ private:
     
     cocos2d::Map<std::string, DBBone*> _boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
     cocos2d::Vector<DBBone*> _topBoneList;
-    cocos2d::Vector<DBSlot*> _slotList;
+    cocos2d::Map<std::string,DBSlot*> _slotDic;
     
 };
 

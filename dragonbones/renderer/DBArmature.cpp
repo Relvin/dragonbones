@@ -22,7 +22,7 @@ DBArmature::DBArmature()
 {
     _boneDic.clear();
     _topBoneList.clear();
-    _slotList.clear();
+    _slotDic.clear();
 }
 
 
@@ -31,7 +31,7 @@ DBArmature::~DBArmature()
     CC_SAFE_RELEASE_NULL(m_pDragonBonesData);
     _boneDic.clear();
     _topBoneList.clear();
-    _slotList.clear();
+    _slotDic.clear();
 }
 
 DBArmature* DBArmature::create(const std::string &dragonBonesName)
@@ -162,6 +162,11 @@ DBBone* DBArmature::getBone(const std::string& boneName)
     return _boneDic.at(boneName);
 }
 
+DBSlot* DBArmature::getSlot(const std::string& slotName)
+{
+    return _slotDic.at(slotName);
+}
+
 void DBArmature::addBone(DBBone *bone, const std::string& parentName)
 {
     CCASSERT( bone != nullptr, "Argument must be non-nil");
@@ -213,7 +218,7 @@ void DBArmature::createSkin(const std::string &textureName)
         DBSlot* slot = DBSlot::create(slotData,textureName);
         this->addChild(slot,slotData->zOrder);
         slot->setParentBone(bone);
-        _slotList.pushBack(slot);
+        _slotDic.insert(slotData->name,slot);
     }
 }
 
@@ -225,25 +230,22 @@ void DBArmature::update(float delta)
         bone->update(delta);
     }
     
-    
-    for (size_t i = _slotList.size(); i--;)
+    for (auto& element : _slotDic)
     {
-        DBSlot *slot = _slotList.at(i);
-        slot->update(delta);
+        element.second->update(delta);
         
-//        if (slot->_isShowDisplay && slot->_childArmature)
-//        {
-//            slot->_childArmature->advanceTime(passedTime);
-//        }
+        //        if (slot->_isShowDisplay && slot->_childArmature)
+        //        {
+        //            slot->_childArmature->advanceTime(passedTime);
+        //        }
     }
-//
-//    if (_slotsZOrderChanged)
-//    {
-//        sortSlotsByZOrder();
-//        
-//    }
-    
-    
+    //
+    //    if (_slotsZOrderChanged)
+    //    {
+    //        sortSlotsByZOrder();
+    //        
+    //    }
+
 }
 
 void DBArmature::onEnter()
