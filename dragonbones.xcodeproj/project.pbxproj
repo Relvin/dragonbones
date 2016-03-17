@@ -201,10 +201,18 @@
 		AD2290F31C63361E0017A24D /* DBSlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2290F01C63361E0017A24D /* DBSlot.cpp */; };
 		AD2290F41C63361E0017A24D /* DBSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2290F11C63361E0017A24D /* DBSlot.h */; };
 		AD2290F51C63361E0017A24D /* DBSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2290F11C63361E0017A24D /* DBSlot.h */; };
+		AD5C8D161C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */; };
+		AD5C8D171C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */; };
+		AD5C8D181C9A51D8007CFDDC /* DBSlotTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */; };
+		AD5C8D191C9A51D8007CFDDC /* DBSlotTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */; };
 		AD60698C1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */; };
 		AD60698D1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */; };
 		AD60698E1C9668FC00CCC818 /* DBAnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD60698B1C9668FC00CCC818 /* DBAnimationState.h */; };
 		AD60698F1C9668FC00CCC818 /* DBAnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD60698B1C9668FC00CCC818 /* DBAnimationState.h */; };
+		AD97C5321C98FC7A00331850 /* DBTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD97C5301C98FC7A00331850 /* DBTimelineState.cpp */; };
+		AD97C5331C98FC7A00331850 /* DBTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD97C5301C98FC7A00331850 /* DBTimelineState.cpp */; };
+		AD97C5341C98FC7A00331850 /* DBTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD97C5311C98FC7A00331850 /* DBTimelineState.h */; };
+		AD97C5351C98FC7A00331850 /* DBTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD97C5311C98FC7A00331850 /* DBTimelineState.h */; };
 		ADADA19A1C62E93C00B15A4F /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADADA18D1C62E93C00B15A4F /* Animation.cpp */; };
 		ADADA19B1C62E93C00B15A4F /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADADA18D1C62E93C00B15A4F /* Animation.cpp */; };
 		ADADA19C1C62E93C00B15A4F /* Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = ADADA18E1C62E93C00B15A4F /* Animation.h */; };
@@ -356,8 +364,12 @@
 		AD2290F11C63361E0017A24D /* DBSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSlot.h; sourceTree = "<group>"; };
 		AD525BAA1C0768DB000D5586 /* libdragonbones mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libdragonbones mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD525BB91C076906000D5586 /* libdragonbones ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libdragonbones ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBSlotTimelineState.cpp; sourceTree = "<group>"; };
+		AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSlotTimelineState.h; sourceTree = "<group>"; };
 		AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBAnimationState.cpp; sourceTree = "<group>"; };
 		AD60698B1C9668FC00CCC818 /* DBAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAnimationState.h; sourceTree = "<group>"; };
+		AD97C5301C98FC7A00331850 /* DBTimelineState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBTimelineState.cpp; sourceTree = "<group>"; };
+		AD97C5311C98FC7A00331850 /* DBTimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTimelineState.h; sourceTree = "<group>"; };
 		ADADA18D1C62E93C00B15A4F /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
 		ADADA18E1C62E93C00B15A4F /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		ADADA18F1C62E93C00B15A4F /* AnimationState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationState.cpp; sourceTree = "<group>"; };
@@ -670,6 +682,10 @@
 				ADADA1991C62E93C00B15A4F /* WorldClock.h */,
 				AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */,
 				AD60698B1C9668FC00CCC818 /* DBAnimationState.h */,
+				AD97C5301C98FC7A00331850 /* DBTimelineState.cpp */,
+				AD97C5311C98FC7A00331850 /* DBTimelineState.h */,
+				AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */,
+				AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -695,6 +711,7 @@
 				AD13EDC01C5F39F700562146 /* DBCCUtils.h in Headers */,
 				AD13ED121C5F39F700562146 /* itoa.h in Headers */,
 				ADADA1A01C62E93C00B15A4F /* AnimationState.h in Headers */,
+				AD5C8D181C9A51D8007CFDDC /* DBSlotTimelineState.h in Headers */,
 				ADADA1B21C62E93C00B15A4F /* WorldClock.h in Headers */,
 				ADADA19C1C62E93C00B15A4F /* Animation.h in Headers */,
 				AD13ED841C5F39F700562146 /* SkinData.h in Headers */,
@@ -720,6 +737,7 @@
 				AD13ED761C5F39F700562146 /* AnimationData.h in Headers */,
 				AD13ED6E1C5F39F700562146 /* Matrix.h in Headers */,
 				AD0B5A051C7061BB007F2C1F /* DBBase.h in Headers */,
+				AD97C5341C98FC7A00331850 /* DBTimelineState.h in Headers */,
 				AD13ED6A1C5F39F700562146 /* BaseFactory.h in Headers */,
 				ADADA1AA1C62E93C00B15A4F /* SlotTimelineState.h in Headers */,
 				AD13ED601C5F39F700562146 /* DragonBonesHeaders.h in Headers */,
@@ -789,6 +807,7 @@
 				AD13EDC11C5F39F700562146 /* DBCCUtils.h in Headers */,
 				AD13ED131C5F39F700562146 /* itoa.h in Headers */,
 				ADADA1A11C62E93C00B15A4F /* AnimationState.h in Headers */,
+				AD5C8D191C9A51D8007CFDDC /* DBSlotTimelineState.h in Headers */,
 				ADADA1B31C62E93C00B15A4F /* WorldClock.h in Headers */,
 				ADADA19D1C62E93C00B15A4F /* Animation.h in Headers */,
 				AD13ED851C5F39F700562146 /* SkinData.h in Headers */,
@@ -814,6 +833,7 @@
 				AD13ED771C5F39F700562146 /* AnimationData.h in Headers */,
 				AD13ED6F1C5F39F700562146 /* Matrix.h in Headers */,
 				AD0B5A061C7061BB007F2C1F /* DBBase.h in Headers */,
+				AD97C5351C98FC7A00331850 /* DBTimelineState.h in Headers */,
 				AD13ED6B1C5F39F700562146 /* BaseFactory.h in Headers */,
 				ADADA1AB1C62E93C00B15A4F /* SlotTimelineState.h in Headers */,
 				AD13ED611C5F39F700562146 /* DragonBonesHeaders.h in Headers */,
@@ -949,6 +969,7 @@
 				ADADA1B01C62E93C00B15A4F /* WorldClock.cpp in Sources */,
 				AD13ED9A1C5F39F700562146 /* JSONDataParser.cpp in Sources */,
 				AD13EDB01C5F39F700562146 /* DBCCLuaUtils.cpp in Sources */,
+				AD97C5321C98FC7A00331850 /* DBTimelineState.cpp in Sources */,
 				ADADA19E1C62E93C00B15A4F /* AnimationState.cpp in Sources */,
 				ADADA1B61C62FEDD00B15A4F /* DBBone.cpp in Sources */,
 				AD13EDBE1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
@@ -972,6 +993,7 @@
 				AD13ED621C5F39F700562146 /* EventData.cpp in Sources */,
 				AD13ED921C5F39F700562146 /* BaseDataParser.cpp in Sources */,
 				AD60698C1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */,
+				AD5C8D161C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,6 +1007,7 @@
 				ADADA1B11C62E93C00B15A4F /* WorldClock.cpp in Sources */,
 				AD13ED9B1C5F39F700562146 /* JSONDataParser.cpp in Sources */,
 				AD13EDB11C5F39F700562146 /* DBCCLuaUtils.cpp in Sources */,
+				AD97C5331C98FC7A00331850 /* DBTimelineState.cpp in Sources */,
 				ADADA19F1C62E93C00B15A4F /* AnimationState.cpp in Sources */,
 				ADADA1B71C62FEDD00B15A4F /* DBBone.cpp in Sources */,
 				AD13EDBF1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
@@ -1008,6 +1031,7 @@
 				AD13ED631C5F39F700562146 /* EventData.cpp in Sources */,
 				AD13ED931C5F39F700562146 /* BaseDataParser.cpp in Sources */,
 				AD60698D1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */,
+				AD5C8D171C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

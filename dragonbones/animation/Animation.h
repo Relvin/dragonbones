@@ -81,8 +81,10 @@ protected:
 	std::vector<AnimationData*> _animationDataList;
 	std::vector<AnimationState*> _animationStateList;
 
-	Armature *_armature;
+	
 	AnimationState *_lastAnimationState;
+private:
+    Armature *_armature;
     
 private:
     DRAGON_BONES_DISALLOW_COPY_AND_ASSIGN(Animation);

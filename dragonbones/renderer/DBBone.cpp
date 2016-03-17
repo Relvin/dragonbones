@@ -8,7 +8,7 @@
 
 #include "DBBone.h"
 #include "DBArmature.h"
-#include "animation/AnimationState.h"
+#include "animation/DBAnimationState.h"
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 DBBone* DBBone::create(BoneData* boneData)
@@ -154,6 +154,9 @@ void DBBone::update(float delta)
     }
     
     this->setPosition(global.x,-global.y);
+    
+#define showBone 1
+#ifdef showBone
     cocos2d::Sprite* boneSprite = dynamic_cast<cocos2d::Sprite*>(this->getChildByTag(1001));
     if (!boneSprite)
     {
@@ -173,7 +176,7 @@ void DBBone::update(float delta)
     }
     boneSprite->setRotationSkewX(global.skewX * RADIAN_TO_ANGLE);
     boneSprite->setRotationSkewY(global.skewY * RADIAN_TO_ANGLE);
-    
+#endif
     
     
     blendingTimeline();
@@ -243,7 +246,7 @@ void DBBone::blendingTimeline()
     size_t i = _timelineStateList.size();
     if (i == 1)
     {
-        TimelineState *timelineState = _timelineStateList[0];
+        DBTimelineState *timelineState = _timelineStateList[0];
         const Transform &transform = timelineState->_transform;
         const Point &pivot = timelineState->_pivot;
         timelineState->_weight = timelineState->_animationState->getCurrentWeight();
@@ -274,7 +277,7 @@ void DBBone::blendingTimeline()
         
         while (i--)
         {
-            TimelineState *timelineState = _timelineStateList[i];
+            DBTimelineState *timelineState = _timelineStateList[i];
             currentLayer = timelineState->_animationState->getLayer();
             
             if (prevLayer != currentLayer)
@@ -342,6 +345,88 @@ void DBBone::calculateRelativeParentTransform()
     global.y = origin.y + _tween.y + offset.y;
 }
 
+// static method
+bool DBBone::sortState(const DBTimelineState *a, const DBTimelineState *b)
+{
+    return a->_animationState->getLayer() < b->_animationState->getLayer();
+}
+
+void DBBone::addState(DBTimelineState *timelineState)
+{
+    auto iterator = std::find(_timelineStateList.cbegin(), _timelineStateList.cend(), timelineState);
+    
+    if (iterator == _timelineStateList.cend())
+    {
+        _timelineStateList.push_back(timelineState);
+        std::sort(_timelineStateList.begin() , _timelineStateList.end() , sortState);
+    }
+}
+
+void DBBone::removeState(DBTimelineState *timelineState)
+{
+    auto iterator = std::find(_timelineStateList.begin(), _timelineStateList.end(), timelineState);
+    
+    if (iterator != _timelineStateList.end())
+    {
+        _timelineStateList.erase(iterator);
+    }
+}
+
+void DBBone::invalidUpdate()
+{
+    _needUpdate = 2;
+}
+
+
+void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelineState, DBAnimationState *animationState, bool isCross)
+{
+#if 0
+    // modify by Relvin need todo
+    bool displayControl =
+    animationState->displayControl &&
+    (displayController.empty() || displayController == animationState->name) &&
+    animationState->getMixingTransform(name);
+    
+    // && timelineState->_weight > 0
+    // TODO: 需要修正混合动画干扰关键帧数据的问题，如何正确高效的判断混合动画？
+    if (displayControl)
+    {
+        
+        if (!frame->event.empty() && _armature->_eventDispatcher->hasEvent(EventData::EventType::BONE_FRAME_EVENT))
+        {
+            EventData *eventData = EventData::borrowObject(EventData::EventType::BONE_FRAME_EVENT);
+            eventData->armature = _armature;
+            eventData->bone = this;
+            eventData->animationState = animationState;
+            eventData->frameLabel = frame->event;
+            eventData->frame = frame;
+            _armature->_eventDataList.push_back(eventData);
+        }
+        
+        if (!frame->sound.empty() && Armature::soundEventDispatcher && Armature::soundEventDispatcher->hasEvent(EventData::EventType::SOUND))
+        {
+            EventData *eventData = EventData::borrowObject(EventData::EventType::SOUND);
+            eventData->armature = _armature;
+            eventData->bone = this;
+            eventData->animationState = animationState;
+            eventData->sound = frame->sound;
+            Armature::soundEventDispatcher->dispatchEvent(eventData);
+            EventData::returnObject(eventData);
+        }
+        
+        if (!frame->action.empty())
+        {
+            for (size_t i = 0, l = _slotList.size(); i < l; ++i)
+            {
+                if (_slotList[i]->_childArmature)
+                {
+                    _slotList[i]->_childArmature->_animation->gotoAndPlay(frame->action);
+                }
+            }
+        }
+    }
+#endif
+}
 
 
 NAME_SPACE_DRAGON_BONES_END

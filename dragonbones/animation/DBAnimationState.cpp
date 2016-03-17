@@ -10,8 +10,8 @@
 
 #include <cstdlib>
 
-#include "TimelineState.h"
-#include "SlotTimelineState.h"
+#include "animation/DBTimelineState.h"
+#include "animation/DBSlotTimelineState.h"
 #include "objects/AnimationData.h"
 #include "renderer/DBSlot.h"
 #include "renderer/DBBone.h"
@@ -446,7 +446,7 @@ void DBAnimationState::updateTimelineStates()
 {
     for (size_t i = _timelineStateList.size(); i--;)
     {
-        TimelineState *timelineState = _timelineStateList[i];
+        DBTimelineState *timelineState = _timelineStateList[i];
         if (!_armature->getBone(timelineState->name))
         {
             removeTimelineState(timelineState);
@@ -455,7 +455,7 @@ void DBAnimationState::updateTimelineStates()
     
     for (size_t i = _slotTimelineStateList.size(); i--;)
     {
-        SlotTimelineState *timelineState = _slotTimelineStateList[i];
+        DBSlotTimelineState *timelineState = _slotTimelineStateList[i];
         if (!_armature->getSlot(timelineState->name))
         {
             removeSlotTimelineState(timelineState);
@@ -466,7 +466,7 @@ void DBAnimationState::updateTimelineStates()
     {
         for (size_t i = _timelineStateList.size(); i--;)
         {
-            TimelineState *timelineState = _timelineStateList[i];
+            DBTimelineState *timelineState = _timelineStateList[i];
             auto iterator = std::find(_mixingTransforms.cbegin(), _mixingTransforms.cend(), timelineState->name);
             
             if (iterator == _mixingTransforms.cend())
@@ -508,18 +508,18 @@ void DBAnimationState::addTimelineState(const std::string &timelineName)
             }
         }
         
-        TimelineState *timelineState = TimelineState::borrowObject();
-//        timelineState->fadeIn(bone, this, _clip->getTimeline(timelineName));
+        DBTimelineState *timelineState = DBTimelineState::borrowObject();
+        timelineState->fadeIn(bone, this, _clip->getTimeline(timelineName));
         _timelineStateList.push_back(timelineState);
     }
 }
 
-void DBAnimationState::removeTimelineState(TimelineState *timelineState)
+void DBAnimationState::removeTimelineState(DBTimelineState *timelineState)
 {
     auto iterator = std::find(_timelineStateList.begin(), _timelineStateList.end(), timelineState);
     if (iterator != _timelineStateList.end())
     {
-        TimelineState::returnObject(timelineState);
+        DBTimelineState::returnObject(timelineState);
         _timelineStateList.erase(iterator);
     }
 }
@@ -527,27 +527,27 @@ void DBAnimationState::removeTimelineState(TimelineState *timelineState)
 void DBAnimationState::addSlotTimelineState(const std::string &timelineName)
 {
     DBSlot *slot = _armature->getSlot(timelineName);
-//    if (slot && slot->getDisplayList().size() > 0)
-//    {
-//        for (size_t i = 0, l = _slotTimelineStateList.size(); i < l; ++i)
-//        {
-//            if (_slotTimelineStateList[i]->name == timelineName)
-//            {
-//                return;
-//            }
-//        }
-//        SlotTimelineState *timelineState = SlotTimelineState::borrowObject();
-//        timelineState->fadeIn(slot, this, _clip->getSlotTimeline(timelineName));
-//        _slotTimelineStateList.push_back(timelineState);
-//    }
+    if (slot /*&& slot->getDisplayList().size() > 0*/)
+    {
+        for (size_t i = 0, l = _slotTimelineStateList.size(); i < l; ++i)
+        {
+            if (_slotTimelineStateList[i]->name == timelineName)
+            {
+                return;
+            }
+        }
+        DBSlotTimelineState *timelineState = DBSlotTimelineState::borrowObject();
+        timelineState->fadeIn(slot, this, _clip->getSlotTimeline(timelineName));
+        _slotTimelineStateList.push_back(timelineState);
+    }
 }
 
-void DBAnimationState::removeSlotTimelineState(SlotTimelineState *timelineState)
+void DBAnimationState::removeSlotTimelineState(DBSlotTimelineState *timelineState)
 {
     auto iterator = std::find(_slotTimelineStateList.begin(), _slotTimelineStateList.end(), timelineState);
     if (iterator != _slotTimelineStateList.end())
     {
-        SlotTimelineState::returnObject(timelineState);
+        DBSlotTimelineState::returnObject(timelineState);
         _slotTimelineStateList.erase(iterator);
     }
 }
@@ -840,7 +840,7 @@ void DBAnimationState::updateMainTimeline(bool isThisComplete)
             
             if (prevFrame)
             {
-//                _armature->arriveAtFrame(prevFrame, this, true);
+                _armature->arriveAtFrame(prevFrame, this, true);
             }
             
             _currentFrameDuration = currentFrame->duration;
@@ -850,7 +850,7 @@ void DBAnimationState::updateMainTimeline(bool isThisComplete)
         
         if (currentFrame)
         {
-//            _armature->arriveAtFrame(currentFrame, this, false);
+            _armature->arriveAtFrame(currentFrame, this, false);
         }
     }
 }
@@ -873,7 +873,7 @@ void DBAnimationState::clear()
     // reverse delete
     for (size_t i = _timelineStateList.size(); i--;)
     {
-        TimelineState::returnObject(_timelineStateList[i]);
+        DBTimelineState::returnObject(_timelineStateList[i]);
     }
     
     _timelineStateList.clear();
@@ -886,13 +886,13 @@ void DBAnimationState::resetTimelineStateList()
 {
     for (size_t i = _timelineStateList.size(); i--;)
     {
-        TimelineState::returnObject(_timelineStateList[i]);
+        DBTimelineState::returnObject(_timelineStateList[i]);
     }
     _timelineStateList.clear();
     
     for (size_t i = _slotTimelineStateList.size(); i--;)
     {
-        SlotTimelineState::returnObject(_slotTimelineStateList[i]);
+        DBSlotTimelineState::returnObject(_slotTimelineStateList[i]);
     }
     _slotTimelineStateList.clear();
 }

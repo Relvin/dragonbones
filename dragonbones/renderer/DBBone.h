@@ -13,7 +13,8 @@
 #include "DragonBones.h"
 #include "objects/BoneData.h"
 #include "core/DBBase.h"
-#include "animation/TimelineState.h"
+#include "animation/DBTimelineState.h"
+#include "objects/TransformFrame.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -42,6 +43,16 @@ public:
     
     virtual cocos2d::Vector<DBBone*>& getBones() { return _childBones; }
     virtual const cocos2d::Vector<DBBone*>& getBones() const { return _childBones; }
+    
+    void arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelineState, DBAnimationState *animationState, bool isCross);
+    virtual const Point& getTweenPivot() const;
+    int getNeedUpdate();
+    
+    static bool sortState(const DBTimelineState *a, const DBTimelineState *b);
+    void addState(DBTimelineState *timelineState);
+    void removeState(DBTimelineState *timelineState);
+    void invalidUpdate();
+    
 public:
     std::string displayController;
     bool applyOffsetTranslationToChild;
@@ -51,12 +62,12 @@ public:
     Transform _globalTransformForChild;
     Matrix _globalTransformMatrixForChild;
     
-    virtual const Point& getTweenPivot() const;
-    int getNeedUpdate();
+    
+    
 protected:
     cocos2d::Vector<DBBone*> _childBones;        ///< array of children nodes
 //    std::vector<Slot*> _slotList;
-    std::vector<TimelineState*> _timelineStateList;
+    std::vector<DBTimelineState*> _timelineStateList;
     
     int _needUpdate;
     bool _isColorChanged;

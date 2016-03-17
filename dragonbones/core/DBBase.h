@@ -23,9 +23,6 @@ public:
     virtual ~DBBase();
     virtual void dispose();
     
-    virtual bool getBoneVisible() const;
-    virtual void setBoneVisible(bool vislble);
-    
     virtual cocos2d::Node* getArmature() const;
     virtual cocos2d::Node* getParentBone() const;
     
@@ -52,7 +49,6 @@ public:
     
     
 protected:
-    bool _visible;
     
     cocos2d::Node *_armature;
     cocos2d::Node *_parentBone;

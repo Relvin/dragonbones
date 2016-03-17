@@ -14,8 +14,8 @@
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 class AnimationData;
-class SlotTimelineState;
-class TimelineState;
+class DBSlotTimelineState;
+class DBTimelineState;
 class DBArmature;
 class DBAnimation;
 
@@ -83,8 +83,8 @@ private:
     void addTimelineState(const std::string &timelineName);
     void addSlotTimelineState(const std::string &timelineName);
     
-    void removeTimelineState(TimelineState *timelineState);
-    void removeSlotTimelineState(SlotTimelineState *timelineState);
+    void removeTimelineState(DBTimelineState *timelineState);
+    void removeSlotTimelineState(DBSlotTimelineState *timelineState);
     void advanceFadeTime(float passedTime);
     void advanceTimelinesTime(float passedTime);
     void updateMainTimeline(bool isThisComplete);
@@ -125,9 +125,9 @@ private:
     std::string _group;
     FadeState _fadeState;
     
-    std::vector<TimelineState*> _timelineStateList;
+    std::vector<DBTimelineState*> _timelineStateList;
     std::vector<std::string> _mixingTransforms;
-    std::vector<SlotTimelineState*> _slotTimelineStateList;
+    std::vector<DBSlotTimelineState*> _slotTimelineStateList;
     std::vector<std::string> _boneMasks;
     
     AnimationData *_clip;

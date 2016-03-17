@@ -240,7 +240,6 @@ void DBCCSlot::updateDisplayVisible(bool visible)
     if (_nodeDisplay && _parentBone)
     {
         _nodeDisplay->setVisible(_parentBone->getBoneVisible() && _visible && visible);
-//        _nodeDisplay->setVisible(false);
     }
 }
 

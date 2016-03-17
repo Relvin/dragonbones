@@ -6,9 +6,12 @@
 //  Copyright © 2016年 Relvin. All rights reserved.
 //
 
-#include "DBSlot.h"
-#include "DBArmature.h"
-#include "DBBone.h"
+#include "renderer/DBSlot.h"
+#include "renderer/DBArmature.h"
+#include "renderer/DBBone.h"
+#include "animation/DBSlotTimelineState.h"
+#include "animation/DBAnimationState.h"
+#include "objects/SlotFrame.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -91,7 +94,19 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
 
 
 DBSlot::DBSlot()
-: _slotData (nullptr)
+: _display (nullptr)
+, _slotData (nullptr)
+, _needUpdate (true)
+, _tweenZOrder(0.f)
+, _isShowDisplay (false)
+, _isColorChanged (false)
+//,_displayIndex(-1)
+//,_originZOrder(0.f)
+//,_offsetZOrder(0.f)
+//,_blendMode(BlendMode::BM_NORMAL)
+//,_childArmature(nullptr)
+
+
 {
     
 }
@@ -163,5 +178,123 @@ void DBSlot::updateDisplayTransform()
     }
 }
 
+void DBSlot::arriveAtFrame( Frame *frame, const DBSlotTimelineState *timelineState, DBAnimationState *animationState, bool isCross )
+{
+    // TODO:
+    bool displayControl = animationState->displayControl && animationState->containsBoneMask(this->getName());
+    if (displayControl)
+    {
+        SlotFrame *slotFrame = static_cast<SlotFrame*>(frame);
+        const int displayIndex = slotFrame->displayIndex;
+        DBSlot *childSlot = nullptr;
+        
+        changeDisplay(displayIndex);
+        updateDisplayVisible(slotFrame->visible);
+        if (displayIndex >= 0)
+        {
+            if (slotFrame->zOrder != _tweenZOrder)
+            {
+                _tweenZOrder = slotFrame->zOrder;
+                DBArmature* armeture = dynamic_cast<DBArmature*>(_armature);
+                if (armeture)
+                {
+                    //modify by Relvin todo
+//                    _armature->_slotsZOrderChanged = true;
+                }
+                
+            }
+        }
+        
+        if (!frame->action.empty())
+        {
+            //modify by Relvin
+//            if (_childArmature)
+//            {
+//                _childArmature->_animation->gotoAndPlay(frame->action);
+//            }
+        }
+    }
+}
+
+void DBSlot::changeDisplay(int displayIndex)
+{
+#if 0
+    if (displayIndex < 0)
+    {
+        if (_isShowDisplay)
+        {
+            _isShowDisplay = false;
+            removeDisplayFromContainer();
+            updateChildArmatureAnimation();
+        }
+    }
+    else if (!_displayList.empty())
+    {
+        if (displayIndex >= (int)(_displayList.size()))
+        {
+            displayIndex = _displayList.size() - 1;
+        }
+        
+        if (_displayIndex != displayIndex)
+        {
+            _isShowDisplay = true;
+            _displayIndex = displayIndex;
+            updateSlotDisplay(false);
+            
+            if (
+                _slotData &&
+                !_slotData->displayDataList.empty() &&
+                _displayIndex < (int)(_slotData->displayDataList.size())
+                )
+            {
+                origin = _slotData->displayDataList[_displayIndex]->transform;
+            }
+        }
+        else if (!_isShowDisplay)
+        {
+            _isShowDisplay = true;
+            
+            if (_armature)
+            {
+                _armature->_slotsZOrderChanged = true;
+                addDisplayToContainer(_armature->_display, -1);
+            }
+            
+            updateChildArmatureAnimation();
+        }
+    }
+#endif
+}
+
+
+void DBSlot::updateDisplayVisible(bool visible)
+{
+    DBBone* _bone = dynamic_cast<DBBone *>(_parentBone);
+    if (_display && _bone)
+    {
+        _display->setVisible(_bone->isVisible() && this->isVisible());
+    }
+}
+
+void DBSlot::updateDisplayColor(int aOffset, int rOffset, int gOffset, int bOffset, float aMultiplier, float rMultiplier, float gMultiplier, float bMultiplier, bool colorChanged)
+{
+    if (_display)
+    {
+        _colorTransform.alphaOffset = aOffset;
+        _colorTransform.redOffset = rOffset;
+        _colorTransform.greenOffset = gOffset;
+        _colorTransform.blueOffset = bOffset;
+        _colorTransform.alphaMultiplier = aMultiplier;
+        _colorTransform.redMultiplier = rMultiplier;
+        _colorTransform.greenMultiplier = gMultiplier;
+        _colorTransform.blueMultiplier = bMultiplier;
+        
+        _isColorChanged = colorChanged;
+        
+        // cocos2dx does not support offset of color.
+        _display->setOpacity(aMultiplier * 255.f);
+        _display->setColor(cocos2d::Color3B(rMultiplier * 255.f , gMultiplier * 255.f , bMultiplier * 255.f));
+    }
+}
 
 NAME_SPACE_DRAGON_BONES_END

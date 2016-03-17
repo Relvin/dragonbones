@@ -19,6 +19,8 @@
 #include "DBBone.h"
 #include "DBSlot.h"
 
+class Frame;
+
 USING_NS_CC;
 NAME_SPACE_DRAGON_BONES_BEGIN
 class DBArmature
@@ -53,12 +55,14 @@ public:
     void update(float delta);
     
     virtual void onEnter();
+    
+    void arriveAtFrame(Frame *frame, DBAnimationState *animationState, bool isCross);
 private:
     
-    DragonBonesData* m_pDragonBonesData;
-    ArmatureData* m_pArmatureData;
-    SkinData* m_pSkinData;
-    DBAnimation* m_pAnimation;
+    DragonBonesData* _pDragonBonesData;
+    ArmatureData* _pArmatureData;
+    SkinData* _pSkinData;
+    DBAnimation* _pAnimation;
     
     cocos2d::Map<std::string, DBBone*> _boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
     cocos2d::Vector<DBBone*> _topBoneList;

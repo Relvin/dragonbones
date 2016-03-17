@@ -14,25 +14,25 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
-class AnimationState;
+class DBAnimationState;
 class AnimationData;
-class Armature;
+class DBArmature;
 
 class DBArmature;
 
 class DBAnimation
 : public cocos2d::Ref
 {
-    friend class Armature;
-    friend class Slot;
+    friend class DBArmature;
+    friend class DBSlot;
     
     enum class AnimationFadeOutMode {NONE, SAME_LAYER, SAME_GROUP, SAME_LAYER_AND_GROUP, ALL};
     
 public:
-    static DBAnimation* create();
+    static DBAnimation* create(DBArmature *armature);
     
     
-    bool init();
+    bool initWithArmature(DBArmature *armature);
     
     DBAnimation();
     virtual ~DBAnimation();
@@ -42,7 +42,7 @@ public:
     void dispose();
     void clear();
     
-    AnimationState* gotoAndPlay(
+    DBAnimationState* gotoAndPlay(
                                 const std::string &animationName,
                                 float fadeInTime = -1.f,
                                 float duration = -1.f,
@@ -54,7 +54,7 @@ public:
                                 bool pauseFadeIn = true
                                 );
     
-    AnimationState* gotoAndStop(
+    DBAnimationState* gotoAndStop(
                                 const std::string &animationName,
                                 float time,
                                 float normalizedTime = -1.f,
@@ -70,12 +70,12 @@ public:
     void advanceTime(float passedTime);
     
     bool hasAnimation(const std::string &animationName) const;
-    AnimationState* getState(const std::string &name, int layer = 0) const;
+    DBAnimationState* getState(const std::string &name, int layer = 0) const;
     
     bool getIsPlaying() const;
     bool getIsComplete() const;
     const std::vector<std::string>& getAnimationList() const;
-    AnimationState* getLastAnimationState() const;
+    DBAnimationState* getLastAnimationState() const;
     float getTimeScale() const;
     void setTimeScale(float timeScale);
     
@@ -83,8 +83,8 @@ public:
     void setAnimationDataList(const std::vector<AnimationData*> &animationDataList);
     
 protected:
-    void addState(AnimationState *animationState);
-    void removeState(AnimationState *animationState);
+    void addState(DBAnimationState *animationState);
+    void removeState(DBAnimationState *animationState);
     void updateAnimationStates();
     void resetAnimationStateList();
     
@@ -98,10 +98,10 @@ protected:
     
     std::vector<std::string> _animationList;
     std::vector<AnimationData*> _animationDataList;
-    std::vector<AnimationState*> _animationStateList;
+    std::vector<DBAnimationState*> _animationStateList;
     
     DBArmature *_armature;
-    AnimationState *_lastAnimationState;
+    DBAnimationState *_lastAnimationState;
     
     
 private:

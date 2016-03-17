@@ -17,7 +17,6 @@ inheritRotation(true)
 ,inheritScale(true)
 ,inheritTranslation(true)
 ,userData(nullptr)
-,_visible(true)
 ,_armature(nullptr)
 ,_parentBone(nullptr)
 {
@@ -39,16 +38,6 @@ void DBBase::dispose()
         delete userData;
         userData = nullptr;
     }
-}
-
-bool DBBase::getBoneVisible() const
-{
-    return _visible;
-}
-
-void DBBase::setBoneVisible(bool visible)
-{
-    _visible = visible;
 }
 
 cocos2d::Node* DBBase::getArmature() const

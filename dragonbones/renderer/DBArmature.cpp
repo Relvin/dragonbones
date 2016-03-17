@@ -10,15 +10,16 @@
 #include "DBCCFactory.h"
 #include "objects/SkinData.h"
 #include "DBSlot.h"
+#include "objects/Frame.h"
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 DBArmature::DBArmature()
-: m_pDragonBonesData (nullptr)
-, m_pArmatureData (nullptr)
-, m_pAnimation (nullptr)
-, m_pSkinData (nullptr)
+: _pDragonBonesData (nullptr)
+, _pArmatureData (nullptr)
+, _pAnimation (nullptr)
+, _pSkinData (nullptr)
 {
     _boneDic.clear();
     _topBoneList.clear();
@@ -28,7 +29,7 @@ DBArmature::DBArmature()
 
 DBArmature::~DBArmature()
 {
-    CC_SAFE_RELEASE_NULL(m_pDragonBonesData);
+    CC_SAFE_RELEASE_NULL(_pDragonBonesData);
     _boneDic.clear();
     _topBoneList.clear();
     _slotDic.clear();
@@ -71,30 +72,23 @@ bool DBArmature::initWithName(const std::string &name,const std::string &texture
     {
         return false;
     }
-    m_pArmatureData = dragonBonesData->getArmatureData(name);
-    if (!m_pArmatureData)
+    _pArmatureData = dragonBonesData->getArmatureData(name);
+    if (!_pArmatureData)
     {
         return false;
     }
     
     _name = name;
-    DBAnimation* animation = DBAnimation::create();
+    DBAnimation* animation = DBAnimation::create(this);
     this->setAnimation(animation);
-    animation->setAnimationDataList(m_pArmatureData->animationDataList);
+    animation->setAnimationDataList(_pArmatureData->animationDataList);
     
-    for (size_t i = 0, l = m_pArmatureData->boneDataList.size(); i < l; ++i)
+    for (size_t i = 0, l = _pArmatureData->boneDataList.size(); i < l; ++i)
     {
-        createBone(m_pArmatureData->boneDataList.at(i));
+        createBone(_pArmatureData->boneDataList.at(i));
     }
 
     createSkin(textureName);
-//    SkinData *skinData = nullptr;
-//    
-//    skinData = armatureData->getSkinData("");
-//    if (skinData)
-//    {
-//        buildSlots(armature, armatureData, skinData, skinDataCopy);
-//    }
     
     
     this->setCascadeColorEnabled(true);
@@ -116,21 +110,21 @@ bool DBArmature::initWithName(const std::string &name,const std::string &texture
 
 void DBArmature::setDragonBonesData(dragonBones::DragonBonesData *data)
 {
-    CC_SAFE_RELEASE_NULL(m_pDragonBonesData);
-    m_pDragonBonesData = data;
-    CC_SAFE_RETAIN(m_pDragonBonesData);
+    CC_SAFE_RELEASE_NULL(_pDragonBonesData);
+    _pDragonBonesData = data;
+    CC_SAFE_RETAIN(_pDragonBonesData);
 }
 
 void DBArmature::setAnimation(dragonBones::DBAnimation *animation)
 {
-    CC_SAFE_RELEASE_NULL(m_pAnimation);
-    m_pAnimation = animation;
-    CC_SAFE_RETAIN(m_pAnimation);
+    CC_SAFE_RELEASE_NULL(_pAnimation);
+    _pAnimation = animation;
+    CC_SAFE_RETAIN(_pAnimation);
 }
 
 DBAnimation* DBArmature::getAnimation()
 {
-    return this->m_pAnimation;
+    return this->_pAnimation;
 }
 
 DBBone* DBArmature::createBone(BoneData* boneData)
@@ -146,7 +140,7 @@ DBBone* DBArmature::createBone(BoneData* boneData)
     
     if( !parentName.empty() && !this->getBone(parentName))
     {
-        BoneData* parentBoneData = this->m_pArmatureData->getBoneData(parentName);
+        BoneData* parentBoneData = this->_pArmatureData->getBoneData(parentName);
         createBone(parentBoneData);
     }
     
@@ -197,15 +191,15 @@ void DBArmature::addBone(DBBone *bone, const std::string& parentName)
 
 void DBArmature::createSkin(const std::string &textureName)
 {
-    m_pSkinData = m_pArmatureData->getSkinData("");
+    _pSkinData = _pArmatureData->getSkinData("");
     
     
-    if (!m_pSkinData)
+    if (!_pSkinData)
     {
         return;
     }
-    m_pArmatureData->setSkinData(m_pSkinData->name);
-    auto slotDataList = m_pArmatureData->slotDataList;
+    _pArmatureData->setSkinData(_pSkinData->name);
+    auto slotDataList = _pArmatureData->slotDataList;
     for (size_t i = 0, l = slotDataList.size(); i < l; ++i)
     {
         SlotData *slotData = slotDataList[i];
@@ -224,7 +218,9 @@ void DBArmature::createSkin(const std::string &textureName)
 
 void DBArmature::update(float delta)
 {
-//    _animation->update(delta);
+    _pAnimation->advanceTime(delta);
+    delta *= _pAnimation->_timeScale;
+    const bool isFading = _pAnimation->_isFading;
     
     for(const auto &bone : _topBoneList) {
         bone->update(delta);
@@ -253,6 +249,40 @@ void DBArmature::onEnter()
     Node::onEnter();
     this->scheduleUpdate();
 }
+
+void DBArmature::arriveAtFrame(Frame *frame, DBAnimationState *animationState, bool isCross)
+{
+#if 0
+    if (!frame->event.empty() && _eventDispatcher->hasEvent(EventData::EventType::ANIMATION_FRAME_EVENT))
+    {
+        EventData *eventData = EventData::borrowObject(EventData::EventType::ANIMATION_FRAME_EVENT);
+        eventData->armature = this;
+        eventData->animationState = animationState;
+        eventData->frameLabel = frame->event;
+        eventData->frame = frame;
+        _eventDataList.push_back(eventData);
+    }
+    
+    if (!frame->sound.empty() && soundEventDispatcher && soundEventDispatcher->hasEvent(EventData::EventType::SOUND))
+    {
+        EventData *eventData = EventData::borrowObject(EventData::EventType::SOUND);
+        eventData->armature = this;
+        eventData->animationState = animationState;
+        eventData->sound = frame->sound;
+        soundEventDispatcher->dispatchEvent(eventData);
+        EventData::returnObject(eventData);
+    }
+    
+    if (!frame->action.empty())
+    {
+        if (animationState->displayControl)
+        {
+            _animation->gotoAndPlay(frame->action);
+        }
+    }
+#endif
+}
+
 
 
 NAME_SPACE_DRAGON_BONES_END
