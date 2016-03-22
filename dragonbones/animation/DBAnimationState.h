@@ -10,6 +10,7 @@
 #define DBAnimationState_h
 
 #include "DragonBones.h"
+#include "base/CCRef.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -18,20 +19,23 @@ class DBSlotTimelineState;
 class DBTimelineState;
 class DBArmature;
 class DBAnimation;
+class DBTimelineStateMgr;
 
 class DBAnimationState
+: public cocos2d::Ref
 {
-    friend class DBArmature;
-    friend class TimelineState;
-    friend class SlotTimelineState;
     
-    friend class DBAnimation;
+public:
     
     enum class FadeState {FADE_BEFORE, FADING, FADE_COMPLETE};
     
-public:
+    
     DBAnimationState();
     virtual ~DBAnimationState();
+    
+    static DBAnimationState* create();
+    bool init();
+    
     
     DBAnimationState* fadeOut(float fadeTotalTime, bool pausePlayhead);
     DBAnimationState* play();
@@ -45,10 +49,13 @@ public:
     bool getIsPlaying() const;
     int getCurrentPlayTimes() const;
     int getLayer() const;
+    void setLayer(int layer);
     float getTotalTime() const;
     float getCurrentWeight() const;
     const std::string& getGroup() const;
+    void setGroup(const std::string& group);
     const AnimationData* getClip() const;
+    const FadeState getFadeState() const;
     
     DBAnimationState* setAdditiveBlending(bool value);
     DBAnimationState* setAutoFadeOut(bool value, float fadeOutTime = -1);
@@ -70,11 +77,7 @@ public:
     
     void resetTimelineStateList();
     
-private:
-    static std::vector<DBAnimationState*> _pool;
-    static DBAnimationState* borrowObject();
-    static void returnObject(DBAnimationState *animationState);
-    static void clearObjects();
+public:
     
     void fadeIn(DBArmature *armature, AnimationData *clip, float fadeTotalTime, float timeScale, int playTimes, bool pausePlayhead);
     
@@ -125,7 +128,7 @@ private:
     std::string _group;
     FadeState _fadeState;
     
-    std::vector<DBTimelineState*> _timelineStateList;
+    DBTimelineStateMgr* _timelineStateMgr;
     std::vector<std::string> _mixingTransforms;
     std::vector<DBSlotTimelineState*> _slotTimelineStateList;
     std::vector<std::string> _boneMasks;

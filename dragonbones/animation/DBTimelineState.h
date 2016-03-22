@@ -9,9 +9,12 @@
 #ifndef DBTimelineState_hpp
 #define DBTimelineState_hpp
 #include "DragonBones.h"
+#include "core/DBBase.h"
 #include "geoms/ColorTransform.h"
 #include "geoms/Point.h"
 #include "geoms/Transform.h"
+#include "base/CCRef.h"
+#include "base/CCVector.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -21,16 +24,34 @@ class TransformTimeline;
 class DBBone;
 class DBAnimationState;
 class DBBone;
+class DBTimelineState;
+
+class DBTimelineStateMgr
+: public TemplateTimeline<DBTimelineState>
+, public cocos2d::Ref
+{
+public:
+    
+    static DBTimelineStateMgr* create();
+    bool init ();
+    DBTimelineStateMgr ();
+    ~DBTimelineStateMgr();
+    
+private:
+    
+};
 
 
 class DBTimelineState
+: public cocos2d::Ref
 {
-    friend class DBAnimationState;
-    friend class DBBone;
     
     enum class UpdateState {UPDATE, UPDATE_ONCE, UNUPDATE};
     
 public:
+    static DBTimelineState* create();
+    bool init();
+    
     DBTimelineState();
     virtual ~DBTimelineState();
     
@@ -46,15 +67,17 @@ public:
     // property
     bool getIsComplete() const { return _isComplete; }
     
-    static DBTimelineState* borrowObject();
-    static void returnObject(DBTimelineState *timelineState);
-    static void clearObjects();
-    
 public:
-    std::string name;
+    const Transform& getTransform() const;
+    const Point& getPivot() const;
+    float getWeight();
+    void setWeight(float weight);
+    const DBAnimationState *getAnimationState() const;
+    bool getBlendEnabled();
     
+    const std::string& getName() const;
 private:
-    static std::vector<DBTimelineState*> _pool;
+    std::string name;
     
     bool _blendEnabled;
     bool _isComplete;

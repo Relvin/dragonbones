@@ -133,14 +133,14 @@ void DBSlot::update(float delta)
     Point tweenPivot = parentBone->getTweenPivot();
     const float x = origin.x + offset.x + tweenPivot.x;
     const float y = origin.y + offset.y + tweenPivot.y;
-    const Matrix &parentMatrix = parentBone->globalTransformMatrix;
+    const Matrix &parentMatrix = parentBone->getGlobalTransformMatrix();
     globalTransformMatrix.tx = global.x = parentMatrix.a * x + parentMatrix.c * y + parentMatrix.tx;
     globalTransformMatrix.ty = global.y = parentMatrix.d * y + parentMatrix.b * x + parentMatrix.ty;
     
     if (inheritRotation)
     {
-        global.skewX = origin.skewX + offset.skewX + parentBone->global.skewX;
-        global.skewY = origin.skewY + offset.skewY + parentBone->global.skewY;
+        global.skewX = origin.skewX + offset.skewX + parentBone->getGlobalTransform().skewX;
+        global.skewY = origin.skewY + offset.skewY + parentBone->getGlobalTransform().skewY;
     }
     else
     {
@@ -150,8 +150,8 @@ void DBSlot::update(float delta)
     
     if (inheritScale)
     {
-        global.scaleX = origin.scaleX * offset.scaleX * parentBone->global.scaleX;
-        global.scaleY = origin.scaleY * offset.scaleY * parentBone->global.scaleY;
+        global.scaleX = origin.scaleX * offset.scaleX * parentBone->getGlobalTransform().scaleX;
+        global.scaleY = origin.scaleY * offset.scaleY * parentBone->getGlobalTransform().scaleY;
     }
     else
     {

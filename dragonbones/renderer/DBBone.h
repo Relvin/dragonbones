@@ -41,6 +41,7 @@ public:
     void update(float needUpdate) override;
     void blendingTimeline();
     
+    
     virtual cocos2d::Vector<DBBone*>& getBones() { return _childBones; }
     virtual const cocos2d::Vector<DBBone*>& getBones() const { return _childBones; }
     
@@ -53,7 +54,11 @@ public:
     void removeState(DBTimelineState *timelineState);
     void invalidUpdate();
     
-public:
+private:
+    
+    BoneData* _boneData;
+    DBArmature* _pArmature;
+    
     std::string displayController;
     bool applyOffsetTranslationToChild;
     bool applyOffsetRotationToChild;
@@ -62,9 +67,7 @@ public:
     Transform _globalTransformForChild;
     Matrix _globalTransformMatrixForChild;
     
-    
-    
-protected:
+
     cocos2d::Vector<DBBone*> _childBones;        ///< array of children nodes
 //    std::vector<Slot*> _slotList;
     std::vector<DBTimelineState*> _timelineStateList;
@@ -75,12 +78,10 @@ protected:
     Point _tweenPivot;
     Transform _tween;
     
-private:
+
     Transform _tempGlobalTransformForChild;
     Matrix _tempGlobalTransformMatrixForChild;
-    BoneData* _boneData;
-    
-    DBArmature* _pArmature;
+
     
 };
 

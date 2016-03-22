@@ -15,6 +15,41 @@
 #include "animation/DBAnimationState.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
+
+DBTimelineStateMgr::DBTimelineStateMgr()
+{
+
+}
+
+DBTimelineStateMgr::~DBTimelineStateMgr()
+{
+
+}
+
+DBTimelineStateMgr* DBTimelineStateMgr::create()
+{
+    DBTimelineStateMgr *timelineStataMgr = new (std::nothrow) DBTimelineStateMgr();
+    if (timelineStataMgr && timelineStataMgr->init())
+    {
+        timelineStataMgr->autorelease();
+        return timelineStataMgr;
+    }
+    CC_SAFE_DELETE(timelineStataMgr);
+    return nullptr;
+}
+
+bool DBTimelineStateMgr::init()
+{
+    if (!TemplateTimeline<DBTimelineState>::init())
+    {
+        return false;
+    }
+    return true;
+}
+
+
+
+#if 0
 std::vector<DBTimelineState*> DBTimelineState::_pool;
 
 DBTimelineState* DBTimelineState::borrowObject()
@@ -49,6 +84,25 @@ void DBTimelineState::clearObjects()
     
     _pool.clear();
 }
+#endif
+
+DBTimelineState* DBTimelineState::create()
+{
+    DBTimelineState *timelineState = new (std::nothrow) DBTimelineState();
+    if (timelineState && timelineState->init())
+    {
+        timelineState->autorelease();
+        return timelineState;
+    }
+    CC_SAFE_DELETE(timelineState);
+    return nullptr;
+}
+
+bool DBTimelineState::init()
+{
+    return true;
+}
+
 
 DBTimelineState::DBTimelineState() :
 name("")
@@ -560,4 +614,41 @@ void DBTimelineState::clear()
     _animationState = nullptr;
     _timelineData = nullptr;
 }
+
+const Transform& DBTimelineState::getTransform() const
+{
+    return this->_transform;
+}
+
+const Point& DBTimelineState::getPivot() const
+{
+    return this->_pivot;
+}
+
+float DBTimelineState::getWeight()
+{
+    return this->_weight;
+}
+
+void DBTimelineState::setWeight(float weight)
+{
+    this->_weight = weight;
+}
+
+const DBAnimationState *DBTimelineState::getAnimationState() const
+{
+    return this->_animationState;
+}
+
+bool DBTimelineState::getBlendEnabled()
+{
+    return this->_blendEnabled;
+}
+
+const std::string& DBTimelineState::getName() const
+{
+    return this->name;
+}
+
+
 NAME_SPACE_DRAGON_BONES_END

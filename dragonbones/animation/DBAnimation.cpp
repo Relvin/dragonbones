@@ -46,19 +46,11 @@ bool DBAnimation::getIsPlaying() const
 }
 bool DBAnimation::getIsComplete() const
 {
-    if (_lastAnimationState)
+    if (_animationState)
     {
-        if (!_lastAnimationState->_isComplete)
+        if (!_animationState->getIsComplete())
         {
             return false;
-        }
-        
-        for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
-        {
-            if (!_animationStateList[i]->_isComplete)
-            {
-                return false;
-            }
         }
         
         return true;
@@ -69,7 +61,7 @@ bool DBAnimation::getIsComplete() const
 
 DBAnimationState* DBAnimation::getLastAnimationState() const
 {
-    return _lastAnimationState;
+    return _animationState;
 }
 
 const std::vector<std::string>& DBAnimation::getAnimationList() const
@@ -112,7 +104,7 @@ _isFading(false)
 ,_timeScale(1.f)
 ,autoTween(true)
 ,_armature(nullptr)
-,_lastAnimationState(nullptr)
+,_animationState(nullptr)
 {
     
 }
@@ -126,26 +118,14 @@ void DBAnimation::dispose()
 {
     _animationDataList.clear();
     
-    for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
-    {
-        DBAnimationState::returnObject(_animationStateList[i]);
-    }
-    
-    _animationStateList.clear();
+    CC_SAFE_RELEASE_NULL(_animationState);
     _armature = nullptr;
-    _lastAnimationState = nullptr;
+    _animationState = nullptr;
 }
 
 void DBAnimation::clear()
 {
     stop();
-    
-    for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
-    {
-        DBAnimationState::returnObject(_animationStateList[i]);
-    }
-    _animationStateList.clear();
-    _lastAnimationState = nullptr;
     
 //    for (size_t i = 0, l = _armature->_slotList.size(); i < l; ++i)
 //    {
@@ -218,61 +198,54 @@ DBAnimationState* DBAnimation::gotoAndPlay(
             break;
             
         case AnimationFadeOutMode::SAME_LAYER:
-            for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
-            {
-                DBAnimationState *animationState = _animationStateList[i];
-                
-                if (animationState->_layer == layer)
+
+                if (_animationState && _animationState->getLayer() == layer)
                 {
-                    animationState->fadeOut(fadeInTime, pauseFadeOut);
+                    _animationState->fadeOut(fadeInTime, pauseFadeOut);
                 }
-            }
             
             break;
             
         case AnimationFadeOutMode::SAME_GROUP:
-            for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
-            {
-                DBAnimationState *animationState = _animationStateList[i];
                 
-                if (animationState->_group == group)
+                if (_animationState && _animationState->getGroup() == group)
                 {
-                    animationState->fadeOut(fadeInTime, pauseFadeOut);
+                    _animationState->fadeOut(fadeInTime, pauseFadeOut);
                 }
-            }
             
             break;
             
         case AnimationFadeOutMode::ALL:
-            for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
-            {
-                DBAnimationState *animationState = _animationStateList[i];
-                animationState->fadeOut(fadeInTime, pauseFadeOut);
-            }
+
+                if (_animationState)
+                {
+                    _animationState->fadeOut(fadeInTime, pauseFadeOut);
+                }
+                
             
             break;
             
         case AnimationFadeOutMode::SAME_LAYER_AND_GROUP:
         default:
-            for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
-            {
-                DBAnimationState *animationState = _animationStateList[i];
-                
-                if (animationState->_layer == layer && animationState->_group == group)
+
+                if (_animationState && _animationState->getLayer() == layer && _animationState->getGroup() == group)
                 {
-                    animationState->fadeOut(fadeInTime, pauseFadeOut);
+                    _animationState->fadeOut(fadeInTime, pauseFadeOut);
                 }
-            }
             
             break;
     }
+    if (!_animationState)
+    {
+        _animationState = DBAnimationState::create();
+        CC_SAFE_RETAIN(_animationState);
+    }
+    _animationState->clear();
+    _animationState->setLayer(layer);
+    _animationState->setGroup(group);
+    _animationState->autoTween = autoTween;
+    _animationState->fadeIn(_armature, animationData, fadeInTime, 1.f / durationScale, playTimes, pauseFadeIn);
     
-    _lastAnimationState = DBAnimationState::borrowObject();
-    _lastAnimationState->_layer = layer;
-    _lastAnimationState->_group = group;
-    _lastAnimationState->autoTween = autoTween;
-    _lastAnimationState->fadeIn(_armature, animationData, fadeInTime, 1.f / durationScale, playTimes, pauseFadeIn);
-    addState(_lastAnimationState);
     
 //    for (size_t i = 0, l = _armature->getSlots().size(); i < l; ++i)
     {
@@ -284,7 +257,7 @@ DBAnimationState* DBAnimation::gotoAndPlay(
 //        }
     }
     
-    return _lastAnimationState;
+    return _animationState;
 }
 
 DBAnimationState* DBAnimation::gotoAndStop(
@@ -325,7 +298,7 @@ void DBAnimation::play()
         return;
     }
     
-    if (!_lastAnimationState)
+    if (!_animationState)
     {
         gotoAndPlay(_animationDataList[0]->name);
     }
@@ -355,14 +328,9 @@ bool DBAnimation::hasAnimation(const std::string &animationName) const
 
 DBAnimationState* DBAnimation::getState(const std::string &name, int layer) const
 {
-    for (size_t i = _animationStateList.size(); i--; )
+    if (_animationState && _animationState->name == name && _animationState->getLayer() == layer)
     {
-        DBAnimationState *animationState = _animationStateList[i];
-        
-        if (animationState->name == name && animationState->_layer == layer)
-        {
-            return animationState;
-        }
+        return _animationState;
     }
     
     return nullptr;
@@ -378,74 +346,47 @@ void DBAnimation::advanceTime(float passedTime)
     bool isFading = false;
     passedTime *= _timeScale;
     
-    for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
+    if (_animationState)
     {
-        DBAnimationState *animationState = _animationStateList[i];
-        if (animationState->advanceTime(passedTime))
+        if (_animationState->advanceTime(passedTime))
         {
-            removeState(animationState);
-            --i;
-            --l;
+            
         }
-        else if (animationState->_fadeState != DBAnimationState::FadeState::FADE_COMPLETE)
+        else if (_animationState->getFadeState() != DBAnimationState::FadeState::FADE_COMPLETE)
         {
             isFading = true;
         }
     }
+    
     
     _isFading = isFading;
 }
 
 void DBAnimation::updateAnimationStates()
 {
-    for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
+    if (_animationState)
     {
-        _animationStateList[i]->updateTimelineStates();
+        _animationState->updateTimelineStates();
     }
 }
 
 void DBAnimation::addState(DBAnimationState *animationState)
 {
-    auto iterator = std::find(_animationStateList.cbegin(), _animationStateList.cend(), animationState);
-    
-    if (iterator == _animationStateList.cend())
-    {
-        _animationStateList.push_back(animationState);
-    }
 }
 
 void DBAnimation::removeState(DBAnimationState *animationState)
 {
-    auto iterator = std::find(_animationStateList.begin(), _animationStateList.end(), animationState);
     
-    if (iterator != _animationStateList.end())
-    {
-        _animationStateList.erase(iterator);
-        DBAnimationState::returnObject(animationState);
-        
-        if (_lastAnimationState == animationState)
-        {
-            if (_animationStateList.empty())
-            {
-                _lastAnimationState = nullptr;
-            }
-            else
-            {
-                _lastAnimationState = _animationStateList.back();
-            }
-        }
-    }
 }
 
 void DBAnimation::resetAnimationStateList()
 {
-    for (size_t i = 0, l = _animationStateList.size(); i < l; ++i)
+    if (_animationState)
     {
-        auto animationState = _animationStateList[i];
-        animationState->resetTimelineStateList();
-        DBAnimationState::returnObject(animationState);
+        _animationState->resetTimelineStateList();
+        _animationState->clear();
+//        DBAnimationState::returnObject(animationState);
     }
-    _animationStateList.clear();
 }
 
 NAME_SPACE_DRAGON_BONES_END

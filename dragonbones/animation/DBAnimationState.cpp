@@ -21,41 +21,25 @@
 #include "animation/DBAnimation.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
-std::vector<DBAnimationState*> DBAnimationState::_pool;
 
-DBAnimationState* DBAnimationState::borrowObject()
+DBAnimationState* DBAnimationState::create()
 {
-    if (_pool.empty())
+    DBAnimationState* animationState = new (std::nothrow) DBAnimationState();
+    if (animationState && animationState->init())
     {
-        return new DBAnimationState();
+        animationState->autorelease();
+        return animationState;
     }
-    
-    DBAnimationState *animationState = _pool.back();
-    _pool.pop_back();
-    return animationState;
+    CC_SAFE_DELETE(animationState);
+    return nullptr;
 }
 
-void DBAnimationState::returnObject(DBAnimationState *animationState)
+bool DBAnimationState::init()
 {
-    auto iterator = std::find(_pool.cbegin(), _pool.cend(), animationState);
-    
-    if (iterator == _pool.end())
-    {
-        _pool.push_back(animationState);
-    }
-    
-    animationState->clear();
-}
-
-void DBAnimationState::clearObjects()
-{
-    for (size_t i = 0, l = _pool.size(); i < l; ++i)
-    {
-        _pool[i]->clear();
-        delete _pool[i];
-    }
-    
-    _pool.clear();
+    this->_timelineStateMgr = DBTimelineStateMgr::create();
+    CC_SAFE_RETAIN(_timelineStateMgr);
+    clear();
+    return true;
 }
 
 bool DBAnimationState::getIsComplete() const
@@ -78,6 +62,16 @@ int DBAnimationState::getLayer() const
     return _layer;
 }
 
+void DBAnimationState::setLayer(int layer)
+{
+    this->_layer = layer;
+}
+
+void DBAnimationState::setGroup(const std::string &group)
+{
+    this->_group = group;
+}
+
 float DBAnimationState::getTotalTime() const
 {
     return _totalTime * 0.001f;
@@ -97,6 +91,11 @@ const AnimationData* DBAnimationState::getClip() const
 {
     return _clip;
 }
+
+const DBAnimationState::FadeState DBAnimationState::getFadeState() const
+{
+    return this->_fadeState;
+};
 
 DBAnimationState* DBAnimationState::setAdditiveBlending(bool value)
 {
@@ -247,10 +246,12 @@ DBAnimationState* DBAnimationState::removeBoneMask(const std::string &boneName, 
 DBAnimationState::DBAnimationState() :
 _clip(nullptr)
 ,_armature(nullptr)
+,_timelineStateMgr(nullptr)
 {}
 DBAnimationState::~DBAnimationState()
 {
     clear();
+    CC_SAFE_RELEASE_NULL(_timelineStateMgr);
 }
 
 void DBAnimationState::fadeIn(DBArmature *armature, AnimationData *clip, float fadeTotalTime, float timeScale, int playTimes, bool pausePlayhead)
@@ -315,9 +316,10 @@ DBAnimationState* DBAnimationState::fadeOut(float fadeTotalTime, bool pausePlayh
     }
     else
     {
-        for (size_t i = 0, l = _timelineStateList.size(); i < l; ++i)
+        cocos2d::Vector<DBTimelineState*> timelineStateList = this->_timelineStateMgr->getAllTimelineState();
+        for (size_t i = 0, l = timelineStateList.size(); i < l; ++i)
         {
-            _timelineStateList[i]->fadeOut();
+            timelineStateList.at(i)->fadeOut();
         }
     }
     
@@ -444,15 +446,15 @@ bool DBAnimationState::advanceTime(float passedTime)
 
 void DBAnimationState::updateTimelineStates()
 {
-    for (size_t i = _timelineStateList.size(); i--;)
-    {
-        DBTimelineState *timelineState = _timelineStateList[i];
-        if (!_armature->getBone(timelineState->name))
-        {
-            removeTimelineState(timelineState);
-        }
-    }
-    
+//    for (size_t i = _timelineStateList.size(); i--;)
+//    {
+//        DBTimelineState *timelineState = _timelineStateList[i];
+//        if (!_armature->getBone(timelineState->getName()))
+//        {
+//            removeTimelineState(timelineState);
+//        }
+//    }
+
     for (size_t i = _slotTimelineStateList.size(); i--;)
     {
         DBSlotTimelineState *timelineState = _slotTimelineStateList[i];
@@ -464,16 +466,17 @@ void DBAnimationState::updateTimelineStates()
     
     if (_boneMasks.size() > 0)
     {
-        for (size_t i = _timelineStateList.size(); i--;)
-        {
-            DBTimelineState *timelineState = _timelineStateList[i];
-            auto iterator = std::find(_mixingTransforms.cbegin(), _mixingTransforms.cend(), timelineState->name);
-            
-            if (iterator == _mixingTransforms.cend())
-            {
-                removeTimelineState(timelineState);
-            }
-        }
+//        cocos2d::Vector<DBTimelineState*> timelineStateList = this->_timelineStateMgr->getAllTimelineState();
+//        for (size_t i = timelineStateList.size(); i--;)
+//        {
+//            DBTimelineState *timelineState = timelineStateList.at(i);
+//            auto iterator = std::find(_mixingTransforms.cbegin(), _mixingTransforms.cend(), timelineState->getName());
+//            
+//            if (iterator == _mixingTransforms.cend())
+//            {
+//                removeTimelineState(timelineState);
+//            }
+//        }
         
         for (size_t i = 0, l = _mixingTransforms.size(); i < l; ++i)
         {
@@ -500,28 +503,23 @@ void DBAnimationState::addTimelineState(const std::string &timelineName)
     DBBone *bone = _armature->getBone(timelineName);
     if (bone)
     {
-        for (size_t i = 0, l = _timelineStateList.size(); i < l; ++i)
+        cocos2d::Vector<DBTimelineState*> timelineStateList = this->_timelineStateMgr->getAllTimelineState();
+        for (size_t i = 0, l = timelineStateList.size(); i < l; ++i)
         {
-            if (_timelineStateList[i]->name == timelineName)
+            if (timelineStateList.at(i)->getName() == timelineName)
             {
                 return;
             }
         }
-        
-        DBTimelineState *timelineState = DBTimelineState::borrowObject();
+
+        DBTimelineState *timelineState = this->_timelineStateMgr->getUnusedTimelineState();
         timelineState->fadeIn(bone, this, _clip->getTimeline(timelineName));
-        _timelineStateList.push_back(timelineState);
     }
 }
 
 void DBAnimationState::removeTimelineState(DBTimelineState *timelineState)
 {
-    auto iterator = std::find(_timelineStateList.begin(), _timelineStateList.end(), timelineState);
-    if (iterator != _timelineStateList.end())
-    {
-        DBTimelineState::returnObject(timelineState);
-        _timelineStateList.erase(iterator);
-    }
+    _timelineStateMgr->removeTimelineState(timelineState);
 }
 
 void DBAnimationState::addSlotTimelineState(const std::string &timelineName)
@@ -726,11 +724,12 @@ void DBAnimationState::advanceTimelinesTime(float passedTime)
     // update timeline
     _isComplete = isThisComplete;
     float progress = _time * 1000.f / (float)(_totalTime);
+    cocos2d::Vector<DBTimelineState*> timelineStateList = this->_timelineStateMgr->getAllTimelineState();
     
-    for (size_t i = 0, l = _timelineStateList.size(); i < l; ++i)
+    for (size_t i = 0, l = timelineStateList.size(); i < l; ++i)
     {
-        _timelineStateList[i]->update(progress);
-        _isComplete = _timelineStateList[i]->getIsComplete() && _isComplete;
+        timelineStateList.at(i)->update(progress);
+        _isComplete = timelineStateList.at(i)->getIsComplete() && _isComplete;
     }
     
     // update main timeline
@@ -871,12 +870,7 @@ void DBAnimationState::hideBones()
 void DBAnimationState::clear()
 {
     // reverse delete
-    for (size_t i = _timelineStateList.size(); i--;)
-    {
-        DBTimelineState::returnObject(_timelineStateList[i]);
-    }
-    
-    _timelineStateList.clear();
+    this->_timelineStateMgr->removeAllTimelineState();
     _mixingTransforms.clear();
     _armature = nullptr;
     _clip = nullptr;
@@ -884,11 +878,7 @@ void DBAnimationState::clear()
 
 void DBAnimationState::resetTimelineStateList()
 {
-    for (size_t i = _timelineStateList.size(); i--;)
-    {
-        DBTimelineState::returnObject(_timelineStateList[i]);
-    }
-    _timelineStateList.clear();
+    this->_timelineStateMgr->removeAllTimelineState();
     
     for (size_t i = _slotTimelineStateList.size(); i--;)
     {

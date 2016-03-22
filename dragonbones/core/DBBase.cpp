@@ -96,5 +96,72 @@ void DBBase::updateGlobal( Transform &transform, Matrix &matrix )
     global.toMatrix(globalTransformMatrix, true);
 }
 
+bool DBBase::getInheritRotation()
+{
+    return this->inheritRotation;
+}
+
+void DBBase::setInheritRotation(bool inheritRotation)
+{
+    this->inheritRotation = inheritRotation;
+}
+
+bool DBBase::getInheritScale()
+{
+    return this->inheritScale;
+}
+void DBBase::setInheritScale(bool inheritScale)
+{
+    this->inheritScale = inheritScale;
+}
+
+bool DBBase::getInheritTranslation()
+{
+    return this->inheritTranslation;
+}
+
+void DBBase::setInheritTranslation(bool inheritTranslation)
+{
+    this->inheritTranslation = inheritTranslation;
+}
+
+const Transform& DBBase::getGlobalTransform() const
+{
+    return this->global;
+}
+void DBBase::setGlobalTransform(const Transform& global)
+{
+    this->global = global;
+}
+
+const Transform& DBBase::getOriginTransform() const
+{
+    return this->origin;
+}
+void DBBase::setOriginTransform(const Transform& origin)
+{
+    this->origin = origin;
+}
+
+const Transform& DBBase::getOffsetTransform() const
+{
+    return this->offset;
+}
+
+void DBBase::setOffsetTransform(const Transform& offset)
+{
+    this->offset = offset;
+}
+
+const Matrix& DBBase::getGlobalTransformMatrix() const
+{
+    return this->globalTransformMatrix;
+}
+
+void DBBase::setGlobalTransformMatrix(const Matrix& matrix)
+{
+    this->globalTransformMatrix = matrix;
+}
+
 
 NAME_SPACE_DRAGON_BONES_END

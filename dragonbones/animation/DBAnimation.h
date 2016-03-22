@@ -98,10 +98,9 @@ protected:
     
     std::vector<std::string> _animationList;
     std::vector<AnimationData*> _animationDataList;
-    std::vector<DBAnimationState*> _animationStateList;
     
     DBArmature *_armature;
-    DBAnimationState *_lastAnimationState;
+    DBAnimationState *_animationState;
     
     
 private:

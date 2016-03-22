@@ -16,6 +16,86 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
+
+template <class T>
+class TemplateTimeline
+{
+public:
+    
+    bool init () {return true;};
+    TemplateTimeline ()
+    {
+        _timelineUsed.clear();
+        _timelineFreed.clear();
+    }
+    
+    virtual ~TemplateTimeline()
+    {
+        _timelineUsed.clear();
+        _timelineFreed.clear();
+    }
+    
+    T* getUnusedTimelineState()
+    {
+        T* timeline = nullptr;
+        if (_timelineFreed.size() > 0)
+        {
+            timeline = _timelineFreed.at(0);
+            timeline->retain();
+            _timelineFreed.erase(0);
+        }
+        
+        if (!timeline)
+        {
+            timeline = T::create();
+            timeline->retain();
+        }
+        
+        _timelineUsed.pushBack(timeline);
+        timeline->release();
+        return timeline;
+    }
+    
+    void removeTimelineState(T* timeline)
+    {
+        if (!timeline)
+        {
+            return;
+        }
+        
+        timeline->retain();
+        _timelineUsed.eraseObject(timeline);
+        _timelineFreed.pushBack(timeline);
+        timeline->release();
+        timeline->clear();
+    }
+
+    void removeAllTimelineState()
+    {
+        _timelineFreed.pushBack(_timelineUsed);
+        
+        for (auto _timeline : _timelineUsed)
+        {
+            _timeline->clear();
+        }
+        
+        _timelineUsed.clear();
+    }
+    
+    cocos2d::Vector<T*>& getAllTimelineState() { return _timelineUsed; }
+private:
+    /**
+     * Used list of DBTimelineStates
+     */
+    cocos2d::Vector<T*> _timelineUsed;
+    /**
+     * free list of DBTimelineStates
+     */
+    cocos2d::Vector<T*> _timelineFreed;
+    
+};
+
+
 class DBBase
 {
 public:
@@ -33,7 +113,29 @@ public:
     virtual void calculateParentTransform(Transform &transform, Matrix &matrix);
     virtual void updateGlobal(Transform &transform, Matrix &matrix);
     
-public:
+    bool getInheritRotation();
+    void setInheritRotation(bool inheritRotation);
+    
+    bool getInheritScale();
+    void setInheritScale(bool inheritScale);
+    
+    bool getInheritTranslation();
+    void setInheritTranslation(bool inheritTranslation);
+    
+    const Transform& getGlobalTransform() const;
+    void setGlobalTransform(const Transform& global);
+    
+    const Transform& getOriginTransform() const;
+    void setOriginTransform(const Transform& origin);
+    
+    const Transform& getOffsetTransform() const;
+    void setOffsetTransform(const Transform& offset);
+    
+    const Matrix& getGlobalTransformMatrix() const;
+    void setGlobalTransformMatrix(const Matrix& matrix);
+
+    
+protected:
     bool inheritRotation;
     bool inheritScale;
     bool inheritTranslation;
@@ -45,10 +147,6 @@ public:
     Matrix globalTransformMatrix;
     
     void *userData;
-    
-    
-    
-protected:
     
     cocos2d::Node *_armature;
     cocos2d::Node *_parentBone;

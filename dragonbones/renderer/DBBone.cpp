@@ -41,14 +41,25 @@ bool DBBone::initWithBoneData(BoneData* boneData)
 DBBone::DBBone()
 : _boneData (nullptr)
 , _pArmature (nullptr)
+, displayController("")
+,applyOffsetTranslationToChild(true)
+,applyOffsetRotationToChild(true)
+,applyOffsetScaleToChild(false)
+,_isColorChanged(false)
+,_needUpdate(2)
+,_tween()
 {
-    
+
+    inheritScale = false;
+    _timelineStateList.clear();
+    _childBones.clear();
 }
 
 
 DBBone::~DBBone()
 {
-    
+    _timelineStateList.clear();
+    _childBones.clear();
 }
 
 
@@ -247,10 +258,10 @@ void DBBone::blendingTimeline()
     if (i == 1)
     {
         DBTimelineState *timelineState = _timelineStateList[0];
-        const Transform &transform = timelineState->_transform;
-        const Point &pivot = timelineState->_pivot;
-        timelineState->_weight = timelineState->_animationState->getCurrentWeight();
-        const float weight = timelineState->_weight;
+        const Transform &transform = timelineState->getTransform();
+        const Point &pivot = timelineState->getPivot();
+        timelineState->setWeight(timelineState->getAnimationState()->getCurrentWeight());
+        const float weight = timelineState->getWeight();
         _tween.x = transform.x * weight;
         _tween.y = transform.y * weight;
         _tween.skewX = transform.skewX * weight;
@@ -262,7 +273,7 @@ void DBBone::blendingTimeline()
     }
     else if (i > 1)
     {
-        int prevLayer = _timelineStateList[i - 1]->_animationState->getLayer();
+        int prevLayer = _timelineStateList[i - 1]->getAnimationState()->getLayer();
         int currentLayer = 0;
         float weigthLeft = 1.f;
         float layerTotalWeight = 0.f;
@@ -278,13 +289,13 @@ void DBBone::blendingTimeline()
         while (i--)
         {
             DBTimelineState *timelineState = _timelineStateList[i];
-            currentLayer = timelineState->_animationState->getLayer();
+            currentLayer = timelineState->getAnimationState()->getLayer();
             
             if (prevLayer != currentLayer)
             {
                 if (layerTotalWeight >= weigthLeft)
                 {
-                    timelineState->_weight = 0;
+                    timelineState->setWeight(0);
                     break;
                 }
                 else
@@ -294,14 +305,14 @@ void DBBone::blendingTimeline()
             }
             
             prevLayer = currentLayer;
-            timelineState->_weight = timelineState->_animationState->getCurrentWeight() * weigthLeft;
-            const float weight = timelineState->_weight;
+            timelineState->setWeight(timelineState->getAnimationState()->getCurrentWeight() * weigthLeft);
+            const float weight = timelineState->getWeight();
             
             //timelineState
-            if (weight && timelineState->_blendEnabled)
+            if (weight && timelineState->getBlendEnabled())
             {
-                const Transform &transform = timelineState->_transform;
-                const Point &pivot = timelineState->_pivot;
+                const Transform &transform = timelineState->getTransform();
+                const Point &pivot = timelineState->getPivot();
                 x += transform.x * weight;
                 y += transform.y * weight;
                 skewX += transform.skewX * weight;
@@ -348,7 +359,7 @@ void DBBone::calculateRelativeParentTransform()
 // static method
 bool DBBone::sortState(const DBTimelineState *a, const DBTimelineState *b)
 {
-    return a->_animationState->getLayer() < b->_animationState->getLayer();
+    return a->getAnimationState()->getLayer() < b->getAnimationState()->getLayer();
 }
 
 void DBBone::addState(DBTimelineState *timelineState)
