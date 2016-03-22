@@ -11,6 +11,7 @@
 
 #include "DragonBones.h"
 #include "geoms/ColorTransform.h"
+#include "core/DBBase.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -24,20 +25,41 @@ class DBAnimation;
 class Frame;
 class SlotFrame;
 
+class DBSlotTimelineState;
+
+class DBSlotTimelineStateMgr
+: public TemplateTimeline<DBSlotTimelineState>
+, public cocos2d::Ref
+{
+public:
+    
+    static DBSlotTimelineStateMgr* create();
+    bool init ();
+    DBSlotTimelineStateMgr ();
+    ~DBSlotTimelineStateMgr();
+    
+private:
+    
+};
+
+
 class DBSlotTimelineState
+: public cocos2d::Ref
 {
     enum class UpdateState {UPDATE, UPDATE_ONCE, UNUPDATE};
     
 public:
-    static std::vector<DBSlotTimelineState*> _pool;
-    static DBSlotTimelineState* borrowObject();
-    static void returnObject(DBSlotTimelineState *timelineState);
-    static void clearObjects();
+    
+    static DBSlotTimelineState* create();
+    virtual bool init();
     
     DBSlotTimelineState();
     virtual ~DBSlotTimelineState();
     
     void fadeIn(DBSlot *slot, DBAnimationState *animationState, SlotTimeline *timelineData);
+    const std::string & getName();
+    void resetTimelineState();
+    
     
 private:
     void update(float progress);
@@ -45,12 +67,9 @@ private:
     void updateToNextFrame(int currentPlayTimes);
     void updateTween();
     void updateSingleFrame();
-    void clear();
-    
-public:
-    std::string name;
     
 private:
+    std::string name;
     float _weight;
     bool _blendEnabled;
     bool _isComplete;

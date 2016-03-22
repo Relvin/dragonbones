@@ -391,17 +391,18 @@ void DBBone::invalidUpdate()
 
 void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelineState, DBAnimationState *animationState, bool isCross)
 {
-#if 0
+
     // modify by Relvin need todo
     bool displayControl =
     animationState->displayControl &&
     (displayController.empty() || displayController == animationState->name) &&
-    animationState->getMixingTransform(name);
+    animationState->getMixingTransform(this->getName());
     
     // && timelineState->_weight > 0
     // TODO: 需要修正混合动画干扰关键帧数据的问题，如何正确高效的判断混合动画？
     if (displayControl)
     {
+        #if 0
         
         if (!frame->event.empty() && _armature->_eventDispatcher->hasEvent(EventData::EventType::BONE_FRAME_EVENT))
         {
@@ -435,8 +436,9 @@ void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelin
                 }
             }
         }
+        #endif
     }
-#endif
+
 }
 
 

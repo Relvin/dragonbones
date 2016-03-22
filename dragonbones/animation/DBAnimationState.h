@@ -20,6 +20,7 @@ class DBTimelineState;
 class DBArmature;
 class DBAnimation;
 class DBTimelineStateMgr;
+class DBSlotTimelineStateMgr;
 
 class DBAnimationState
 : public cocos2d::Ref
@@ -92,7 +93,6 @@ public:
     void advanceTimelinesTime(float passedTime);
     void updateMainTimeline(bool isThisComplete);
     void hideBones();
-    void clear();
     
 public:
     bool additiveBlending;
@@ -129,8 +129,9 @@ private:
     FadeState _fadeState;
     
     DBTimelineStateMgr* _timelineStateMgr;
+    DBSlotTimelineStateMgr* _slotTimelineStateMgr;
     std::vector<std::string> _mixingTransforms;
-    std::vector<DBSlotTimelineState*> _slotTimelineStateList;
+//    std::vector<DBSlotTimelineState*> _slotTimelineStateList;
     std::vector<std::string> _boneMasks;
     
     AnimationData *_clip;

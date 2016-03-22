@@ -20,6 +20,40 @@
 #include "animation/DBAnimationState.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
+
+
+DBSlotTimelineStateMgr::DBSlotTimelineStateMgr()
+{
+    
+}
+
+DBSlotTimelineStateMgr::~DBSlotTimelineStateMgr()
+{
+    
+}
+
+DBSlotTimelineStateMgr* DBSlotTimelineStateMgr::create()
+{
+    DBSlotTimelineStateMgr *timelineStataMgr = new (std::nothrow) DBSlotTimelineStateMgr();
+    if (timelineStataMgr && timelineStataMgr->init())
+    {
+        timelineStataMgr->autorelease();
+        return timelineStataMgr;
+    }
+    CC_SAFE_DELETE(timelineStataMgr);
+    return nullptr;
+}
+
+bool DBSlotTimelineStateMgr::init()
+{
+    if (!TemplateTimeline<DBSlotTimelineState>::init())
+    {
+        return false;
+    }
+    return true;
+}
+
+#if 0
 std::vector<DBSlotTimelineState*> DBSlotTimelineState::_pool;
 
 DBSlotTimelineState* DBSlotTimelineState::borrowObject()
@@ -55,11 +89,29 @@ void DBSlotTimelineState::clearObjects()
     _pool.clear();
 }
 
+#endif
+DBSlotTimelineState* DBSlotTimelineState::create()
+{
+    DBSlotTimelineState *timelineState = new (std::nothrow) DBSlotTimelineState();
+    if (timelineState && timelineState->init())
+    {
+        timelineState->autorelease();
+        return timelineState;
+    }
+    CC_SAFE_DELETE(timelineState);
+    return nullptr;
+}
+
+bool DBSlotTimelineState::init()
+{
+    return true;
+}
+
 DBSlotTimelineState::DBSlotTimelineState() : _tweenCurve(nullptr)
 {}
 DBSlotTimelineState::~DBSlotTimelineState()
 {
-    clear();
+    resetTimelineState();
 }
 
 void DBSlotTimelineState::fadeIn(DBSlot *slot, DBAnimationState *animationState, SlotTimeline *timelineData)
@@ -494,7 +546,7 @@ void DBSlotTimelineState::updateSingleFrame()
     }
 }
 
-void DBSlotTimelineState::clear()
+void DBSlotTimelineState::resetTimelineState()
 {
     _slot = nullptr;
     _armature = nullptr;
@@ -502,4 +554,10 @@ void DBSlotTimelineState::clear()
     _animationState = nullptr;
     _timelineData = nullptr;
 }
+
+const std::string& DBSlotTimelineState::getName()
+{
+    return this->name;
+}
+
 NAME_SPACE_DRAGON_BONES_END

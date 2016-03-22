@@ -124,7 +124,7 @@ name("")
 
 DBTimelineState::~DBTimelineState()
 {
-    clear();
+    resetTimelineState();
 }
 
 void DBTimelineState::fadeIn(DBBone *bone, DBAnimationState *animationState, TransformTimeline *timeline)
@@ -603,7 +603,7 @@ void DBTimelineState::updateSingleFrame()
     }
 }
 
-void DBTimelineState::clear()
+void DBTimelineState::resetTimelineState()
 {
     if (_bone)
     {

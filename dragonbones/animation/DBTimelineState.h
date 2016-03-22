@@ -62,7 +62,7 @@ public:
     void updateToNextFrame(int currentPlayTimes);
     void updateTween();
     void updateSingleFrame();
-    void clear();
+    void resetTimelineState();
     
     // property
     bool getIsComplete() const { return _isComplete; }

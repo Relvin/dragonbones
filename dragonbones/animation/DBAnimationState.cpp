@@ -38,7 +38,9 @@ bool DBAnimationState::init()
 {
     this->_timelineStateMgr = DBTimelineStateMgr::create();
     CC_SAFE_RETAIN(_timelineStateMgr);
-    clear();
+    this->_slotTimelineStateMgr = DBSlotTimelineStateMgr::create();
+    CC_SAFE_RETAIN(_slotTimelineStateMgr);
+    resetTimelineStateList();
     return true;
 }
 
@@ -247,11 +249,13 @@ DBAnimationState::DBAnimationState() :
 _clip(nullptr)
 ,_armature(nullptr)
 ,_timelineStateMgr(nullptr)
+,_slotTimelineStateMgr (nullptr)
 {}
 DBAnimationState::~DBAnimationState()
 {
-    clear();
+    resetTimelineStateList();
     CC_SAFE_RELEASE_NULL(_timelineStateMgr);
+    CC_SAFE_RELEASE_NULL(_slotTimelineStateMgr);
 }
 
 void DBAnimationState::fadeIn(DBArmature *armature, AnimationData *clip, float fadeTotalTime, float timeScale, int playTimes, bool pausePlayhead)
@@ -446,37 +450,9 @@ bool DBAnimationState::advanceTime(float passedTime)
 
 void DBAnimationState::updateTimelineStates()
 {
-//    for (size_t i = _timelineStateList.size(); i--;)
-//    {
-//        DBTimelineState *timelineState = _timelineStateList[i];
-//        if (!_armature->getBone(timelineState->getName()))
-//        {
-//            removeTimelineState(timelineState);
-//        }
-//    }
-
-    for (size_t i = _slotTimelineStateList.size(); i--;)
-    {
-        DBSlotTimelineState *timelineState = _slotTimelineStateList[i];
-        if (!_armature->getSlot(timelineState->name))
-        {
-            removeSlotTimelineState(timelineState);
-        }
-    }
     
     if (_boneMasks.size() > 0)
     {
-//        cocos2d::Vector<DBTimelineState*> timelineStateList = this->_timelineStateMgr->getAllTimelineState();
-//        for (size_t i = timelineStateList.size(); i--;)
-//        {
-//            DBTimelineState *timelineState = timelineStateList.at(i);
-//            auto iterator = std::find(_mixingTransforms.cbegin(), _mixingTransforms.cend(), timelineState->getName());
-//            
-//            if (iterator == _mixingTransforms.cend())
-//            {
-//                removeTimelineState(timelineState);
-//            }
-//        }
         
         for (size_t i = 0, l = _mixingTransforms.size(); i < l; ++i)
         {
@@ -527,27 +503,23 @@ void DBAnimationState::addSlotTimelineState(const std::string &timelineName)
     DBSlot *slot = _armature->getSlot(timelineName);
     if (slot /*&& slot->getDisplayList().size() > 0*/)
     {
-        for (size_t i = 0, l = _slotTimelineStateList.size(); i < l; ++i)
+        
+        cocos2d::Vector<DBSlotTimelineState*> timelineStateList = this->_slotTimelineStateMgr->getAllTimelineState();
+        for (size_t i = 0, l = timelineStateList.size(); i < l; ++i)
         {
-            if (_slotTimelineStateList[i]->name == timelineName)
+            if (timelineStateList.at(i)->getName() == timelineName)
             {
                 return;
             }
         }
-        DBSlotTimelineState *timelineState = DBSlotTimelineState::borrowObject();
+        DBSlotTimelineState *timelineState = _slotTimelineStateMgr->getUnusedTimelineState();
         timelineState->fadeIn(slot, this, _clip->getSlotTimeline(timelineName));
-        _slotTimelineStateList.push_back(timelineState);
     }
 }
 
 void DBAnimationState::removeSlotTimelineState(DBSlotTimelineState *timelineState)
 {
-    auto iterator = std::find(_slotTimelineStateList.begin(), _slotTimelineStateList.end(), timelineState);
-    if (iterator != _slotTimelineStateList.end())
-    {
-        DBSlotTimelineState::returnObject(timelineState);
-        _slotTimelineStateList.erase(iterator);
-    }
+    _slotTimelineStateMgr->removeTimelineState(timelineState);
 }
 
 void DBAnimationState::advanceFadeTime(float passedTime)
@@ -867,24 +839,15 @@ void DBAnimationState::hideBones()
     }
 }
 
-void DBAnimationState::clear()
-{
-    // reverse delete
-    this->_timelineStateMgr->removeAllTimelineState();
-    _mixingTransforms.clear();
-    _armature = nullptr;
-    _clip = nullptr;
-}
-
 void DBAnimationState::resetTimelineStateList()
 {
     this->_timelineStateMgr->removeAllTimelineState();
     
-    for (size_t i = _slotTimelineStateList.size(); i--;)
-    {
-        DBSlotTimelineState::returnObject(_slotTimelineStateList[i]);
-    }
-    _slotTimelineStateList.clear();
+    this->_slotTimelineStateMgr->removeAllTimelineState();
+    
+    _mixingTransforms.clear();
+    _armature = nullptr;
+    _clip = nullptr;
 }
 
 NAME_SPACE_DRAGON_BONES_END

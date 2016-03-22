@@ -67,7 +67,7 @@ public:
         _timelineUsed.eraseObject(timeline);
         _timelineFreed.pushBack(timeline);
         timeline->release();
-        timeline->clear();
+        timeline->resetTimelineState();
     }
 
     void removeAllTimelineState()
@@ -76,7 +76,7 @@ public:
         
         for (auto _timeline : _timelineUsed)
         {
-            _timeline->clear();
+            _timeline->resetTimelineState();
         }
         
         _timelineUsed.clear();

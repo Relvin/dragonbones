@@ -240,7 +240,7 @@ DBAnimationState* DBAnimation::gotoAndPlay(
         _animationState = DBAnimationState::create();
         CC_SAFE_RETAIN(_animationState);
     }
-    _animationState->clear();
+    _animationState->resetTimelineStateList();
     _animationState->setLayer(layer);
     _animationState->setGroup(group);
     _animationState->autoTween = autoTween;
@@ -384,7 +384,6 @@ void DBAnimation::resetAnimationStateList()
     if (_animationState)
     {
         _animationState->resetTimelineStateList();
-        _animationState->clear();
 //        DBAnimationState::returnObject(animationState);
     }
 }
