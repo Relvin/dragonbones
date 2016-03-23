@@ -8,7 +8,9 @@
 
 #include "DBBone.h"
 #include "DBArmature.h"
+#include "DBSlot.h"
 #include "animation/DBAnimationState.h"
+#include "events/DBEventData.h"
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 DBBone* DBBone::create(BoneData* boneData)
@@ -53,6 +55,7 @@ DBBone::DBBone()
     inheritScale = false;
     _timelineStateList.clear();
     _childBones.clear();
+    _slotList.clear();
 }
 
 
@@ -60,6 +63,7 @@ DBBone::~DBBone()
 {
     _timelineStateList.clear();
     _childBones.clear();
+    _slotList.clear();
 }
 
 
@@ -72,8 +76,6 @@ void DBBone::addChildBone(DBBone *child)
     {
         _childBones.reserve(4);
     }
-    
-    
     
     if (_childBones.getIndex(child) == cocos2d::CC_INVALID_INDEX)
     {
@@ -99,10 +101,38 @@ void DBBone::removeChildBone(DBBone *bone, bool recursion)
         
         bone->setParentBone(nullptr);
         
-//        bone->getDisplayManager()->setCurrentDecorativeDisplay(nullptr);
-        
         _childBones.eraseObject(bone);
     }
+}
+
+
+void DBBone::addSlot(DBSlot* slot)
+{
+    if (!slot)
+    {
+        return;
+    }
+    if(_slotList.empty())
+    {
+        _slotList.reserve(4);
+    }
+    
+    if (_slotList.getIndex(slot) == cocos2d::CC_INVALID_INDEX)
+    {
+        _slotList.pushBack(slot);
+        slot->setParentBone(this);
+    }
+    
+}
+
+void DBBone::removeSlot(DBSlot* slot)
+{
+    if (_slotList.empty() || _slotList.getIndex(slot) != cocos2d::CC_INVALID_INDEX)
+    {
+        return;
+    }
+    slot->setParentBone(nullptr);
+    _slotList.eraseObject(slot);
 }
 
 void DBBone::setArmature(DBArmature *armature)
@@ -257,7 +287,7 @@ void DBBone::blendingTimeline()
     size_t i = _timelineStateList.size();
     if (i == 1)
     {
-        DBTimelineState *timelineState = _timelineStateList[0];
+        DBTimelineState *timelineState = _timelineStateList.at(0);
         const Transform &transform = timelineState->getTransform();
         const Point &pivot = timelineState->getPivot();
         timelineState->setWeight(timelineState->getAnimationState()->getCurrentWeight());
@@ -273,7 +303,7 @@ void DBBone::blendingTimeline()
     }
     else if (i > 1)
     {
-        int prevLayer = _timelineStateList[i - 1]->getAnimationState()->getLayer();
+        int prevLayer = _timelineStateList.at(i -1)->getAnimationState()->getLayer();
         int currentLayer = 0;
         float weigthLeft = 1.f;
         float layerTotalWeight = 0.f;
@@ -288,7 +318,7 @@ void DBBone::blendingTimeline()
         
         while (i--)
         {
-            DBTimelineState *timelineState = _timelineStateList[i];
+            DBTimelineState *timelineState = _timelineStateList.at(i);
             currentLayer = timelineState->getAnimationState()->getLayer();
             
             if (prevLayer != currentLayer)
@@ -368,7 +398,7 @@ void DBBone::addState(DBTimelineState *timelineState)
     
     if (iterator == _timelineStateList.cend())
     {
-        _timelineStateList.push_back(timelineState);
+        _timelineStateList.pushBack(timelineState);
         std::sort(_timelineStateList.begin() , _timelineStateList.end() , sortState);
     }
 }
@@ -392,7 +422,6 @@ void DBBone::invalidUpdate()
 void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelineState, DBAnimationState *animationState, bool isCross)
 {
 
-    // modify by Relvin need todo
     bool displayControl =
     animationState->displayControl &&
     (displayController.empty() || displayController == animationState->name) &&
@@ -402,41 +431,41 @@ void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelin
     // TODO: 需要修正混合动画干扰关键帧数据的问题，如何正确高效的判断混合动画？
     if (displayControl)
     {
-        #if 0
         
-        if (!frame->event.empty() && _armature->_eventDispatcher->hasEvent(EventData::EventType::BONE_FRAME_EVENT))
+        if (!frame->event.empty())
         {
-            EventData *eventData = EventData::borrowObject(EventData::EventType::BONE_FRAME_EVENT);
-            eventData->armature = _armature;
-            eventData->bone = this;
-            eventData->animationState = animationState;
-            eventData->frameLabel = frame->event;
-            eventData->frame = frame;
-            _armature->_eventDataList.push_back(eventData);
+            
+            DBEventData *eventData = _pArmature->getEventDataManager()->getUnusedEventData();
+            eventData->setType(DBEventData::EventType::BONE_FRAME_EVENT);
+            eventData->setArmature(_pArmature);
+            eventData->setBone(this);
+            eventData->setAnimationState(animationState);
+            eventData->setFrameLabel(frame->event);
+            eventData->setFrame(frame);
+            
         }
         
-        if (!frame->sound.empty() && Armature::soundEventDispatcher && Armature::soundEventDispatcher->hasEvent(EventData::EventType::SOUND))
-        {
-            EventData *eventData = EventData::borrowObject(EventData::EventType::SOUND);
-            eventData->armature = _armature;
-            eventData->bone = this;
-            eventData->animationState = animationState;
-            eventData->sound = frame->sound;
-            Armature::soundEventDispatcher->dispatchEvent(eventData);
-            EventData::returnObject(eventData);
-        }
+//        if (!frame->sound.empty() && Armature::soundEventDispatcher && Armature::soundEventDispatcher->hasEvent(EventData::EventType::SOUND))
+//        {
+//            EventData *eventData = EventData::borrowObject(EventData::EventType::SOUND);
+//            eventData->armature = _pArmature;
+//            eventData->bone = this;
+//            eventData->animationState = animationState;
+//            eventData->sound = frame->sound;
+//            Armature::soundEventDispatcher->dispatchEvent(eventData);
+//            EventData::returnObject(eventData);
+//        }
         
-        if (!frame->action.empty())
-        {
-            for (size_t i = 0, l = _slotList.size(); i < l; ++i)
-            {
-                if (_slotList[i]->_childArmature)
-                {
-                    _slotList[i]->_childArmature->_animation->gotoAndPlay(frame->action);
-                }
-            }
-        }
-        #endif
+//        if (!frame->action.empty())
+//        {
+//            for (size_t i = 0, l = _slotList.size(); i < l; ++i)
+//            {
+//                if (_slotList[i]->_childArmature)
+//                {
+//                    _slotList[i]->_childArmature->_animation->gotoAndPlay(frame->action);
+//                }
+//            }
+//        }
     }
 
 }

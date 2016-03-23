@@ -17,43 +17,139 @@
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 
+
+template <class T>
+class MultData {
+public:
+    bool init () {return true;};
+    MultData ()
+    {
+        _dataUsed.clear();
+        _dataFreed.clear();
+    }
+    
+    virtual ~MultData()
+    {
+        _dataUsed.clear();
+        _dataFreed.clear();
+    }
+    
+    typename cocos2d::Vector<T*>::iterator getUsedVectorBegin()
+    {
+        return _dataUsed.begin();
+    }
+    
+    typename cocos2d::Vector<T*>::iterator getUsedVectorEnd()
+    {
+        return _dataUsed.end();
+    }
+    
+    bool empty()
+    {
+        return _dataUsed.empty();
+    }
+    
+    T* getUnusedData()
+    {
+        T* data = nullptr;
+        if (_dataFreed.size() > 0)
+        {
+            data = _dataFreed.at(0);
+            data->retain();
+            _dataFreed.erase(0);
+        }
+        
+        if (!data)
+        {
+            data = T::create();
+            data->retain();
+        }
+        
+        _dataUsed.pushBack(data);
+        data->release();
+        return data;
+    }
+    typename cocos2d::Vector<T*>::iterator removeDataFromUsed(typename cocos2d::Vector<T*>::iterator iter)
+    {
+        T * data = nullptr;
+        if (iter != _dataUsed.end())
+        {
+            data = *iter;
+            data->retain();
+            iter = _dataUsed.erase(iter);
+            _dataFreed.pushBack(data);
+            data->release();
+        }
+        return iter;
+    }
+    
+    void removeDataFromUsed(T* data)
+    {
+        if (!data)
+        {
+            return;
+        }
+        
+        data->retain();
+        _dataUsed.eraseObject(data);
+        _dataFreed.pushBack(data);
+        data->release();
+    }
+    
+    void removeAllDataFromUsed()
+    {
+        _dataFreed.pushBack(_dataUsed);
+        _dataUsed.clear();
+    }
+    
+    cocos2d::Vector<T*>& getAllData() { return _dataUsed; }
+private:
+    /**
+     * Used list of DBTimelineStates
+     */
+    cocos2d::Vector<T*> _dataUsed;
+    /**
+     * free list of DBTimelineStates
+     */
+    cocos2d::Vector<T*> _dataFreed;
+    
+};
+
 template <class T>
 class TemplateTimeline
+: public MultData<T>
 {
 public:
     
     bool init () {return true;};
     TemplateTimeline ()
     {
-        _timelineUsed.clear();
-        _timelineFreed.clear();
+
     }
     
     virtual ~TemplateTimeline()
     {
-        _timelineUsed.clear();
-        _timelineFreed.clear();
+    }
+    
+    typename cocos2d::Vector<T*>::iterator getUsedVectorBegin()
+    {
+        return MultData<T>::getUsedVectorBegin();
+    }
+    
+    typename cocos2d::Vector<T*>::iterator getUsedVectorEnd()
+    {
+        return MultData<T>::getUsedVectorEnd();
     }
     
     T* getUnusedTimelineState()
     {
-        T* timeline = nullptr;
-        if (_timelineFreed.size() > 0)
-        {
-            timeline = _timelineFreed.at(0);
-            timeline->retain();
-            _timelineFreed.erase(0);
-        }
-        
-        if (!timeline)
-        {
-            timeline = T::create();
-            timeline->retain();
-        }
-        
-        _timelineUsed.pushBack(timeline);
-        timeline->release();
-        return timeline;
+        return MultData<T>::getUnusedData();
+    }
+    typename cocos2d::Vector<T*>::iterator removeTimelineState(typename cocos2d::Vector<T*>::iterator iter)
+    {
+        T * timeline = *iter;
+        timeline->resetTimelineState();
+        return MultData<T>::removeDataFromUsed(iter);
     }
     
     void removeTimelineState(T* timeline)
@@ -62,36 +158,22 @@ public:
         {
             return;
         }
-        
-        timeline->retain();
-        _timelineUsed.eraseObject(timeline);
-        _timelineFreed.pushBack(timeline);
-        timeline->release();
         timeline->resetTimelineState();
-    }
-
-    void removeAllTimelineState()
-    {
-        _timelineFreed.pushBack(_timelineUsed);
+        MultData<T>::removeDataFromUsed(timeline);
         
-        for (auto _timeline : _timelineUsed)
-        {
-            _timeline->resetTimelineState();
-        }
-        
-        _timelineUsed.clear();
     }
     
-    cocos2d::Vector<T*>& getAllTimelineState() { return _timelineUsed; }
-private:
-    /**
-     * Used list of DBTimelineStates
-     */
-    cocos2d::Vector<T*> _timelineUsed;
-    /**
-     * free list of DBTimelineStates
-     */
-    cocos2d::Vector<T*> _timelineFreed;
+    void removeAllTimelineState()
+    {
+        
+        for (auto iter = getUsedVectorBegin(); iter != getUsedVectorEnd();++iter )
+        {
+            (*iter)->resetTimelineState();
+        }
+        MultData<T>::removeAllDataFromUsed();
+    }
+    
+    cocos2d::Vector<T*>& getAllTimelineState() { return MultData<T>::getAllData(); }
     
 };
 

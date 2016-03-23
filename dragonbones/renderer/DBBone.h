@@ -19,6 +19,7 @@
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 class DBArmature;
+class DBSlot;
 
 class DBBone
 : public cocos2d::Node
@@ -54,6 +55,9 @@ public:
     void removeState(DBTimelineState *timelineState);
     void invalidUpdate();
     
+    void addSlot(DBSlot *slot);
+    void removeSlot(DBSlot *slot);
+    
 private:
     
     BoneData* _boneData;
@@ -69,8 +73,8 @@ private:
     
 
     cocos2d::Vector<DBBone*> _childBones;        ///< array of children nodes
-//    std::vector<Slot*> _slotList;
-    std::vector<DBTimelineState*> _timelineStateList;
+    cocos2d::Vector<DBSlot*> _slotList;
+    cocos2d::Vector<DBTimelineState*> _timelineStateList;
     
     int _needUpdate;
     bool _isColorChanged;

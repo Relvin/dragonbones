@@ -47,45 +47,6 @@ bool DBTimelineStateMgr::init()
     return true;
 }
 
-
-
-#if 0
-std::vector<DBTimelineState*> DBTimelineState::_pool;
-
-DBTimelineState* DBTimelineState::borrowObject()
-{
-    if (_pool.empty())
-    {
-        return new DBTimelineState();
-    }
-    
-    DBTimelineState *timelinseState = _pool.back();
-    _pool.pop_back();
-    return timelinseState;
-}
-
-void DBTimelineState::returnObject(DBTimelineState *timelineState)
-{
-    if (std::find(_pool.cbegin(), _pool.cend(), timelineState) == _pool.end())
-    {
-        _pool.push_back(timelineState);
-    }
-    
-    timelineState->clear();
-}
-
-void DBTimelineState::clearObjects()
-{
-    for (size_t i = 0, l = _pool.size(); i < l; ++i)
-    {
-        _pool[i]->clear();
-        delete _pool[i];
-    }
-    
-    _pool.clear();
-}
-#endif
-
 DBTimelineState* DBTimelineState::create()
 {
     DBTimelineState *timelineState = new (std::nothrow) DBTimelineState();

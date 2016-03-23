@@ -11,6 +11,8 @@
 #include "objects/SkinData.h"
 #include "DBSlot.h"
 #include "objects/Frame.h"
+#include "events/DBEventData.h"
+#include "animation/DBAnimationState.h"
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
@@ -20,6 +22,7 @@ DBArmature::DBArmature()
 , _pArmatureData (nullptr)
 , _pAnimation (nullptr)
 , _pSkinData (nullptr)
+, _eventDataMgr (nullptr)
 {
     _boneDic.clear();
     _topBoneList.clear();
@@ -30,6 +33,7 @@ DBArmature::DBArmature()
 DBArmature::~DBArmature()
 {
     CC_SAFE_RELEASE_NULL(_pDragonBonesData);
+    CC_SAFE_RELEASE_NULL(_eventDataMgr);
     _boneDic.clear();
     _topBoneList.clear();
     _slotDic.clear();
@@ -67,6 +71,10 @@ bool DBArmature::initWithName(const std::string &name)
 
 bool DBArmature::initWithName(const std::string &name,const std::string &textureName)
 {
+    CC_SAFE_RELEASE_NULL(_eventDataMgr);
+    _eventDataMgr = DBEventDataMgr::create();
+    CC_SAFE_RETAIN(_eventDataMgr);
+    
     DragonBonesData* dragonBonesData = DBCCFactory::getInstance()->getDragonBonesData(name);
     if (!dragonBonesData)
     {
@@ -94,17 +102,14 @@ bool DBArmature::initWithName(const std::string &name,const std::string &texture
     this->setCascadeColorEnabled(true);
     this->setCascadeOpacityEnabled(true);
     
-#if 0
-    
     
     // update armature pose
-    armature->getAnimation()->play();
-    armature->advanceTime(0);
-    armature->getAnimation()->stop();
-    
-#endif
+    getAnimation()->play();
+    update(0);
+    getAnimation()->stop();
     
     dragonBonesData->retain();
+    
     return true;
 }
 
@@ -212,7 +217,9 @@ void DBArmature::createSkin(const std::string &textureName)
         DBSlot* slot = DBSlot::create(slotData,textureName);
         this->addChild(slot,slotData->zOrder);
         slot->setParentBone(bone);
+        slot->setArmature(this);
         _slotDic.insert(slotData->name,slot);
+        bone->addSlot(slot);
     }
 }
 
@@ -241,6 +248,17 @@ void DBArmature::update(float delta)
     //        sortSlotsByZOrder();
     //        
     //    }
+    
+    if (!_eventDataMgr->empty())
+    {
+        auto dataList = _eventDataMgr->getAllData();
+        for (size_t i = 0, l = dataList.size(); i < l; ++i)
+        {
+//            _eventDispatcher->dispatchEvent(_eventDataList[i]);
+        }
+        _eventDataMgr->removeAllEventData();
+        
+    }
 
 }
 
@@ -252,35 +270,40 @@ void DBArmature::onEnter()
 
 void DBArmature::arriveAtFrame(Frame *frame, DBAnimationState *animationState, bool isCross)
 {
-#if 0
-    if (!frame->event.empty() && _eventDispatcher->hasEvent(EventData::EventType::ANIMATION_FRAME_EVENT))
+
+    if (!frame->event.empty())
     {
-        EventData *eventData = EventData::borrowObject(EventData::EventType::ANIMATION_FRAME_EVENT);
-        eventData->armature = this;
-        eventData->animationState = animationState;
-        eventData->frameLabel = frame->event;
-        eventData->frame = frame;
-        _eventDataList.push_back(eventData);
+        DBEventData *eventData = _eventDataMgr->getUnusedEventData();
+        eventData->setType(DBEventData::EventType::ANIMATION_FRAME_EVENT);
+        eventData->setArmature(this);
+        eventData->setAnimationState(animationState);
+        eventData->setFrameLabel(frame->event);
+        eventData->setFrame(frame);
     }
     
-    if (!frame->sound.empty() && soundEventDispatcher && soundEventDispatcher->hasEvent(EventData::EventType::SOUND))
-    {
-        EventData *eventData = EventData::borrowObject(EventData::EventType::SOUND);
-        eventData->armature = this;
-        eventData->animationState = animationState;
-        eventData->sound = frame->sound;
-        soundEventDispatcher->dispatchEvent(eventData);
-        EventData::returnObject(eventData);
-    }
+//    if (!frame->sound.empty() && soundEventDispatcher && soundEventDispatcher->hasEvent(EventData::EventType::SOUND))
+//    {
+//        EventData *eventData = EventData::borrowObject(EventData::EventType::SOUND);
+//        eventData->armature = this;
+//        eventData->animationState = animationState;
+//        eventData->sound = frame->sound;
+//        soundEventDispatcher->dispatchEvent(eventData);
+//        EventData::returnObject(eventData);
+//    }
     
     if (!frame->action.empty())
     {
         if (animationState->displayControl)
         {
-            _animation->gotoAndPlay(frame->action);
+            _pAnimation->gotoAndPlay(frame->action);
         }
     }
-#endif
+
+}
+
+DBEventDataMgr* DBArmature::getEventDataManager() const
+{
+    return this->_eventDataMgr;
 }
 
 

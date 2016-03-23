@@ -16,7 +16,7 @@
 #include "renderer/DBSlot.h"
 #include "renderer/DBBone.h"
 #include "renderer/DBArmature.h"
-#include "events/EventData.h"
+#include "events/DBEventData.h"
 #include "events/IEventDispatcher.h"
 #include "animation/DBAnimation.h"
 
@@ -450,9 +450,39 @@ bool DBAnimationState::advanceTime(float passedTime)
 
 void DBAnimationState::updateTimelineStates()
 {
+
+    for (auto iter = _timelineStateMgr->getUsedVectorBegin();iter != _timelineStateMgr->getUsedVectorEnd(); ++ iter)
+    {
+        DBTimelineState *timelineState = *iter;
+        if (!_armature->getBone(timelineState->getName()))
+        {
+            iter = _timelineStateMgr->removeTimelineState(iter);
+        }
+    }
+    
+    for (auto iter = _slotTimelineStateMgr->getUsedVectorBegin();iter != _slotTimelineStateMgr->getUsedVectorEnd(); ++ iter)
+    {
+        DBSlotTimelineState *timelineState = *iter;
+        if (!_armature->getSlot(timelineState->getName()))
+        {
+            iter = _slotTimelineStateMgr->removeTimelineState(iter);
+        }
+    }
     
     if (_boneMasks.size() > 0)
     {
+        
+        for (auto iter = _timelineStateMgr->getUsedVectorBegin();iter != _timelineStateMgr->getUsedVectorEnd(); ++ iter)
+        {
+            DBTimelineState *timelineState = *iter;
+            
+            auto iterator = std::find(_mixingTransforms.cbegin(), _mixingTransforms.cend(), timelineState->getName());
+            
+            if (iterator == _mixingTransforms.cend())
+            {
+                iter = _timelineStateMgr->removeTimelineState(iter);
+            }
+        }
         
         for (size_t i = 0, l = _mixingTransforms.size(); i < l; ++i)
         {
@@ -586,47 +616,49 @@ void DBAnimationState::advanceFadeTime(float passedTime)
     
     if (fadeStartFlg)
     {
-        EventData::EventType eventDataType;
+        DBEventData::EventType eventDataType;
         
         if (_isFadeOut)
         {
-            eventDataType = EventData::EventType::FADE_OUT;
+            eventDataType = DBEventData::EventType::FADE_OUT;
         }
         else
         {
             hideBones();
-            eventDataType = EventData::EventType::FADE_IN;
+            eventDataType = DBEventData::EventType::FADE_IN;
         }
         
-        //modify by Relvin need todo
+
 //        if (_armature->_eventDispatcher->hasEvent(eventDataType))
-//        {
-//            EventData *eventData = EventData::borrowObject(eventDataType);
-//            eventData->armature = _armature;
-//            eventData->animationState = this;
-//            _armature->_eventDataList.push_back(eventData);
-//        }
+        {
+            DBEventData *eventData = _armature->getEventDataManager()->getUnusedEventData();
+            eventData->setType(eventDataType);
+            eventData->setArmature(_armature);
+            eventData->setAnimationState(this);
+        }
     }
     
     if (fadeCompleteFlg)
     {
-        EventData::EventType eventDataType;
+        DBEventData::EventType eventDataType;
         if (_isFadeOut)
         {
-            eventDataType = EventData::EventType::FADE_OUT_COMPLETE;
+            eventDataType = DBEventData::EventType::FADE_OUT_COMPLETE;
         }
         else
         {
-            eventDataType = EventData::EventType::FADE_IN_COMPLETE;
+            eventDataType = DBEventData::EventType::FADE_IN_COMPLETE;
         }
-        //modify by Relvin need todo
+
 //        if (_armature->_eventDispatcher->hasEvent(eventDataType))
-//        {
-//            EventData *eventData = EventData::borrowObject(eventDataType);
-//            eventData->armature = _armature;
-//            eventData->animationState = this;
-//            _armature->_eventDataList.push_back(eventData);
-//        }
+        {
+        
+            DBEventData *eventData = _armature->getEventDataManager()->getUnusedEventData();
+            eventData->setType(eventDataType);
+            eventData->setArmature(_armature);
+            eventData->setAnimationState(this);
+        
+        }
     }
 }
 
@@ -734,26 +766,27 @@ void DBAnimationState::advanceTimelinesTime(float passedTime)
     
     if (startFlg)
     {
-        //modify by Relvin need todo
+
 //        if (_armature->_eventDispatcher->hasEvent(EventData::EventType::START))
-//        {
-//            EventData *eventData = EventData::borrowObject(EventData::EventType::START);
-//            eventData->armature = _armature;
-//            eventData->animationState = this;
-//            _armature->_eventDataList.push_back(eventData);
-//        }
+        {
+            
+            DBEventData *eventData = _armature->getEventDataManager()->getUnusedEventData();
+            eventData->setType(DBEventData::EventType::START);
+            eventData->setArmature(_armature);
+            eventData->setAnimationState(this);
+        }
     }
     
     if (completeFlg)
     {
-        //modify by Relvin need todo
 //        if (_armature->_eventDispatcher->hasEvent(EventData::EventType::COMPLETE))
-//        {
-//            EventData *eventData = EventData::borrowObject(EventData::EventType::COMPLETE);
-//            eventData->armature = _armature;
-//            eventData->animationState = this;
-//            _armature->_eventDataList.push_back(eventData);
-//        }
+        {
+            DBEventData *eventData = _armature->getEventDataManager()->getUnusedEventData();
+            eventData->setType(DBEventData::EventType::COMPLETE);
+            eventData->setArmature(_armature);
+            eventData->setAnimationState(this);
+            
+        }
         
         if (autoFadeOut)
         {
@@ -762,14 +795,13 @@ void DBAnimationState::advanceTimelinesTime(float passedTime)
     }
     else if (loopCompleteFlg)
     {
-        //modify by Relvin need todo
 //        if (_armature->_eventDispatcher->hasEvent(EventData::EventType::LOOP_COMPLETE))
-//        {
-//            EventData *eventData = EventData::borrowObject(EventData::EventType::LOOP_COMPLETE);
-//            eventData->armature = _armature;
-//            eventData->animationState = this;
-//            _armature->_eventDataList.push_back(eventData);
-//        }
+        {
+            DBEventData *eventData = _armature->getEventDataManager()->getUnusedEventData();
+            eventData->setType(DBEventData::EventType::LOOP_COMPLETE);
+            eventData->setArmature(_armature);
+            eventData->setAnimationState(this);
+        }
     }
 }
 

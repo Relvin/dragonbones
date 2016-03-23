@@ -201,6 +201,10 @@
 		AD2290F31C63361E0017A24D /* DBSlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2290F01C63361E0017A24D /* DBSlot.cpp */; };
 		AD2290F41C63361E0017A24D /* DBSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2290F11C63361E0017A24D /* DBSlot.h */; };
 		AD2290F51C63361E0017A24D /* DBSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2290F11C63361E0017A24D /* DBSlot.h */; };
+		AD4CAC371CA2748E00053685 /* DBEventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD4CAC351CA2748E00053685 /* DBEventData.cpp */; };
+		AD4CAC381CA2748E00053685 /* DBEventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD4CAC351CA2748E00053685 /* DBEventData.cpp */; };
+		AD4CAC391CA2748E00053685 /* DBEventData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4CAC361CA2748E00053685 /* DBEventData.h */; };
+		AD4CAC3A1CA2748E00053685 /* DBEventData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4CAC361CA2748E00053685 /* DBEventData.h */; };
 		AD5C8D161C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */; };
 		AD5C8D171C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */; };
 		AD5C8D181C9A51D8007CFDDC /* DBSlotTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */; };
@@ -362,6 +366,8 @@
 		AD13EDE41C62019F00562146 /* DBArmature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBArmature.h; sourceTree = "<group>"; };
 		AD2290F01C63361E0017A24D /* DBSlot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBSlot.cpp; sourceTree = "<group>"; };
 		AD2290F11C63361E0017A24D /* DBSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSlot.h; sourceTree = "<group>"; };
+		AD4CAC351CA2748E00053685 /* DBEventData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBEventData.cpp; sourceTree = "<group>"; };
+		AD4CAC361CA2748E00053685 /* DBEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBEventData.h; sourceTree = "<group>"; };
 		AD525BAA1C0768DB000D5586 /* libdragonbones mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libdragonbones mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD525BB91C076906000D5586 /* libdragonbones ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libdragonbones ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBSlotTimelineState.cpp; sourceTree = "<group>"; };
@@ -526,6 +532,8 @@
 				AD13ECBA1C5F39F700562146 /* EventData.cpp */,
 				AD13ECBB1C5F39F700562146 /* EventData.h */,
 				AD13ECBC1C5F39F700562146 /* IEventDispatcher.h */,
+				AD4CAC351CA2748E00053685 /* DBEventData.cpp */,
+				AD4CAC361CA2748E00053685 /* DBEventData.h */,
 			);
 			path = events;
 			sourceTree = "<group>";
@@ -752,6 +760,7 @@
 				AD13EDAE1C5F39F700562146 /* DBCCFactory.h in Headers */,
 				AD13EDC41C5F39F700562146 /* TextureAtlasData.h in Headers */,
 				AD13ED941C5F39F700562146 /* BaseDataParser.h in Headers */,
+				AD4CAC391CA2748E00053685 /* DBEventData.h in Headers */,
 				AD13ED2E1C5F39F700562146 /* reader.h in Headers */,
 				AD13ED2A1C5F39F700562146 /* prettywriter.h in Headers */,
 				AD13ED081C5F39F700562146 /* filewritestream.h in Headers */,
@@ -848,6 +857,7 @@
 				AD13EDAF1C5F39F700562146 /* DBCCFactory.h in Headers */,
 				AD13EDC51C5F39F700562146 /* TextureAtlasData.h in Headers */,
 				AD13ED951C5F39F700562146 /* BaseDataParser.h in Headers */,
+				AD4CAC3A1CA2748E00053685 /* DBEventData.h in Headers */,
 				AD13ED2F1C5F39F700562146 /* reader.h in Headers */,
 				AD13ED2B1C5F39F700562146 /* prettywriter.h in Headers */,
 				AD13ED091C5F39F700562146 /* filewritestream.h in Headers */,
@@ -965,6 +975,7 @@
 			files = (
 				ADADA1A81C62E93C00B15A4F /* SlotTimelineState.cpp in Sources */,
 				AD13ED4E1C5F39F700562146 /* Armature.cpp in Sources */,
+				AD4CAC371CA2748E00053685 /* DBEventData.cpp in Sources */,
 				AD13ED561C5F39F700562146 /* DBObject.cpp in Sources */,
 				ADADA1B01C62E93C00B15A4F /* WorldClock.cpp in Sources */,
 				AD13ED9A1C5F39F700562146 /* JSONDataParser.cpp in Sources */,
@@ -1003,6 +1014,7 @@
 			files = (
 				ADADA1A91C62E93C00B15A4F /* SlotTimelineState.cpp in Sources */,
 				AD13ED4F1C5F39F700562146 /* Armature.cpp in Sources */,
+				AD4CAC381CA2748E00053685 /* DBEventData.cpp in Sources */,
 				AD13ED571C5F39F700562146 /* DBObject.cpp in Sources */,
 				ADADA1B11C62E93C00B15A4F /* WorldClock.cpp in Sources */,
 				AD13ED9B1C5F39F700562146 /* JSONDataParser.cpp in Sources */,
