@@ -1,5 +1,5 @@
 #include "DBCCLuaUtils.h"
-
+#if 0
 #if (DRAGON_BONES_ENABLE_LUA == 1)
 
 #include "DBCCArmature.h"
@@ -50,5 +50,5 @@ void DBCCLuaUtils::pushObjectKV(lua_State *L, const char *key, T* value, const c
 }
 
 NAME_SPACE_DRAGON_BONES_END
-
+#endif
 #endif // !DRAGON_BONES_ENABLE_LUA

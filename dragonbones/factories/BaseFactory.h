@@ -6,9 +6,6 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
-class Slot;
-class Bone;
-class Armature;
 class ArmatureData;
 class ITextureAtlas;
 class DragonBonesData;
@@ -37,19 +34,9 @@ public:
     virtual void addTextureAtlas(ITextureAtlas *textureAtlas, const std::string &name = "");
     virtual void removeTextureAtlas(const std::string &name, bool disposeData = true);
     
-    virtual Armature* buildArmature(const std::string &armatureName) const;
-    virtual Armature* buildArmatureByData(DragonBonesData *dragonBonesData) const;
-    virtual Armature* buildArmatureByData(DragonBonesData *dragonBonesData,const std::string &armatureName, const std::string &skinName, const std::string &animationName, const std::string &dragonBonesName, const std::string &textureAtlasName) const;
-    virtual Armature* buildArmature(const std::string &armatureName, const std::string &dragonBonesName) const;
-    virtual Armature* buildArmature(const std::string &armatureName, const std::string &skinName, const std::string &animationName, const std::string &dragonBonesName, const std::string &textureAtlasName) const;
     virtual cocos2d::Node* getTextureDisplay(const std::string &textureName, const std::string &textureAtlasName = "", const DisplayData *displayData = nullptr) const;
-    
+
 protected:
-    virtual void buildBones(Armature *armature, const ArmatureData *armatureData) const;
-    virtual void buildSlots(Armature *armature, const ArmatureData *armatureData, const SkinData *skinData, const SkinData *skinDataCopy) const;
-    
-    virtual Armature* generateArmature(const ArmatureData *armatureData) const = 0;
-    virtual Slot* generateSlot(const SlotData *slotData) const = 0;
     virtual cocos2d::Node* generateDisplay(const ITextureAtlas *textureAtlas, const TextureData *textureData, const DisplayData *displayData) const = 0;
     
 public:

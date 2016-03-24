@@ -1,12 +1,12 @@
 #include "DBCCUtils.h"
 
-#include "DBCCArmature.h"
 #include "cocos2d.h"
 //#include "renderer/CCGLProgramState.h"
 
 USING_NS_CC;
-
+#if 0
 NAME_SPACE_DRAGON_BONES_BEGIN
+//modify by Relvin need todo
 
 void DBCCUtils::setAllBlendFunc(DBCCArmature *armature, int src, int dest)
 {
@@ -58,4 +58,7 @@ void DBCCUtils::setAllGLParamState(DBCCArmature *armature, cocos2d::GLProgramSta
         }
     }
 }
+
+
 NAME_SPACE_DRAGON_BONES_END
+#endif

@@ -17,7 +17,6 @@
 #include "renderer/DBBone.h"
 #include "renderer/DBArmature.h"
 #include "events/DBEventData.h"
-#include "events/IEventDispatcher.h"
 #include "animation/DBAnimation.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN

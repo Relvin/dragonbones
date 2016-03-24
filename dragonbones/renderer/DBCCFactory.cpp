@@ -1,8 +1,5 @@
 ﻿#include "DBCCFactory.h"
 #include "DBCCTextureAtlas.h"
-#include "DBCCSlot.h"
-#include "DBCCEventDispatcher.h"
-#include "DBCCArmature.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -43,41 +40,6 @@ void DBCCFactory::destroyInstance()
 
 DBCCFactory::DBCCFactory() {}
 DBCCFactory::~DBCCFactory() {}
-
-DBCCArmature* DBCCFactory::buildArmature(const std::string &armatureName) const
-{
-    return (DBCCArmature*) BaseFactory::buildArmature(armatureName);
-}
-
-DBCCArmature* DBCCFactory::buildArmature(const std::string &armatureName, const std::string &dragonBonesName) const
-{
-    return (DBCCArmature*) BaseFactory::buildArmature(armatureName, dragonBonesName);
-}
-
-DBCCArmature* DBCCFactory::buildArmature(const std::string &armatureName, const std::string &skinName, const std::string &animationName,
-                                         const std::string &dragonBonesName, const std::string &textureAtlasName) const
-{
-    return (DBCCArmature*) BaseFactory::buildArmature(armatureName, skinName, animationName, dragonBonesName, textureAtlasName);
-}
-
-DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName) const
-{
-    auto armature = buildArmature(armatureName);
-    return DBCCArmatureNode::createWithArmature(armature);
-}
-
-DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName, const std::string &dragonBonesName) const
-{
-    auto armature = buildArmature(armatureName, dragonBonesName);
-    return DBCCArmatureNode::createWithArmature(armature);
-}
-
-DBCCArmatureNode* DBCCFactory::buildArmatureNode(const std::string &armatureName, const std::string &skinName, const std::string &animationName,
-    const std::string &dragonBonesName, const std::string &textureAtlasName) const
-{
-    auto armature = buildArmature(armatureName, skinName, animationName, dragonBonesName, textureAtlasName);
-    return DBCCArmatureNode::createWithArmature(armature);
-}
 
 DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBonesFilePath, const std::string &name)
 {
@@ -217,27 +179,6 @@ bool DBCCFactory::hasDragonBones(const std::string &skeletonName, const std::str
     return true;
 }
 
-DBCCArmature* DBCCFactory::generateArmature(const ArmatureData *armatureData) const
-{
-    Animation *animation = new Animation();
-    // sprite
-    cocos2d::Node *display = cocos2d::Node::create();
-    display->setCascadeColorEnabled(true);
-    display->setCascadeOpacityEnabled(true);
-    display->retain();
-    // eventDispatcher
-    DBCCEventDispatcher *eventDispatcher = new DBCCEventDispatcher();
-    eventDispatcher->eventDispatcher = new cocos2d::EventDispatcher();
-    eventDispatcher->eventDispatcher->setEnabled(true);
-    // armature
-    return new DBCCArmature((ArmatureData*)(armatureData), animation, eventDispatcher, display);
-}
-
-DBCCSlot* DBCCFactory::generateSlot(const SlotData *slotData) const
-{
-    return new DBCCSlot((SlotData*)(slotData));
-}
-
 cocos2d::Node* DBCCFactory::generateDisplay(const ITextureAtlas *textureAtlas, const TextureData *textureData, const DisplayData *displayData) const
 {
     DBCCTextureAtlas *dbccTextureAtlas = (DBCCTextureAtlas*)(textureAtlas);
@@ -308,4 +249,32 @@ cocos2d::Node* DBCCFactory::generateDisplay(const ITextureAtlas *textureAtlas, c
     display->setContentSize(originSize);
     return display;
 }
+
+void DBCCFactory::removeUnusedDragonBonesData()
+{
+    auto iterator = _dragonBonesDataMap.begin();
+    
+    while (iterator != _dragonBonesDataMap.end())
+    {
+        if (iterator->second->getReferenceCount() == 1)
+        {
+            iterator->second->dispose();
+            delete iterator->second;
+            iterator = _dragonBonesDataMap.erase(iterator);
+        }
+        else
+        {
+            iterator++;
+        }
+        
+    }
+#ifdef COCOS2D_DEBUG
+    if (_dragonBonesDataMap.size() != 0)
+    {
+        CCLOG("%s,%d dragonBonesDataCache size is %lu",__FUNCTION__,__LINE__,_dragonBonesDataMap.size());
+    }
+#endif
+}
+
+
 NAME_SPACE_DRAGON_BONES_END
