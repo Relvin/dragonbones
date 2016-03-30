@@ -21,6 +21,7 @@ public:
     virtual void refreshAllTextureAtlasTexture();
     virtual bool hasDragonBones(const std::string &skeletonName, const std::string &armatureName = "", const std::string &animationName = "");
     void removeUnusedDragonBonesData() ;
+    TextureAtlasData* loadTextureWithPlist(const std::string &path,const char* filedata, int filesize);
 protected:
 
 private:

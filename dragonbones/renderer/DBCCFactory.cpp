@@ -147,6 +147,12 @@ ITextureAtlas* DBCCFactory::loadTextureAtlas(const std::string &textureAtlasFile
 		dragonBones::XMLDataParser parser;
 		textureAtlas->textureAtlasData = parser.parseTextureAtlasData(doc.RootElement(), scale);
 	}
+    else if (".PLIST" == filePosfix)
+    {
+        
+        
+        textureAtlas->textureAtlasData = this->loadTextureWithPlist(textureAtlasFile,data.c_str(), data.size());
+    }
 	else
 	{
 		CCLOG("read file [%s] error!", textureAtlasFile.c_str());
@@ -236,6 +242,71 @@ void DBCCFactory::removeUnusedDragonBonesData()
         CCLOG("%s,%d dragonBonesDataCache size is %lu",__FUNCTION__,__LINE__,_dragonBonesDataMap.size());
     }
 #endif
+}
+
+TextureAtlasData* DBCCFactory::loadTextureWithPlist(const std::string &path,const char* filedata, int filesize)
+{
+    cocos2d::ValueMap dict = cocos2d::FileUtils::getInstance()->getValueMapFromData(filedata, filesize);
+    if (dict.size() < 1)
+    {
+        CCLOG("error:Data is empty!");
+        return nullptr;
+    }
+    
+    std::string textureFileName("");
+    size_t pos = path.find_last_of("/");
+    size_t pos1 = path.find_last_of(".");
+    std::string plistName = "";
+    if (pos != std::string::npos && pos1 != std::string::npos)
+    {
+        plistName = path.substr(pos + 1,pos1-pos - 1);
+    }
+    
+    if (dict.find("metadata") != dict.end())
+    {
+        cocos2d::ValueMap& metadataDict = dict["metadata"].asValueMap();
+        // try to read  texture file name from meta data
+        textureFileName = metadataDict["textureFileName"].asString();
+    }
+    std::string base_path = "";
+    if (std::string::npos != pos)
+    {
+        base_path = path.substr(0, pos + 1);
+    }
+    
+    TextureAtlasData *textureAtlasData = new TextureAtlasData();
+    textureAtlasData->name = plistName;
+    textureAtlasData->imagePath = textureFileName;
+    cocos2d::ValueMap& framesDict = dict["frames"].asValueMap();
+    
+    auto textureCache = cocos2d::Director::getInstance()->getTextureCache();
+    
+    //    cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist_file);
+    auto texture = textureCache->addImage(base_path + textureFileName);
+    /*
+     */
+    for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
+    {
+        cocos2d::ValueMap& frameDict = iter->second.asValueMap();
+        std::string spriteFrameName = iter->first;
+        size_t fpos = spriteFrameName.find(".");
+        spriteFrameName = spriteFrameName.substr(0,fpos);
+        
+        TextureData *textureData = new TextureData();
+        
+        textureData->name = spriteFrameName;
+        cocos2d::SpriteFrame* spriteFrame = new cocos2d::SpriteFrame();
+        spriteFrame->initWithTexture(texture,
+                                     cocos2d::RectFromString(frameDict["frame"].asString()),
+                                     frameDict["rotated"].asBool(),
+                                     cocos2d::PointFromString(frameDict["offset"].asString()),
+                                     cocos2d::SizeFromString(frameDict["sourceSize"].asString()));
+        spriteFrame->autorelease();
+        textureData->setSpriteFrame(spriteFrame);
+        
+        textureAtlasData->textureDataList.push_back(textureData);
+    }
+    return textureAtlasData;
 }
 
 
