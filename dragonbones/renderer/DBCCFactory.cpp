@@ -1,5 +1,6 @@
 ﻿#include "DBCCFactory.h"
 #include "DBCCTextureAtlas.h"
+#include "cocos2d.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -55,7 +56,6 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
 		CCLOG("read file [%s] error!", dragonBonesFilePath.c_str());
         return nullptr;
     }
-
 	DragonBonesData *dragonBonesData = nullptr;
 	const std::string filePosfix = getFilePosfix(dragonBonesFilePath);
 	if (".JSON" == filePosfix)
@@ -64,6 +64,11 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
 	}
 	else if (".XML" == filePosfix)
 	{
+
+#ifdef COCOS2D_DEBUG
+        timeval t_beg,t_beg_1;
+        gettimeofday(&t_beg, NULL);
+#endif
         float scale = cocos2d::Director::getInstance()->getContentScaleFactor();
 		// load skeleton.xml using XML parser.
 		dragonBones::XMLDocument doc;
@@ -71,12 +76,34 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
 		// paser dragonbones skeleton data.
 		dragonBones::XMLDataParser parser;
 		dragonBonesData = parser.parseDragonBonesData(doc.RootElement(),scale);
+#ifdef COCOS2D_DEBUG
+        size_t pos = dragonBonesFilePath.rfind('/');
+        std::string fileName = dragonBonesFilePath;
+        if (0 < pos) {
+            fileName = fileName.substr(pos + 1, std::string::npos);
+        }
+        gettimeofday(&t_beg_1, NULL);
+        CCLOG("%s load waste time = %f s",fileName.c_str(),(t_beg_1.tv_usec - t_beg.tv_usec) / 1000000.f);
+#endif
 	}
     else if (".XMLB" == filePosfix)
     {
+#ifdef COCOS2D_DEBUG
+        timeval t_beg,t_beg_1;
+        gettimeofday(&t_beg, NULL);
+#endif
         float scale = cocos2d::Director::getInstance()->getContentScaleFactor();
         dragonBones::BinaryParser parser;
         dragonBonesData = parser.parseDragonBonesData(data.getBytes(),scale);
+#ifdef COCOS2D_DEBUG
+        size_t pos = dragonBonesFilePath.rfind('/');
+        std::string fileName = dragonBonesFilePath;
+        if (0 < pos) {
+            fileName = fileName.substr(pos + 1, std::string::npos);
+        }
+        gettimeofday(&t_beg_1, NULL);
+        CCLOG("%s load waste time = %f s",fileName.c_str(),(t_beg_1.tv_usec - t_beg.tv_usec) / 1000000.f);
+#endif
     }
 	else
 	{
