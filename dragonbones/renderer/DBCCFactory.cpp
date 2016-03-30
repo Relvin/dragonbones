@@ -66,7 +66,7 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
 	{
 
 #ifdef COCOS2D_DEBUG
-        timeval t_beg,t_beg_1;
+        timeval t_beg,t_end;
         gettimeofday(&t_beg, NULL);
 #endif
         float scale = cocos2d::Director::getInstance()->getContentScaleFactor();
@@ -82,14 +82,14 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
         if (0 < pos) {
             fileName = fileName.substr(pos + 1, std::string::npos);
         }
-        gettimeofday(&t_beg_1, NULL);
-        CCLOG("%s load waste time = %f s",fileName.c_str(),(t_beg_1.tv_usec - t_beg.tv_usec) / 1000000.f);
+        gettimeofday(&t_end, NULL);
+        CCLOG("%s load waste time = %f s",fileName.c_str(),(t_end.tv_usec - t_beg.tv_usec) / 1000000.f);
 #endif
 	}
     else if (".XMLB" == filePosfix)
     {
 #ifdef COCOS2D_DEBUG
-        timeval t_beg,t_beg_1;
+        timeval t_beg,t_end;
         gettimeofday(&t_beg, NULL);
 #endif
         float scale = cocos2d::Director::getInstance()->getContentScaleFactor();
@@ -101,8 +101,8 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
         if (0 < pos) {
             fileName = fileName.substr(pos + 1, std::string::npos);
         }
-        gettimeofday(&t_beg_1, NULL);
-        CCLOG("%s load waste time = %f s",fileName.c_str(),(t_beg_1.tv_usec - t_beg.tv_usec) / 1000000.f);
+        gettimeofday(&t_end, NULL);
+        CCLOG("%s load waste time = %f s",fileName.c_str(),(t_end.tv_usec - t_beg.tv_usec) / 1000000.f);
 #endif
     }
 	else
@@ -210,77 +210,6 @@ bool DBCCFactory::hasDragonBones(const std::string &skeletonName, const std::str
     }
 
     return true;
-}
-
-cocos2d::Node* DBCCFactory::generateDisplay(const ITextureAtlas *textureAtlas, const TextureData *textureData, const DisplayData *displayData) const
-{
-    DBCCTextureAtlas *dbccTextureAtlas = (DBCCTextureAtlas*)(textureAtlas);
-
-    if (!dbccTextureAtlas || !textureData) return nullptr;
-
-    auto texture = dbccTextureAtlas->getTexture();
-    assert(texture);
-
-    const float x = textureData->region.x;
-    const float y = textureData->region.y;
-    const bool rotated = textureData->rotated;
-    const float width = rotated ? textureData->region.height : textureData->region.width;
-    const float height = rotated ? textureData->region.width : textureData->region.height;
-    cocos2d::Rect rect(x, y, width, height);
-    cocos2d::Vec2 offset;
-    cocos2d::Size originSize(width, height);
-
-    cocos2d::Node *display = nullptr;
-
-    if (textureData->frame)
-    {
-        float scale = cocos2d::Director::getInstance()->getContentScaleFactor();
-        
-        float frameX = -textureData->frame->x;
-        float frameY = -textureData->frame->y;
-        originSize.width = textureData->frame->width ;
-        originSize.height = textureData->frame->height;
-        // offset = trimed center - origin center
-        // y use cocos2d coordinates
-        offset.x = (width - originSize.width) * 0.5 + frameX;
-        offset.y = (originSize.height - height)*0.5 - frameY;
-        
-        
-        originSize = originSize * scale;
-        offset = offset * scale;
-        rect = cocos2d::Rect(rect.origin * scale,rect.size * scale);
-        auto spriteFrame = cocos2d::SpriteFrame::createWithTexture(texture, rect,
-            textureData->rotated, offset, originSize);
-        display = cocos2d::Sprite::createWithSpriteFrame(spriteFrame);
-    }
-    else
-    {
-        display = cocos2d::Sprite::createWithTexture(texture, rect, rotated);
-    }
-    // sprite
-    
-    display->setCascadeColorEnabled(true);
-    display->setCascadeOpacityEnabled(true);
-    display->retain();
-    float pivotX = 0.f;
-    float pivotY = 0.f;
-
-    if (displayData)
-    {
-        pivotX = displayData->pivot.x;
-        pivotY = displayData->pivot.y;
-    }
-
-	if (pivotX != 0.f || pivotY != 0.f)
-	{
-		display->setAnchorPoint(cocos2d::Vec2(pivotX / originSize.width, 1.f - pivotY / originSize.height));
-	}
-	else
-	{
-		display->setAnchorPoint(cocos2d::Vec2(0.5f, 0.5f));
-	}
-    display->setContentSize(originSize);
-    return display;
 }
 
 void DBCCFactory::removeUnusedDragonBonesData()

@@ -75,11 +75,13 @@ bool DBSkin::initWithTextureData(const ITextureAtlas *textureAtlas, const Textur
     const float height = rotated ? textureData->region.width : textureData->region.height;
     cocos2d::Rect rect(x, y, width, height);
     cocos2d::Vec2 offset;
-    cocos2d::Size originSize(width, height);
+    
     
     if (textureData->frame)
     {
         float scale = cocos2d::Director::getInstance()->getContentScaleFactor();
+        rect = cocos2d::Rect(rect.origin * scale,rect.size * scale);
+        cocos2d::Size originSize(rect.size);
         
         float frameX = -textureData->frame->x;
         float frameY = -textureData->frame->y;
@@ -87,13 +89,10 @@ bool DBSkin::initWithTextureData(const ITextureAtlas *textureAtlas, const Textur
         originSize.height = textureData->frame->height;
         // offset = trimed center - origin center
         // y use cocos2d coordinates
-        offset.x = (width - originSize.width) * 0.5 + frameX;
-        offset.y = (originSize.height - height)*0.5 - frameY;
+        offset.x = (rect.size.width - originSize.width) * 0.5 + frameX;
+        offset.y = (originSize.height - rect.size.height)*0.5 - frameY;
         
         
-        originSize = originSize * scale;
-        offset = offset * scale;
-        rect = cocos2d::Rect(rect.origin * scale,rect.size * scale);
         auto spriteFrame = cocos2d::SpriteFrame::createWithTexture(texture, rect,
                                                                    textureData->rotated, offset, originSize);
         if (!Sprite::initWithSpriteFrame(spriteFrame))
@@ -113,7 +112,6 @@ bool DBSkin::initWithTextureData(const ITextureAtlas *textureAtlas, const Textur
     this->setCascadeColorEnabled(true);
     this->setCascadeOpacityEnabled(true);
     
-    this->setContentSize(originSize);
     return true;
 }
 

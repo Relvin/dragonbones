@@ -34,10 +34,8 @@ public:
     virtual void addTextureAtlas(ITextureAtlas *textureAtlas, const std::string &name = "");
     virtual void removeTextureAtlas(const std::string &name, bool disposeData = true);
     
-    virtual cocos2d::Node* getTextureDisplay(const std::string &textureName, const std::string &textureAtlasName = "", const DisplayData *displayData = nullptr) const;
 
 protected:
-    virtual cocos2d::Node* generateDisplay(const ITextureAtlas *textureAtlas, const TextureData *textureData, const DisplayData *displayData) const = 0;
     
 public:
 	bool autoSearchDragonBonesData;

@@ -22,7 +22,6 @@ public:
     virtual bool hasDragonBones(const std::string &skeletonName, const std::string &armatureName = "", const std::string &animationName = "");
     void removeUnusedDragonBonesData() ;
 protected:
-    virtual cocos2d::Node* generateDisplay(const ITextureAtlas *textureAtlas, const TextureData *textureData, const DisplayData *displayData) const override;
 
 private:
 	static DBCCFactory *_instance;

@@ -393,8 +393,8 @@ void BinaryParser::parseFlatStringToString(const flatbuffers::String *flatString
 
 void BinaryParser::parseTransformFromBinary(const TransformOption *transformOption, Transform &transform) const
 {
-    transform.x = transformOption->x();
-    transform.y = transformOption->y();
+    transform.x = transformOption->x() / _armatureScale;
+    transform.y = transformOption->y() / _armatureScale;
     transform.skewX = transformOption->skewX();
     transform.skewY = transformOption->skewY();
     transform.scaleX = transformOption->scaleX();
@@ -403,8 +403,8 @@ void BinaryParser::parseTransformFromBinary(const TransformOption *transformOpti
 
 void BinaryParser::parsePointFromBinary(const PointOption *pointOption, Point &point) const
 {
-    point.x = pointOption->x();
-    point.y = pointOption->y();
+    point.x = pointOption->x() / _armatureScale;
+    point.y = pointOption->y() / _armatureScale;
 }
 
 

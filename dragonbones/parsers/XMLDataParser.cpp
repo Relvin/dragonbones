@@ -116,14 +116,14 @@ TextureData* XMLDataParser::parseTextureData(const XMLElement *textureXML) const
     textureData->region.y = textureXML->FloatAttribute(ConstValues::A_Y.c_str()) / _textureScale;
     textureData->region.width = textureXML->FloatAttribute(ConstValues::A_WIDTH.c_str()) / _textureScale;
     textureData->region.height = textureXML->FloatAttribute(ConstValues::A_HEIGHT.c_str()) / _textureScale;
-    const float frameWidth = textureXML->FloatAttribute(ConstValues::A_FRAME_WIDTH.c_str()) / _textureScale;
-    const float frameHeight = textureXML->FloatAttribute(ConstValues::A_FRAME_HEIGHT.c_str()) / _textureScale;
+    const float frameWidth = textureXML->FloatAttribute(ConstValues::A_FRAME_WIDTH.c_str()) ;
+    const float frameHeight = textureXML->FloatAttribute(ConstValues::A_FRAME_HEIGHT.c_str());
     
     if (frameWidth > 0 && frameHeight > 0)
     {
         textureData->frame = new Rectangle();
-        textureData->frame->x = textureXML->FloatAttribute(ConstValues::A_FRAME_X.c_str()) / _textureScale;
-        textureData->frame->y = textureXML->FloatAttribute(ConstValues::A_FRAME_Y.c_str()) / _textureScale;
+        textureData->frame->x = textureXML->FloatAttribute(ConstValues::A_FRAME_X.c_str());
+        textureData->frame->y = textureXML->FloatAttribute(ConstValues::A_FRAME_Y.c_str());
         textureData->frame->width = frameWidth;
         textureData->frame->height = frameHeight;
     }
@@ -133,7 +133,7 @@ TextureData* XMLDataParser::parseTextureData(const XMLElement *textureXML) const
 
 DragonBonesData* XMLDataParser::parseDragonBonesData(const void *rawDragonBonesData,float scale) const
 {
-    _armatureScale = 1;
+    _armatureScale = scale;
     const XMLElement *dragonBonesXML = static_cast<const XMLElement*>(rawDragonBonesData);
     std::string version = dragonBonesXML->Attribute(ConstValues::A_VERSION.c_str());
     // TODO
