@@ -40,6 +40,7 @@
 #include "parsers/BaseDataParser.h"
 #include "parsers/XMLDataParser.h"
 #include "parsers/JSONDataParser.h"
+#include "parsers/BinaryParser.h"
 
 // factories
 #include "factories/BaseFactory.h"

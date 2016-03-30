@@ -165,6 +165,12 @@
 		AD2290F31C63361E0017A24D /* DBSlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2290F01C63361E0017A24D /* DBSlot.cpp */; };
 		AD2290F41C63361E0017A24D /* DBSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2290F11C63361E0017A24D /* DBSlot.h */; };
 		AD2290F51C63361E0017A24D /* DBSlot.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2290F11C63361E0017A24D /* DBSlot.h */; };
+		AD4570F31CAB7A5600A5F37C /* BinaryParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD4570F11CAB7A5600A5F37C /* BinaryParser.cpp */; };
+		AD4570F41CAB7A5600A5F37C /* BinaryParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD4570F11CAB7A5600A5F37C /* BinaryParser.cpp */; };
+		AD4570F51CAB7A5600A5F37C /* BinaryParser.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4570F21CAB7A5600A5F37C /* BinaryParser.h */; };
+		AD4570F61CAB7A5600A5F37C /* BinaryParser.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4570F21CAB7A5600A5F37C /* BinaryParser.h */; };
+		AD4570F81CAB7BC700A5F37C /* dragonbones_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4570F71CAB7BC700A5F37C /* dragonbones_generated.h */; };
+		AD4570F91CAB7BC700A5F37C /* dragonbones_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4570F71CAB7BC700A5F37C /* dragonbones_generated.h */; };
 		AD4CAC371CA2748E00053685 /* DBEventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD4CAC351CA2748E00053685 /* DBEventData.cpp */; };
 		AD4CAC381CA2748E00053685 /* DBEventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD4CAC351CA2748E00053685 /* DBEventData.cpp */; };
 		AD4CAC391CA2748E00053685 /* DBEventData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD4CAC361CA2748E00053685 /* DBEventData.h */; };
@@ -290,6 +296,9 @@
 		AD13EDE41C62019F00562146 /* DBArmature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBArmature.h; sourceTree = "<group>"; };
 		AD2290F01C63361E0017A24D /* DBSlot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBSlot.cpp; sourceTree = "<group>"; };
 		AD2290F11C63361E0017A24D /* DBSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSlot.h; sourceTree = "<group>"; };
+		AD4570F11CAB7A5600A5F37C /* BinaryParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryParser.cpp; sourceTree = "<group>"; };
+		AD4570F21CAB7A5600A5F37C /* BinaryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryParser.h; sourceTree = "<group>"; };
+		AD4570F71CAB7BC700A5F37C /* dragonbones_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dragonbones_generated.h; sourceTree = "<group>"; };
 		AD4CAC351CA2748E00053685 /* DBEventData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBEventData.cpp; sourceTree = "<group>"; };
 		AD4CAC361CA2748E00053685 /* DBEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBEventData.h; sourceTree = "<group>"; };
 		AD525BAA1C0768DB000D5586 /* libdragonbones mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libdragonbones mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -329,6 +338,7 @@
 		AD13EC7A1C5F39F700562146 /* dragonbones */ = {
 			isa = PBXGroup;
 			children = (
+				AD4570F71CAB7BC700A5F37C /* dragonbones_generated.h */,
 				ADADA18C1C62E93C00B15A4F /* animation */,
 				AD13EC7B1C5F39F700562146 /* 3rd */,
 				AD13ECAE1C5F39F700562146 /* core */,
@@ -485,6 +495,8 @@
 		AD13ECD51C5F39F700562146 /* parsers */ = {
 			isa = PBXGroup;
 			children = (
+				AD4570F11CAB7A5600A5F37C /* BinaryParser.cpp */,
+				AD4570F21CAB7A5600A5F37C /* BinaryParser.h */,
 				AD13ECD61C5F39F700562146 /* BaseDataParser.cpp */,
 				AD13ECD71C5F39F700562146 /* BaseDataParser.h */,
 				AD13ECD81C5F39F700562146 /* ConstValues.cpp */,
@@ -597,6 +609,7 @@
 				AD13ED821C5F39F700562146 /* Frame.h in Headers */,
 				AD13EDB41C5F39F700562146 /* dbccMacro.h in Headers */,
 				AD13EDC21C5F39F700562146 /* ITextureAtlas.h in Headers */,
+				AD4570F51CAB7A5600A5F37C /* BinaryParser.h in Headers */,
 				ADAF1F641C7F252200000F53 /* DBSkin.h in Headers */,
 				AD13ED0E1C5F39F700562146 /* dtoa.h in Headers */,
 				AD13EDC01C5F39F700562146 /* DBCCUtils.h in Headers */,
@@ -645,6 +658,7 @@
 				ADADA1B81C62FEDD00B15A4F /* DBBone.h in Headers */,
 				AD13ED741C5F39F700562146 /* Transform.h in Headers */,
 				AD60698E1C9668FC00CCC818 /* DBAnimationState.h in Headers */,
+				AD4570F81CAB7BC700A5F37C /* dragonbones_generated.h in Headers */,
 				AD13ED0A1C5F39F700562146 /* biginteger.h in Headers */,
 				AD13ED8C1C5F39F700562146 /* Timeline.h in Headers */,
 				AD13ED361C5F39F700562146 /* dbtinyxml2.h in Headers */,
@@ -678,6 +692,7 @@
 				AD13ED831C5F39F700562146 /* Frame.h in Headers */,
 				AD13EDB51C5F39F700562146 /* dbccMacro.h in Headers */,
 				AD13EDC31C5F39F700562146 /* ITextureAtlas.h in Headers */,
+				AD4570F61CAB7A5600A5F37C /* BinaryParser.h in Headers */,
 				ADAF1F651C7F252200000F53 /* DBSkin.h in Headers */,
 				AD13ED0F1C5F39F700562146 /* dtoa.h in Headers */,
 				AD13EDC11C5F39F700562146 /* DBCCUtils.h in Headers */,
@@ -726,6 +741,7 @@
 				ADADA1B91C62FEDD00B15A4F /* DBBone.h in Headers */,
 				AD13ED751C5F39F700562146 /* Transform.h in Headers */,
 				AD60698F1C9668FC00CCC818 /* DBAnimationState.h in Headers */,
+				AD4570F91CAB7BC700A5F37C /* dragonbones_generated.h in Headers */,
 				AD13ED0B1C5F39F700562146 /* biginteger.h in Headers */,
 				AD13ED8D1C5F39F700562146 /* Timeline.h in Headers */,
 				AD13ED371C5F39F700562146 /* dbtinyxml2.h in Headers */,
@@ -832,6 +848,7 @@
 				ADADA1B61C62FEDD00B15A4F /* DBBone.cpp in Sources */,
 				AD13EDBE1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
 				AD13ED681C5F39F700562146 /* BaseFactory.cpp in Sources */,
+				AD4570F31CAB7A5600A5F37C /* BinaryParser.cpp in Sources */,
 				AD13ED961C5F39F700562146 /* ConstValues.cpp in Sources */,
 				AD13EDE51C62019F00562146 /* DBArmature.cpp in Sources */,
 				AD2290F21C63361E0017A24D /* DBSlot.cpp in Sources */,
@@ -858,6 +875,7 @@
 				ADADA1B71C62FEDD00B15A4F /* DBBone.cpp in Sources */,
 				AD13EDBF1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
 				AD13ED691C5F39F700562146 /* BaseFactory.cpp in Sources */,
+				AD4570F41CAB7A5600A5F37C /* BinaryParser.cpp in Sources */,
 				AD13ED971C5F39F700562146 /* ConstValues.cpp in Sources */,
 				AD13EDE61C62019F00562146 /* DBArmature.cpp in Sources */,
 				AD2290F31C63361E0017A24D /* DBSlot.cpp in Sources */,
