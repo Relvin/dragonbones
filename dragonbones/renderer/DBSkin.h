@@ -12,8 +12,10 @@
 #include "2d/CCSprite.h"
 #include "DragonBones.h"
 #include "renderer/DBCCTextureAtlas.h"
+
 NAME_SPACE_DRAGON_BONES_BEGIN
 
+class DisplayData;
 
 class DBSkin
 : public cocos2d::Sprite
@@ -23,13 +25,17 @@ public:
     DBSkin();
     virtual ~DBSkin();
     
-    static DBSkin* create(const std::string &name,const std::string & textureAtlasName);
+    static DBSkin* create(DisplayData *displayData,const std::string & textureAtlasName);
+    virtual bool initWithDisplayDataTextureName(DisplayData *displayData,const std::string & textureAtlasName);
     virtual bool initWithTextureName(const std::string &name,const std::string & textureAtlasName);
     virtual bool initWithTextureData(const ITextureAtlas *textureAtlas, const TextureData *textureData);
     
-    
+    void setDisplayData(DisplayData* displayData);
+    void updateTextureData();
+    void updateBaseInfo();
 private:
-    
+    DisplayData* _displayData;
+    std::string _textureAtlasName;
     
 };
 

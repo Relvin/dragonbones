@@ -8,17 +8,18 @@
 
 #include "DBSkin.h"
 #include "DBCCFactory.h"
-
+#include "objects/DisplayData.h"
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 
-DBSkin* DBSkin::create(const std::string &name,const std::string & textureAtlasName)
+DBSkin* DBSkin::create(DisplayData *displayData,const std::string & textureAtlasName)
 {
     DBSkin* skin = new (std::nothrow) DBSkin();
-    if (skin && skin->initWithTextureName(name,textureAtlasName))
+    if (skin && displayData && skin->initWithDisplayDataTextureName(displayData, textureAtlasName))
     {
+        skin->updateBaseInfo();
         skin->autorelease();
         return skin;
     }
@@ -26,12 +27,22 @@ DBSkin* DBSkin::create(const std::string &name,const std::string & textureAtlasN
     return nullptr;
 }
 
+bool DBSkin::initWithDisplayDataTextureName(DisplayData *displayData,const std::string & textureAtlasName)
+{
+    this->_displayData = displayData;
+    if (!this->initWithTextureName(displayData->name,textureAtlasName))
+    {
+        return false;
+    }
+    return true;
+}
+
 bool DBSkin::initWithTextureName(const std::string &name,const std::string & textureAtlasName)
 {
     
     ITextureAtlas *textureAtlas = nullptr;
     TextureData *textureData = nullptr;
-    
+    this->_textureAtlasName = textureAtlasName;
     if (!textureAtlasName.empty())
     {
         textureAtlas = DBCCFactory::getInstance()->getTextureAtlas(textureAtlasName);
@@ -135,6 +146,46 @@ DBSkin::~DBSkin()
     
 }
 
+void DBSkin::setDisplayData(dragonBones::DisplayData *displayData)
+{
+    if (displayData)
+    {
+        if (!this->_displayData || this->_displayData->name != displayData->name)
+        {
+            this->_displayData = displayData;
+            this->updateBaseInfo();
+            this->updateTextureData();
+        }
+    }
+    
+}
+
+void DBSkin::updateTextureData()
+{
+    this->initWithTextureName(this->_displayData->name,this->_textureAtlasName);
+}
+
+void DBSkin::updateBaseInfo()
+{
+    float pivotX = 0.f;
+    float pivotY = 0.f;
+    DisplayData* displayData = this->_displayData;
+    if (displayData)
+    {
+        pivotX = displayData->pivot.x;
+        pivotY = displayData->pivot.y;
+    }
+    
+    if ((pivotX > 0.000001f && pivotX >= -0.000001f) || (pivotY <= 0.000001f && pivotY >= -0.000001f))
+    {
+        this->setAnchorPoint(cocos2d::Vec2(0.5f, 0.5f));
+    }
+    else
+    {
+        cocos2d::Size size = this->getContentSize();
+        this->setAnchorPoint(cocos2d::Vec2(pivotX / size.width, 1.f - pivotY / size.height));
+    }
+}
 
 
 NAME_SPACE_DRAGON_BONES_END

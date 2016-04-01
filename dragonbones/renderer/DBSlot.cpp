@@ -41,6 +41,8 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     }
     
     this->_slotData = slotData;
+    this->_textureAtlasName = textureAtlasName;
+    _originZOrder = this->_slotData->zOrder;
     int displayIndex = slotData->displayIndex;
     
     displayIndex = displayIndex < 0 ? 0 : displayIndex;
@@ -48,45 +50,29 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     DisplayData *displayData = nullptr;
     if (displayIndex >= 0)
     {
-        displayData = slotData->displayDataList[slotData->displayIndex];
+        displayData = slotData->displayDataList[displayIndex];
         
     }
     
     if (displayData)
     {
         origin = displayData->transform;
+        Node* displayNode = nullptr;
         if (displayData->type == DisplayType::DT_IMAGE)
         {
-            _display = DBSkin::create(displayData->name,textureAtlasName);
+            _display = DBSkin::create(displayData,textureAtlasName);
+            displayNode = _display;
         }
         else if (displayData->type == DisplayType::DT_ARMATURE)
         {
-//            _display = DBArmature::create("");
+            _childArmature = DBArmature::create(displayData->name/*,""*/,textureAtlasName);
+            displayNode = _childArmature;
         }
-        
-        if (_display)
+        if (displayNode)
         {
-            this->addChild(_display);
-            float pivotX = 0.f;
-            float pivotY = 0.f;
             
-            if (displayData)
-            {
-                pivotX = displayData->pivot.x;
-                pivotY = displayData->pivot.y;
-            }
-            
-            if ((pivotX > 0.000001f && pivotX >= -0.000001f) || (pivotY <= 0.000001f && pivotY >= -0.000001f))
-            {
-                _display->setAnchorPoint(cocos2d::Vec2(0.5f, 0.5f));
-            }
-            else
-            {
-                cocos2d::Size size = _display->getContentSize();
-                _display->setAnchorPoint(cocos2d::Vec2(pivotX / size.width, 1.f - pivotY / size.height));
-            }
+            this->addChild(displayNode);
         }
-        
     }
     
     return true;
@@ -97,15 +83,13 @@ DBSlot::DBSlot()
 : _display (nullptr)
 , _slotData (nullptr)
 , _needUpdate (true)
-, _tweenZOrder(0.f)
-, _isShowDisplay (false)
 , _isColorChanged (false)
-//,_displayIndex(-1)
-//,_originZOrder(0.f)
-//,_offsetZOrder(0.f)
-//,_blendMode(BlendMode::BM_NORMAL)
-//,_childArmature(nullptr)
-
+, _displayIndex(-1)
+, _originZOrder(0.f)
+, _tweenZOrder(0.f)
+//, _blendMode(BlendMode::BM_NORMAL)
+, _childArmature(nullptr)
+, _textureAtlasName ("")
 
 {
     
@@ -123,13 +107,7 @@ void DBSlot::update(float delta)
     {
         return;
     }
-    
-    //	Transform transform;
-    //	Matrix matrix;
-    //	updateGlobal(transform, matrix);
-    //	updateDisplayTransform();
-    //    _needUpdate = false;
-    //    return;
+
     Point tweenPivot = parentBone->getTweenPivot();
     const float x = origin.x + offset.x + tweenPivot.x;
     const float y = origin.y + offset.y + tweenPivot.y;
@@ -186,7 +164,6 @@ void DBSlot::arriveAtFrame( Frame *frame, const DBSlotTimelineState *timelineSta
     {
         SlotFrame *slotFrame = static_cast<SlotFrame*>(frame);
         const int displayIndex = slotFrame->displayIndex;
-        DBSlot *childSlot = nullptr;
         
         changeDisplay(displayIndex);
         updateDisplayVisible(slotFrame->visible);
@@ -194,52 +171,41 @@ void DBSlot::arriveAtFrame( Frame *frame, const DBSlotTimelineState *timelineSta
         {
             if (slotFrame->zOrder != _tweenZOrder)
             {
-                _tweenZOrder = slotFrame->zOrder;
-                DBArmature* armeture = dynamic_cast<DBArmature*>(_armature);
-                if (armeture)
-                {
-                    //modify by Relvin todo
-//                    _armature->_slotsZOrderChanged = true;
-                }
-                
+                this->setTweenZOrder(slotFrame->zOrder);
             }
         }
         
         if (!frame->action.empty())
         {
-            //modify by Relvin
-//            if (_childArmature)
-//            {
-//                _childArmature->_animation->gotoAndPlay(frame->action);
-//            }
+            if (_childArmature)
+            {
+                _childArmature->getAnimation()->gotoAndPlay(frame->action);
+            }
         }
     }
 }
 
 void DBSlot::changeDisplay(int displayIndex)
 {
-#if 0
+
     if (displayIndex < 0)
     {
-        if (_isShowDisplay)
+        this->setVisible(false);
+        if (this->_childArmature)
         {
-            _isShowDisplay = false;
-            removeDisplayFromContainer();
-            updateChildArmatureAnimation();
+            this->_childArmature->stopAllActions();
+            this->_childArmature->unscheduleUpdate();
         }
     }
-    else if (!_displayList.empty())
+    else
     {
-        if (displayIndex >= (int)(_displayList.size()))
-        {
-            displayIndex = _displayList.size() - 1;
-        }
+        
+        displayIndex = displayIndex > this->_slotData->displayDataList.size() ? this->_slotData->displayDataList.size() - 1 : displayIndex;
         
         if (_displayIndex != displayIndex)
         {
-            _isShowDisplay = true;
             _displayIndex = displayIndex;
-            updateSlotDisplay(false);
+            updateSkinDisplay();
             
             if (
                 _slotData &&
@@ -250,20 +216,22 @@ void DBSlot::changeDisplay(int displayIndex)
                 origin = _slotData->displayDataList[_displayIndex]->transform;
             }
         }
-        else if (!_isShowDisplay)
-        {
-            _isShowDisplay = true;
-            
-            if (_armature)
-            {
-                _armature->_slotsZOrderChanged = true;
-                addDisplayToContainer(_armature->_display, -1);
-            }
-            
-            updateChildArmatureAnimation();
-        }
+//        else if (!_isShowDisplay)
+//        {
+//            _isShowDisplay = true;
+//            
+//            if (_armature)
+//            {
+//                _armature->_slotsZOrderChanged = true;
+//                addDisplayToContainer(_armature->_display, -1);
+//            }
+//            
+//            updateChildArmatureAnimation();
+//        }
+        this->setVisible(true);
+        
     }
-#endif
+
 }
 
 
@@ -295,6 +263,20 @@ void DBSlot::updateDisplayColor(int aOffset, int rOffset, int gOffset, int bOffs
         _display->setOpacity(aMultiplier * 255.f);
         _display->setColor(cocos2d::Color3B(rMultiplier * 255.f , gMultiplier * 255.f , bMultiplier * 255.f));
     }
+}
+
+void DBSlot::updateSkinDisplay()
+{
+    if (this->_display)
+    {
+        this->_display->setDisplayData(_slotData->displayDataList[_displayIndex]);
+    }
+}
+
+void DBSlot::setTweenZOrder(float zOrder)
+{
+    this->_tweenZOrder = zOrder;
+    this->setLocalZOrder(this->_originZOrder + this->_tweenZOrder);
 }
 
 NAME_SPACE_DRAGON_BONES_END

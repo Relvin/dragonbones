@@ -19,6 +19,8 @@ NAME_SPACE_DRAGON_BONES_BEGIN
 
 class DBSlotTimelineState;
 class DBAnimationState;
+class DBArmature;
+class DBSkin;
 class DBSlot
 : public cocos2d::Node
 , public DBBase
@@ -41,15 +43,20 @@ public:
     
     void updateDisplayColor(int aOffset, int rOffset, int gOffset, int bOffset, float aMultiplier, float rMultiplier, float gMultiplier, float bMultiplier, bool colorChanged);
     bool isColorChanged() const { return _isColorChanged; }
-
+    void updateSkinDisplay();
+    
+    void setTweenZOrder(float zOrder);
 private:
-    cocos2d::Node* _display;
+    DBSkin* _display;
     SlotData* _slotData;
     bool _needUpdate;
     float _tweenZOrder;
-    bool _isShowDisplay;
     ColorTransform _colorTransform;
     bool _isColorChanged;
+    int _displayIndex;
+    float _originZOrder;
+    DBArmature* _childArmature;
+    std::string _textureAtlasName;
     
 };
 

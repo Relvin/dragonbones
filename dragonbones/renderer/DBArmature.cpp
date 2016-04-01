@@ -243,11 +243,6 @@ void DBArmature::update(float delta)
         //        }
     }
     //
-    //    if (_slotsZOrderChanged)
-    //    {
-    //        sortSlotsByZOrder();
-    //        
-    //    }
     
     if (!_eventDataMgr->empty())
     {

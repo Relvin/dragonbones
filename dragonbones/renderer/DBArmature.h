@@ -61,6 +61,9 @@ public:
     void arriveAtFrame(Frame *frame, DBAnimationState *animationState, bool isCross);
     
     DBEventDataMgr* getEventDataManager() const;
+    
+protected:
+    
 private:
     
     DragonBonesData* _pDragonBonesData;
