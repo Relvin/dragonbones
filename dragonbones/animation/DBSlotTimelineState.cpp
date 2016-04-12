@@ -53,43 +53,6 @@ bool DBSlotTimelineStateMgr::init()
     return true;
 }
 
-#if 0
-std::vector<DBSlotTimelineState*> DBSlotTimelineState::_pool;
-
-DBSlotTimelineState* DBSlotTimelineState::borrowObject()
-{
-    if (_pool.empty())
-    {
-        return new DBSlotTimelineState();
-    }
-    
-    DBSlotTimelineState *timelinseState = _pool.back();
-    _pool.pop_back();
-    return timelinseState;
-}
-
-void DBSlotTimelineState::returnObject(DBSlotTimelineState *timelineState)
-{
-    if (std::find(_pool.cbegin(), _pool.cend(), timelineState) == _pool.end())
-    {
-        _pool.push_back(timelineState);
-    }
-    
-    timelineState->clear();
-}
-
-void DBSlotTimelineState::clearObjects()
-{
-    for (size_t i = 0, l = _pool.size(); i < l; ++i)
-    {
-        _pool[i]->clear();
-        delete _pool[i];
-    }
-    
-    _pool.clear();
-}
-
-#endif
 DBSlotTimelineState* DBSlotTimelineState::create()
 {
     DBSlotTimelineState *timelineState = new (std::nothrow) DBSlotTimelineState();
@@ -224,10 +187,7 @@ void DBSlotTimelineState::updateMultipleFrame(float progress)
         }
     }
     
-    if (currentPlayTimes == 0)
-    {
-        currentPlayTimes = 1;
-    }
+    currentPlayTimes = currentPlayTimes == 0 ? 1 : currentPlayTimes;
     
     if (_currentTime != currentTime)
     {
@@ -335,11 +295,11 @@ void DBSlotTimelineState::updateToNextFrame(int currentPlayTimes)
     {
         _tweenEasing = _animationState->getClip()->tweenEasing;
         
-        if (_tweenEasing == USE_FRAME_TWEEN_EASING)
+        if (_tweenEasing == NO_TWEEN_EASING)
         {
             _tweenEasing = currentFrame->tweenEasing;
-            
-            if (_tweenEasing == NO_TWEEN_EASING)    // frame no tween
+            _tweenCurve = currentFrame->curve;
+            if(_tweenEasing == NO_TWEEN_EASING && _tweenCurve == nullptr)    //frame no tween
             {
                 tweenEnabled = false;
             }
@@ -363,8 +323,8 @@ void DBSlotTimelineState::updateToNextFrame(int currentPlayTimes)
     else
     {
         _tweenEasing = currentFrame->tweenEasing;
-        
-        if (_tweenEasing == NO_TWEEN_EASING || _tweenEasing == AUTO_TWEEN_EASING)    // frame no tween
+        _tweenCurve = currentFrame->curve;
+        if((_tweenEasing == NO_TWEEN_EASING || _tweenEasing == AUTO_TWEEN_EASING) && _tweenCurve == nullptr)   //frame no tween
         {
             _tweenEasing = NO_TWEEN_EASING;
             tweenEnabled = false;
@@ -471,11 +431,11 @@ void DBSlotTimelineState::updateTween()
     if (_tweenColor && _animationState->displayControl)
     {
         float progress = (_currentTime - _currentFramePosition) / (float)(_currentFrameDuration);
-        if (!_tweenCurve)
+        if (_tweenCurve != nullptr)
         {
             progress = _tweenCurve->getValueByProgress(progress);
         }
-        if (_tweenEasing && _tweenEasing != NO_TWEEN_EASING)
+        else if (_tweenEasing && _tweenEasing != NO_TWEEN_EASING)
         {
             progress = getEaseValue(progress, _tweenEasing);
         }

@@ -65,7 +65,7 @@ public:
     void resetTimelineState();
     
     // property
-    bool getIsComplete() const { return _isComplete; }
+    inline bool getIsComplete() const { return _isComplete; }
     
 public:
     const Transform& getTransform() const;

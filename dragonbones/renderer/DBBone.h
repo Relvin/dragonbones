@@ -57,6 +57,7 @@ public:
     
     void addSlot(DBSlot *slot);
     void removeSlot(DBSlot *slot);
+    void hideSlots();
     
 private:
     

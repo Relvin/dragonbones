@@ -1,10 +1,11 @@
-﻿#ifndef DRAGONBONES_PARSERS_XML_DATA_PARSER_H
+#ifndef DRAGONBONES_PARSERS_XML_DATA_PARSER_H
 #define DRAGONBONES_PARSERS_XML_DATA_PARSER_H
 
 #include "3rd/tinyxml2/dbtinyxml2.h"
 
 #include "DragonBones.h"
 #include "BaseDataParser.h"
+#include "geoms/Point.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -24,8 +25,10 @@ class SlotTimeline;
 class SlotFrame;
 class Frame;
 class Timeline;
-class Point;
 class ColorTransform;
+class MeshData;
+class FFDTimeline;
+class FFDFrame;
 
 class XMLDataParser : public BaseDataParser
 {
@@ -46,10 +49,14 @@ private:
 	SlotData* parseSlotDisplayData(const XMLElement *slotXML) const;
     SlotData* parseSlotData(const XMLElement *slotXML) const;
     DisplayData* parseDisplayData(const XMLElement *displayXML) const;
+    MeshData* parseMeshData(const XMLElement *MeshXML) const;
     AnimationData* parseAnimationData(const XMLElement *animationXML, const ArmatureData *armatureData) const;
     TransformTimeline* parseTransformTimeline(const XMLElement *timelineXML, int duration) const;
 	SlotTimeline* parseSlotTimeline(const XMLElement *frameXML, int duration) const;
 	SlotFrame* parseSlotFrame(const XMLElement *timelineXML) const;
+    FFDTimeline* parseFFDTimeline(const XMLElement *timelineXML,int duration) const;
+    FFDFrame * parseFFDFrame(const XMLElement *frameXML) const;
+    
     Frame* parseMainFrame(const XMLElement *frameXML) const;
     TransformFrame* parseTransformFrame(const XMLElement *frameXML) const;
     

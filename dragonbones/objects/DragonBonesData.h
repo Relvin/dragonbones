@@ -62,7 +62,16 @@ public:
         
         return nullptr;
     }
-
+    
+    ArmatureData* getArmatureDataFirst() const
+    {
+        if (armatureDataList.size() > 0)
+        {
+            return armatureDataList.at(0);
+        }
+        return nullptr;
+    }
+    
 public:
 	bool autoSearch;
 	bool isGlobalData;

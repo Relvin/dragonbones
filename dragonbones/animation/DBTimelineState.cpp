@@ -76,7 +76,7 @@ name("")
 ,_lastTime(0)
 ,_totalTime(0)
 ,_weight(1.f)
-,_tweenEasing(USE_FRAME_TWEEN_EASING)
+,_tweenEasing(NO_TWEEN_EASING)
 ,_bone(nullptr)
 ,_animationState(nullptr)
 ,_timelineData(nullptr)
@@ -93,8 +93,20 @@ void DBTimelineState::fadeIn(DBBone *bone, DBAnimationState *animationState, Tra
     _bone = bone;
     _animationState = animationState;
     _timelineData = timeline;
-    _totalTime = _timelineData->duration;
+    _originTransform = _timelineData->originTransform;
+    _originPivot = _timelineData->originPivot;
     name = _timelineData->name;
+    
+    _totalTime = _timelineData->duration;
+    
+    _isComplete = false;
+    _tweenTransform = false;
+    _tweenScale = false;
+    _currentFrameIndex = -1;
+    _currentTime = -1;
+    _tweenEasing = NO_TWEEN_EASING;
+    _weight = 1;
+    
     _transform.x = 0.f;
     _transform.y = 0.f;
     _transform.scaleX = 1.f;
@@ -111,10 +123,7 @@ void DBTimelineState::fadeIn(DBBone *bone, DBAnimationState *animationState, Tra
     _durationTransform.skewY = 0.f;
     _durationPivot.x = 0.f;
     _durationPivot.y = 0.f;
-    // copy
-    _originTransform = _timelineData->originTransform;
-    // copy
-    _originPivot = _timelineData->originPivot;
+    
     
     switch (_timelineData->frameList.size())
     {
@@ -209,10 +218,7 @@ void DBTimelineState::updateMultipleFrame(float progress)
         }
     }
     
-    if (currentPlayTimes == 0)
-    {
-        currentPlayTimes = 1;
-    }
+    currentPlayTimes = currentPlayTimes == 0 ? 1 : currentPlayTimes;
     
     if (_currentTime != currentTime)
     {
@@ -264,24 +270,9 @@ void DBTimelineState::updateMultipleFrame(float progress)
         if (currentFrame)
         {
             _bone->arriveAtFrame(currentFrame, this, _animationState, false);
-            //_blendEnabled = currentFrame->displayIndex >= 0;
-            _blendEnabled = currentFrame->tweenEasing != NO_TWEEN_EASING;
-            if (_blendEnabled)
-            {
-                updateToNextFrame(currentPlayTimes);
-            }
-            else
-            {
-                _tweenEasing = NO_TWEEN_EASING;
-                _tweenTransform = false;
-                _tweenScale = false;
-            }
+            updateToNextFrame(currentPlayTimes);
         }
-        
-        if (_blendEnabled)
-        {
-            updateTween();
-        }
+        updateTween();
     }
 }
 
@@ -316,7 +307,6 @@ void DBTimelineState::updateToNextFrame(int currentPlayTimes)
     {
         _tweenEasing = _animationState->getClip()->tweenEasing;
         
-        //if (_tweenEasing == USE_FRAME_TWEEN_EASING)
         if (_tweenEasing == NO_TWEEN_EASING)
         {
             _tweenEasing = currentFrame->tweenEasing;
@@ -368,9 +358,8 @@ void DBTimelineState::updateToNextFrame(int currentPlayTimes)
         _durationTransform.scaleX = nextFrame->transform.scaleX - currentFrame->transform.scaleX + nextFrame->scaleOffset.x;
         _durationTransform.scaleY = nextFrame->transform.scaleY - currentFrame->transform.scaleY + nextFrame->scaleOffset.y;
         
-        // 有问题？
-        //_durationTransform.normalizeRotation();
         
+        _durationTransform.normalizeRotation();
         if (nextFrameIndex == 0)
         {
             _durationTransform.skewX = formatRadian(_durationTransform.skewX);
@@ -458,11 +447,10 @@ void DBTimelineState::updateTween()
         {
             progress = _tweenCurve->getValueByProgress(progress);
         }
-        
-        //if (_tweenEasing && _tweenEasing != NO_TWEEN_EASING)
-        //{
-        //progress = getEaseValue(progress, _tweenEasing);
-        //}
+        else if (_tweenEasing && _tweenEasing != NO_TWEEN_EASING)
+        {
+            progress = getEaseValue(progress, _tweenEasing);
+        }
         
         const Transform &currentTransform = currentFrame->transform;
         const Point &currentPivot = currentFrame->pivot;
@@ -515,53 +503,32 @@ void DBTimelineState::updateSingleFrame()
     //_tweenColor = false;
     _tweenEasing = NO_TWEEN_EASING;
     //_blendEnabled = currentFrame->displayIndex >= 0;
-    _blendEnabled = true;
-    
-    if (_blendEnabled)
+
+    if (_animationState->additiveBlending)
     {
-        if (_animationState->additiveBlending)
-        {
-            // additive blending
-            // singleFrame.transform (0)
-            //_transform.x =
-            //    _transform.y =
-            //        _transform.skewX =
-            //            _transform.skewY =
-            //                _transform.scaleX =
-            //                    _transform.scaleY = 0.f;
-            //_pivot.x =
-            //    _pivot.y = 0.f;
-            
-            _transform.x = currentFrame->transform.x;
-            _transform.y = currentFrame->transform.y;
-            _transform.skewX = currentFrame->transform.skewX;
-            _transform.skewY = currentFrame->transform.skewY;
-            _transform.scaleX = currentFrame->transform.scaleX;
-            _transform.scaleY = currentFrame->transform.scaleY;
-            _pivot.x = currentFrame->pivot.x;
-            _pivot.y = currentFrame->pivot.y;
-        }
-        else
-        {
-            // normal blending
-            // timeline.originTransform + singleFrame.transform (0)
-            // copy
-            //_transform = _originTransform;
-            //// copy
-            //_pivot = _originPivot;
-            
-            _transform.x = _originTransform.x + currentFrame->transform.x;
-            _transform.y = _originTransform.y + currentFrame->transform.y;
-            _transform.skewX = _originTransform.skewX + currentFrame->transform.skewX;
-            _transform.skewY = _originTransform.skewY + currentFrame->transform.skewY;
-            _transform.scaleX = _originTransform.scaleX * currentFrame->transform.scaleX;
-            _transform.scaleY = _originTransform.scaleY * currentFrame->transform.scaleY;
-            _pivot.x = _originPivot.x + currentFrame->pivot.x;
-            _pivot.y = _originPivot.y + currentFrame->pivot.y;
-        }
-        
-        _bone->invalidUpdate();
+        _transform.x = currentFrame->transform.x;
+        _transform.y = currentFrame->transform.y;
+        _transform.skewX = currentFrame->transform.skewX;
+        _transform.skewY = currentFrame->transform.skewY;
+        _transform.scaleX = currentFrame->transform.scaleX;
+        _transform.scaleY = currentFrame->transform.scaleY;
+        _pivot.x = currentFrame->pivot.x;
+        _pivot.y = currentFrame->pivot.y;
     }
+    else
+    {
+        _transform.x = _originTransform.x + currentFrame->transform.x;
+        _transform.y = _originTransform.y + currentFrame->transform.y;
+        _transform.skewX = _originTransform.skewX + currentFrame->transform.skewX;
+        _transform.skewY = _originTransform.skewY + currentFrame->transform.skewY;
+        _transform.scaleX = _originTransform.scaleX * currentFrame->transform.scaleX;
+        _transform.scaleY = _originTransform.scaleY * currentFrame->transform.scaleY;
+        _pivot.x = _originPivot.x + currentFrame->pivot.x;
+        _pivot.y = _originPivot.y + currentFrame->pivot.y;
+    }
+    
+    _bone->invalidUpdate();
+    
 }
 
 void DBTimelineState::resetTimelineState()

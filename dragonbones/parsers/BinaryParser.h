@@ -10,6 +10,7 @@
 #define BinaryParser_hpp
 
 #include "DragonBones.h"
+#include "geoms/Point.h"
 
 namespace flatbuffers {
     struct String;
@@ -52,7 +53,6 @@ class SlotTimeline;
 class SlotFrame;
 class Frame;
 class Timeline;
-class Point;
 class ColorTransform;
 
 class BinaryParser

@@ -1,0 +1,146 @@
+//
+//  MeshData.cpp
+//  dragonbones
+//
+//  Created by Relvin on 16/4/5.
+//  Copyright © 2016年 Relvin. All rights reserved.
+//
+
+#include "MeshData.h"
+
+NAME_SPACE_DRAGON_BONES_BEGIN
+
+MeshData::MeshData()
+: _width(0.f)
+, _height(0.f)
+, updated(false)
+{
+    _vectices.clear();
+    _triangles.clear();
+    _UVs.clear();
+    _edges.clear();
+}
+
+MeshData::~MeshData()
+{
+    _vectices.clear();
+    _triangles.clear();
+    _UVs.clear();
+    _edges.clear();
+}
+
+void MeshData::updateVertices(int offset, const std::vector<float> &vectices)
+{
+    bool skined = false;
+    
+//    printf("\nvectices size = %d\n",vectices.size());
+    for (int i = 0;i < vectices.size();i+=2)
+    {
+        int idx = (i + offset) >> 1;
+        if (idx < _vectices.size())
+        {
+            if (skined)
+            {
+                _vectices[idx].vectex.x += vectices[i];
+                _vectices[idx].vectex.y += vectices[i + 1];
+            }
+            else
+            {
+                _vectices[idx].vectex.x = _orgVectices[idx].x + vectices[i];
+                _vectices[idx].vectex.y = _orgVectices[idx].y + vectices[i + 1];
+            }
+        }
+    }
+    
+    updated = true;
+}
+
+std::vector<Point> &MeshData::getVectices() const
+{
+    return this->_orgVectices;
+}
+
+std::vector<Point>& MeshData::getUVs() const
+{
+    return this->_UVs;
+}
+
+std::vector<int>& MeshData::getTriangles() const
+{
+    return this->_triangles;
+}
+
+void MeshData::addVectex(dragonBones::Point vectex)
+{
+    this->_orgVectices.push_back(vectex);
+}
+
+void MeshData::addUV(dragonBones::Point UV)
+{
+    this->_UVs.push_back(UV);
+}
+
+void MeshData::addTriangle(int triangle)
+{
+    this->_triangles.push_back(triangle);
+}
+
+void MeshData::addEdge(int edge)
+{
+    this->_edges.push_back(edge);
+}
+
+void MeshData::setWidht(float widht)
+{
+    this->_width = widht;
+}
+
+void MeshData::setHeight(float height)
+{
+    this->_height = height;
+}
+
+int MeshData::getIndexInVectices(const Point &point) const
+{
+    return this->getIndexInVectices(point.x,point.y);
+}
+
+int MeshData::getIndexInVectices(float x, float y) const
+{
+    for (int idx = 0;idx < _orgVectices.size();idx++)
+    {
+        auto point = _orgVectices.at(idx);
+        if (x == point.x && y == point.y)
+        {
+            return idx;
+        }
+    }
+    return 0;
+}
+
+const Point& MeshData::getVectexByIndex(int index) const
+{
+    if (index <= _orgVectices.size())
+    {
+//        if (updated)
+        {
+            return _vectices.at(index).vectex;
+        }
+//        else
+//        {
+//            return _orgVectices.at(index);
+//        }
+    }
+    return Point(0,0);
+}
+
+const Point& MeshData::getUVByIndex(int index) const
+{
+    if (_UVs.size() > index)
+    {
+        return _UVs.at(index);
+    }
+    return Point(0,0);
+}
+
+NAME_SPACE_DRAGON_BONES_END

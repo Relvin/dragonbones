@@ -5,6 +5,7 @@
 
 #include "DragonBones.h"
 #include "BaseDataParser.h"
+#include "geoms/Point.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -24,7 +25,6 @@ class SlotTimeline;
 class SlotFrame;
 class Frame;
 class Timeline;
-class Point;
 class ColorTransform;
 
 class JSONDataParser : public BaseDataParser

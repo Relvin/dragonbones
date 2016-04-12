@@ -196,7 +196,7 @@ void DBBone::update(float delta)
     
     this->setPosition(global.x,-global.y);
     
-#define showBone 1
+//#define showBone 1
 #ifdef showBone
     cocos2d::Sprite* boneSprite = dynamic_cast<cocos2d::Sprite*>(this->getChildByTag(1001));
     if (!boneSprite)
@@ -424,8 +424,8 @@ void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelin
 
     bool displayControl =
     animationState->displayControl &&
-    (displayController.empty() || displayController == animationState->name) &&
-    animationState->getMixingTransform(this->getName());
+    (displayController.empty() || displayController == animationState->name)/* &&
+    animationState->getMixingTransform(this->getName())*/;
     
     // && timelineState->_weight > 0
     // TODO: 需要修正混合动画干扰关键帧数据的问题，如何正确高效的判断混合动画？
@@ -468,6 +468,14 @@ void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelin
 //        }
     }
 
+}
+
+void DBBone::hideSlots()
+{
+    for (auto slot : _slotList)
+    {
+        slot->changeDisplay(-1);
+    }
 }
 
 

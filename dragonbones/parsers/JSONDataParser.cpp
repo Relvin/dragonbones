@@ -485,7 +485,7 @@ void JSONDataParser::parseFrame(const rapidjson::Value &inFrame, Frame &frame, i
 		{
 			float x = GET_FLOAT(curves, ConstValues::A_X.c_str());
 			float y = GET_FLOAT(curves, ConstValues::A_Y.c_str());
-			frame.curve->_pointList.push_back(new Point(x, y));
+			frame.curve->_pointList.push_back(Point(x, y));
 		}
 	}	
 }

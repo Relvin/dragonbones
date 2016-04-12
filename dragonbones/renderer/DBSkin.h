@@ -13,6 +13,9 @@
 #include "DragonBones.h"
 #include "renderer/DBCCTextureAtlas.h"
 
+namespace cocos2d {
+    class PolygonInfo;
+}
 NAME_SPACE_DRAGON_BONES_BEGIN
 
 class DisplayData;
@@ -33,9 +36,18 @@ public:
     void setDisplayData(DisplayData* displayData);
     void updateTextureData();
     void updateBaseInfo();
+    
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+    void updatePolygonVectex();
+    
+protected:
+    void buildPolygonInfo();
 private:
     DisplayData* _displayData;
     std::string _textureAtlasName;
+    cocos2d::Vec2 _offset;
+    std::vector<int> _polyVtx;
+    
     
 };
 

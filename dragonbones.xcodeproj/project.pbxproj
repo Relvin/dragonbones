@@ -183,6 +183,18 @@
 		AD60698D1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */; };
 		AD60698E1C9668FC00CCC818 /* DBAnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD60698B1C9668FC00CCC818 /* DBAnimationState.h */; };
 		AD60698F1C9668FC00CCC818 /* DBAnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD60698B1C9668FC00CCC818 /* DBAnimationState.h */; };
+		AD930A681CB535570005F930 /* DBFFDTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A661CB535570005F930 /* DBFFDTimelineState.cpp */; };
+		AD930A691CB535570005F930 /* DBFFDTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A661CB535570005F930 /* DBFFDTimelineState.cpp */; };
+		AD930A6A1CB535570005F930 /* DBFFDTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD930A671CB535570005F930 /* DBFFDTimelineState.h */; };
+		AD930A6B1CB535570005F930 /* DBFFDTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD930A671CB535570005F930 /* DBFFDTimelineState.h */; };
+		AD930A6E1CB537C60005F930 /* FFDTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A6C1CB537C60005F930 /* FFDTimeline.cpp */; };
+		AD930A6F1CB537C60005F930 /* FFDTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A6C1CB537C60005F930 /* FFDTimeline.cpp */; };
+		AD930A701CB537C60005F930 /* FFDTimeline.h in Headers */ = {isa = PBXBuildFile; fileRef = AD930A6D1CB537C60005F930 /* FFDTimeline.h */; };
+		AD930A711CB537C60005F930 /* FFDTimeline.h in Headers */ = {isa = PBXBuildFile; fileRef = AD930A6D1CB537C60005F930 /* FFDTimeline.h */; };
+		AD930A741CB539E20005F930 /* FFDFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A721CB539E20005F930 /* FFDFrame.cpp */; };
+		AD930A751CB539E20005F930 /* FFDFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A721CB539E20005F930 /* FFDFrame.cpp */; };
+		AD930A761CB539E20005F930 /* FFDFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = AD930A731CB539E20005F930 /* FFDFrame.h */; };
+		AD930A771CB539E20005F930 /* FFDFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = AD930A731CB539E20005F930 /* FFDFrame.h */; };
 		AD97C5321C98FC7A00331850 /* DBTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD97C5301C98FC7A00331850 /* DBTimelineState.cpp */; };
 		AD97C5331C98FC7A00331850 /* DBTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD97C5301C98FC7A00331850 /* DBTimelineState.cpp */; };
 		AD97C5341C98FC7A00331850 /* DBTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD97C5311C98FC7A00331850 /* DBTimelineState.h */; };
@@ -199,6 +211,14 @@
 		ADAF1F631C7F252200000F53 /* DBSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADAF1F601C7F252200000F53 /* DBSkin.cpp */; };
 		ADAF1F641C7F252200000F53 /* DBSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAF1F611C7F252200000F53 /* DBSkin.h */; };
 		ADAF1F651C7F252200000F53 /* DBSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAF1F611C7F252200000F53 /* DBSkin.h */; };
+		ADC6A7B81CB38BA900653F7F /* MeshData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC6A7B61CB38BA900653F7F /* MeshData.cpp */; };
+		ADC6A7B91CB38BA900653F7F /* MeshData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC6A7B61CB38BA900653F7F /* MeshData.cpp */; };
+		ADC6A7BA1CB38BA900653F7F /* MeshData.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7B71CB38BA900653F7F /* MeshData.h */; };
+		ADC6A7BB1CB38BA900653F7F /* MeshData.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7B71CB38BA900653F7F /* MeshData.h */; };
+		ADC6A7BE1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */; };
+		ADC6A7BF1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */; };
+		ADC6A7C01CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */; };
+		ADC6A7C11CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -307,6 +327,12 @@
 		AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSlotTimelineState.h; sourceTree = "<group>"; };
 		AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBAnimationState.cpp; sourceTree = "<group>"; };
 		AD60698B1C9668FC00CCC818 /* DBAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAnimationState.h; sourceTree = "<group>"; };
+		AD930A661CB535570005F930 /* DBFFDTimelineState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBFFDTimelineState.cpp; sourceTree = "<group>"; };
+		AD930A671CB535570005F930 /* DBFFDTimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBFFDTimelineState.h; sourceTree = "<group>"; };
+		AD930A6C1CB537C60005F930 /* FFDTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFDTimeline.cpp; sourceTree = "<group>"; };
+		AD930A6D1CB537C60005F930 /* FFDTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDTimeline.h; sourceTree = "<group>"; };
+		AD930A721CB539E20005F930 /* FFDFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFDFrame.cpp; sourceTree = "<group>"; };
+		AD930A731CB539E20005F930 /* FFDFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDFrame.h; sourceTree = "<group>"; };
 		AD97C5301C98FC7A00331850 /* DBTimelineState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBTimelineState.cpp; sourceTree = "<group>"; };
 		AD97C5311C98FC7A00331850 /* DBTimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTimelineState.h; sourceTree = "<group>"; };
 		ADADA1911C62E93C00B15A4F /* DBAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBAnimation.cpp; sourceTree = "<group>"; };
@@ -315,6 +341,10 @@
 		ADADA1B51C62FEDD00B15A4F /* DBBone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBone.h; sourceTree = "<group>"; };
 		ADAF1F601C7F252200000F53 /* DBSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBSkin.cpp; sourceTree = "<group>"; };
 		ADAF1F611C7F252200000F53 /* DBSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSkin.h; sourceTree = "<group>"; };
+		ADC6A7B61CB38BA900653F7F /* MeshData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshData.cpp; sourceTree = "<group>"; };
+		ADC6A7B71CB38BA900653F7F /* MeshData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshData.h; sourceTree = "<group>"; };
+		ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBAutoPolygon.cpp; sourceTree = "<group>"; };
+		ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAutoPolygon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -488,6 +518,12 @@
 				AD13ECD21C5F39F700562146 /* Timeline.h */,
 				AD13ECD31C5F39F700562146 /* TransformFrame.h */,
 				AD13ECD41C5F39F700562146 /* TransformTimeline.h */,
+				ADC6A7B61CB38BA900653F7F /* MeshData.cpp */,
+				ADC6A7B71CB38BA900653F7F /* MeshData.h */,
+				AD930A6C1CB537C60005F930 /* FFDTimeline.cpp */,
+				AD930A6D1CB537C60005F930 /* FFDTimeline.h */,
+				AD930A721CB539E20005F930 /* FFDFrame.cpp */,
+				AD930A731CB539E20005F930 /* FFDFrame.h */,
 			);
 			path = objects;
 			sourceTree = "<group>";
@@ -531,6 +567,8 @@
 				AD2290F11C63361E0017A24D /* DBSlot.h */,
 				ADAF1F601C7F252200000F53 /* DBSkin.cpp */,
 				ADAF1F611C7F252200000F53 /* DBSkin.h */,
+				ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */,
+				ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */,
 			);
 			path = renderer;
 			sourceTree = "<group>";
@@ -590,6 +628,8 @@
 				AD97C5311C98FC7A00331850 /* DBTimelineState.h */,
 				AD5C8D141C9A51D8007CFDDC /* DBSlotTimelineState.cpp */,
 				AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */,
+				AD930A661CB535570005F930 /* DBFFDTimelineState.cpp */,
+				AD930A671CB535570005F930 /* DBFFDTimelineState.h */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -603,6 +643,7 @@
 			files = (
 				AD13EDC61C5F39F700562146 /* TextureData.h in Headers */,
 				ADADA1A41C62E93C00B15A4F /* DBAnimation.h in Headers */,
+				AD930A761CB539E20005F930 /* FFDFrame.h in Headers */,
 				AD13ED7A1C5F39F700562146 /* BoneData.h in Headers */,
 				AD13ED6C1C5F39F700562146 /* ColorTransform.h in Headers */,
 				AD2290F41C63361E0017A24D /* DBSlot.h in Headers */,
@@ -649,6 +690,7 @@
 				AD13ED941C5F39F700562146 /* BaseDataParser.h in Headers */,
 				AD4CAC391CA2748E00053685 /* DBEventData.h in Headers */,
 				AD13ED2E1C5F39F700562146 /* reader.h in Headers */,
+				ADC6A7BA1CB38BA900653F7F /* MeshData.h in Headers */,
 				AD13ED2A1C5F39F700562146 /* prettywriter.h in Headers */,
 				AD13ED081C5F39F700562146 /* filewritestream.h in Headers */,
 				AD13ED061C5F39F700562146 /* filereadstream.h in Headers */,
@@ -666,6 +708,7 @@
 				AD13ED321C5F39F700562146 /* writer.h in Headers */,
 				AD13ED2C1C5F39F700562146 /* rapidjson.h in Headers */,
 				AD13ED1E1C5F39F700562146 /* swap.h in Headers */,
+				AD930A6A1CB535570005F930 /* DBFFDTimelineState.h in Headers */,
 				AD13ED7C1C5F39F700562146 /* CurveData.h in Headers */,
 				AD13EDB61C5F39F700562146 /* DBCCRenderHeaders.h in Headers */,
 				AD13ED0C1C5F39F700562146 /* diyfp.h in Headers */,
@@ -675,7 +718,9 @@
 				AD13ED721C5F39F700562146 /* Rectangle.h in Headers */,
 				AD13ED021C5F39F700562146 /* en.h in Headers */,
 				AD13ED8A1C5F39F700562146 /* SlotTimeline.h in Headers */,
+				AD930A701CB537C60005F930 /* FFDTimeline.h in Headers */,
 				AD13ED181C5F39F700562146 /* stack.h in Headers */,
+				ADC6A7C01CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */,
 				AD13ED701C5F39F700562146 /* Point.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,6 +731,7 @@
 			files = (
 				AD13EDC71C5F39F700562146 /* TextureData.h in Headers */,
 				ADADA1A51C62E93C00B15A4F /* DBAnimation.h in Headers */,
+				AD930A771CB539E20005F930 /* FFDFrame.h in Headers */,
 				AD13ED7B1C5F39F700562146 /* BoneData.h in Headers */,
 				AD13ED6D1C5F39F700562146 /* ColorTransform.h in Headers */,
 				AD2290F51C63361E0017A24D /* DBSlot.h in Headers */,
@@ -732,6 +778,7 @@
 				AD13ED951C5F39F700562146 /* BaseDataParser.h in Headers */,
 				AD4CAC3A1CA2748E00053685 /* DBEventData.h in Headers */,
 				AD13ED2F1C5F39F700562146 /* reader.h in Headers */,
+				ADC6A7BB1CB38BA900653F7F /* MeshData.h in Headers */,
 				AD13ED2B1C5F39F700562146 /* prettywriter.h in Headers */,
 				AD13ED091C5F39F700562146 /* filewritestream.h in Headers */,
 				AD13ED071C5F39F700562146 /* filereadstream.h in Headers */,
@@ -749,6 +796,7 @@
 				AD13ED331C5F39F700562146 /* writer.h in Headers */,
 				AD13ED2D1C5F39F700562146 /* rapidjson.h in Headers */,
 				AD13ED1F1C5F39F700562146 /* swap.h in Headers */,
+				AD930A6B1CB535570005F930 /* DBFFDTimelineState.h in Headers */,
 				AD13ED7D1C5F39F700562146 /* CurveData.h in Headers */,
 				AD13EDB71C5F39F700562146 /* DBCCRenderHeaders.h in Headers */,
 				AD13ED0D1C5F39F700562146 /* diyfp.h in Headers */,
@@ -758,7 +806,9 @@
 				AD13ED731C5F39F700562146 /* Rectangle.h in Headers */,
 				AD13ED031C5F39F700562146 /* en.h in Headers */,
 				AD13ED8B1C5F39F700562146 /* SlotTimeline.h in Headers */,
+				AD930A711CB537C60005F930 /* FFDTimeline.h in Headers */,
 				AD13ED191C5F39F700562146 /* stack.h in Headers */,
+				ADC6A7C11CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */,
 				AD13ED711C5F39F700562146 /* Point.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -842,23 +892,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD4CAC371CA2748E00053685 /* DBEventData.cpp in Sources */,
+				ADC6A7B81CB38BA900653F7F /* MeshData.cpp in Sources */,
 				AD13ED9A1C5F39F700562146 /* JSONDataParser.cpp in Sources */,
 				AD13EDB01C5F39F700562146 /* DBCCLuaUtils.cpp in Sources */,
 				AD97C5321C98FC7A00331850 /* DBTimelineState.cpp in Sources */,
 				ADADA1B61C62FEDD00B15A4F /* DBBone.cpp in Sources */,
 				AD13EDBE1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
+				AD930A6E1CB537C60005F930 /* FFDTimeline.cpp in Sources */,
 				AD13ED681C5F39F700562146 /* BaseFactory.cpp in Sources */,
 				AD4570F31CAB7A5600A5F37C /* BinaryParser.cpp in Sources */,
 				AD13ED961C5F39F700562146 /* ConstValues.cpp in Sources */,
 				AD13EDE51C62019F00562146 /* DBArmature.cpp in Sources */,
+				ADC6A7BE1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */,
 				AD2290F21C63361E0017A24D /* DBSlot.cpp in Sources */,
 				AD13ED9E1C5F39F700562146 /* XMLDataParser.cpp in Sources */,
 				ADADA1A21C62E93C00B15A4F /* DBAnimation.cpp in Sources */,
+				AD930A741CB539E20005F930 /* FFDFrame.cpp in Sources */,
 				ADAF1F621C7F252200000F53 /* DBSkin.cpp in Sources */,
 				AD13EDAC1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
 				AD13ED341C5F39F700562146 /* dbtinyxml2.cpp in Sources */,
 				AD0B5A031C7061BB007F2C1F /* DBBase.cpp in Sources */,
 				AD13ED921C5F39F700562146 /* BaseDataParser.cpp in Sources */,
+				AD930A681CB535570005F930 /* DBFFDTimelineState.cpp in Sources */,
 				AD60698C1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */,
 				AD5C8D161C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */,
 			);
@@ -869,23 +924,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD4CAC381CA2748E00053685 /* DBEventData.cpp in Sources */,
+				ADC6A7B91CB38BA900653F7F /* MeshData.cpp in Sources */,
 				AD13ED9B1C5F39F700562146 /* JSONDataParser.cpp in Sources */,
 				AD13EDB11C5F39F700562146 /* DBCCLuaUtils.cpp in Sources */,
 				AD97C5331C98FC7A00331850 /* DBTimelineState.cpp in Sources */,
 				ADADA1B71C62FEDD00B15A4F /* DBBone.cpp in Sources */,
 				AD13EDBF1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
+				AD930A6F1CB537C60005F930 /* FFDTimeline.cpp in Sources */,
 				AD13ED691C5F39F700562146 /* BaseFactory.cpp in Sources */,
 				AD4570F41CAB7A5600A5F37C /* BinaryParser.cpp in Sources */,
 				AD13ED971C5F39F700562146 /* ConstValues.cpp in Sources */,
 				AD13EDE61C62019F00562146 /* DBArmature.cpp in Sources */,
+				ADC6A7BF1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */,
 				AD2290F31C63361E0017A24D /* DBSlot.cpp in Sources */,
 				AD13ED9F1C5F39F700562146 /* XMLDataParser.cpp in Sources */,
 				ADADA1A31C62E93C00B15A4F /* DBAnimation.cpp in Sources */,
+				AD930A751CB539E20005F930 /* FFDFrame.cpp in Sources */,
 				ADAF1F631C7F252200000F53 /* DBSkin.cpp in Sources */,
 				AD13EDAD1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
 				AD13ED351C5F39F700562146 /* dbtinyxml2.cpp in Sources */,
 				AD0B5A041C7061BB007F2C1F /* DBBase.cpp in Sources */,
 				AD13ED931C5F39F700562146 /* BaseDataParser.cpp in Sources */,
+				AD930A691CB535570005F930 /* DBFFDTimelineState.cpp in Sources */,
 				AD60698D1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */,
 				AD5C8D171C9A51D8007CFDDC /* DBSlotTimelineState.cpp in Sources */,
 			);

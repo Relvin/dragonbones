@@ -83,7 +83,11 @@ bool DBArmature::initWithName(const std::string &name,const std::string &texture
     _pArmatureData = dragonBonesData->getArmatureData(name);
     if (!_pArmatureData)
     {
-        return false;
+        _pArmatureData = dragonBonesData->getArmatureDataFirst();
+        if (!_pArmatureData)
+        {
+            return false;
+        }
     }
     
     _name = name;
@@ -215,11 +219,15 @@ void DBArmature::createSkin(const std::string &textureName)
         }
         
         DBSlot* slot = DBSlot::create(slotData,textureName);
-        this->addChild(slot,slotData->zOrder);
-        slot->setParentBone(bone);
-        slot->setArmature(this);
-        _slotDic.insert(slotData->name,slot);
-        bone->addSlot(slot);
+        if (slot)
+        {
+            this->addChild(slot,slotData->zOrder);
+            slot->setParentBone(bone);
+            slot->setArmature(this);
+            _slotDic.insert(slotData->name,slot);
+            bone->addSlot(slot);
+        }
+        
     }
 }
 

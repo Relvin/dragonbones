@@ -46,6 +46,9 @@ public:
     void updateSkinDisplay();
     
     void setTweenZOrder(float zOrder);
+    
+    MeshData* getMeshData(const std::string& name);
+    
 private:
     DBSkin* _display;
     SlotData* _slotData;

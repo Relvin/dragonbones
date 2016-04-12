@@ -165,7 +165,7 @@ private:
 	// -180 ~ 180
 	float _normalizeRotation(float rotation)
 	{
-		rotation = (float)((int)(rotation + PI) % (int)(2 * PI));
+        rotation = fmod(rotation + PI,2 * PI);// (float)((int)(rotation + PI) % (int)(2 * PI));
 		rotation = rotation > 0 ? rotation : 2 * PI + rotation;
 		return rotation - PI;
 	}

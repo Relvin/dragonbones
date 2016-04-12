@@ -20,6 +20,9 @@
 #include "objects/ArmatureData.h"
 #include "objects/DragonBonesData.h"
 #include "objects/SlotFrame.h"
+#include "objects/MeshData.h"
+#include "objects/FFDTimeline.h"
+#include "objects/FFDFrame.h"
 // textures
 #include "textures/TextureData.h"
 #include "textures/TextureAtlasData.h"
@@ -278,19 +281,89 @@ SlotData* XMLDataParser::parseSlotData(const XMLElement *slotXML) const
 
 DisplayData* XMLDataParser::parseDisplayData(const XMLElement *displayXML) const
 {
-    DisplayData *displayData = new DisplayData();
-    displayData->name = displayXML->Attribute(ConstValues::A_NAME.c_str());
-    displayData->type = getDisplayTypeByString(displayXML->Attribute(ConstValues::A_TYPE.c_str()));
+    DisplayType type = getDisplayTypeByString(displayXML->Attribute(ConstValues::A_TYPE.c_str()));
+    DisplayData *displayData = nullptr;
 
+    
+    if (type == DisplayType::DT_MESH)
+    {
+        displayData = parseMeshData(displayXML);
+    }
+    else
+    {
+        displayData = new DisplayData();
+    }
     const XMLElement *transformXML = displayXML->FirstChildElement(ConstValues::TRANSFORM.c_str());
     if (transformXML)
     {
-		// 4.x取消pivot轴动画的支持
+        // 4.x取消pivot轴动画的支持
         parseTransform(*transformXML, displayData->transform);
-        //parsePivot(*transformXML, displayData->pivot);
+        //        parsePivot(*transformXML, displayData->pivot);
     }
-
+    displayData->name = displayXML->Attribute(ConstValues::A_NAME.c_str());
+    displayData->type = type;
+    
     return displayData;
+}
+
+MeshData* XMLDataParser::parseMeshData(const dragonBones::XMLElement *MeshXML) const
+{
+    MeshData* meshData = new MeshData();
+    for (const XMLElement *edgeXML = MeshXML->FirstChildElement(ConstValues::EDGES.c_str());
+         edgeXML; edgeXML = edgeXML->NextSiblingElement(ConstValues::EDGES.c_str()))
+    {
+        int edge = atoi(edgeXML->GetText());
+        meshData->addEdge(edge);
+    }
+    
+    for (const XMLElement *triangleXML = MeshXML->FirstChildElement(ConstValues::TRIANGLES.c_str());
+         triangleXML; triangleXML = triangleXML->NextSiblingElement(ConstValues::TRIANGLES.c_str()))
+    {
+        int triangle = atoi(triangleXML->GetText());
+        meshData->addTriangle(triangle);
+    }
+    
+    int scanIndex = 0;
+    float p_x = 0.f,p_y = 0.f;
+    for (const XMLElement *vertexXML = MeshXML->FirstChildElement(ConstValues::VERTICES.c_str());
+         vertexXML; vertexXML = vertexXML->NextSiblingElement(ConstValues::VERTICES.c_str()))
+    {
+        
+        if ((scanIndex & 1) == 0)
+        {
+            p_x = atof(vertexXML->GetText());
+        }
+        else
+        {
+            p_y = atof(vertexXML->GetText());
+            meshData->_orgVectices.push_back(Point(p_x,p_y));
+        }
+        
+        scanIndex++;
+    }
+    
+    scanIndex = 0;
+    for (const XMLElement *uvXML = MeshXML->FirstChildElement(ConstValues::UVS.c_str());
+         uvXML; uvXML = uvXML->NextSiblingElement(ConstValues::UVS.c_str()))
+    {
+        if ((scanIndex & 1) == 0)
+        {
+            p_x = atof(uvXML->GetText());
+        }
+        else
+        {
+            p_y = atof(uvXML->GetText());
+            Point UV = Point(p_x,p_y);
+            MeshData::VECTEX_UV vtx_uv = {meshData->_orgVectices.at(scanIndex >> 1),UV};
+            meshData->_vectices.push_back(vtx_uv);
+            meshData->_UVs.push_back(UV);
+        }
+        scanIndex++;
+    }
+    
+    meshData->setWidht(MeshXML->FloatAttribute(ConstValues::A_WIDTH.c_str()));
+    meshData->setHeight(MeshXML->FloatAttribute(ConstValues::A_HEIGHT.c_str()));
+    return meshData;
 }
 
 AnimationData* XMLDataParser::parseAnimationData(const XMLElement *animationXML, const ArmatureData *armatureData) const
@@ -304,7 +377,7 @@ AnimationData* XMLDataParser::parseAnimationData(const XMLElement *animationXML,
     animationData->scale = getNumber(*animationXML, ConstValues::A_SCALE.c_str(), 1.f, 1.f);
     // use frame tweenEase, NaN
     // overwrite frame tweenEase, [-1, 0):ease in, 0:line easing, (0, 1]:ease out, (1, 2]:ease in out
-    animationData->tweenEasing = getNumber(*animationXML, ConstValues::A_TWEEN_EASING.c_str(), USE_FRAME_TWEEN_EASING, USE_FRAME_TWEEN_EASING);
+    animationData->tweenEasing = getNumber(*animationXML, ConstValues::A_TWEEN_EASING.c_str(), NO_TWEEN_EASING, NO_TWEEN_EASING);
     animationData->autoTween = getBoolean(*animationXML, ConstValues::A_AUTO_TWEEN.c_str(), true);
     
     for (const XMLElement *frameXML = animationXML->FirstChildElement(ConstValues::FRAME.c_str()); 
@@ -340,8 +413,18 @@ AnimationData* XMLDataParser::parseAnimationData(const XMLElement *animationXML,
 			animationData->slotTimelineList.push_back(slotTimeline);
 		}
 	}
-
-	if (animationData->frameList.size() > 0)
+    
+    for (const XMLElement *ffdXML = animationXML->FirstChildElement(ConstValues::FFD.c_str());
+         ffdXML; ffdXML = ffdXML->NextSiblingElement(ConstValues::FFD.c_str()))
+    {
+        FFDTimeline *ffdTimeline = parseFFDTimeline(ffdXML, animationData->duration);
+        if (ffdTimeline->frameList.size() > 0)
+        {
+            animationData->ffdTimelineList.push_back(ffdTimeline);
+        }
+    }
+    
+    if (animationData->frameList.size() > 0)
 	{
 		lastFrameDuration = std::min(lastFrameDuration, animationData->frameList[animationData->frameList.size() - 1]->duration);
 	}
@@ -397,7 +480,7 @@ SlotFrame* XMLDataParser::parseSlotFrame(const XMLElement *frameXML) const
 	parseFrame(*frameXML, *frame);
 
 	frame->visible = !getBoolean(*frameXML, ConstValues::A_HIDE.c_str(), false);
-	frame->tweenEasing = getNumber(*frameXML, ConstValues::A_TWEEN_EASING.c_str(), AUTO_TWEEN_EASING, NO_TWEEN_EASING);
+	frame->tweenEasing = getNumber(*frameXML, ConstValues::A_TWEEN_EASING.c_str(), NO_TWEEN_EASING, NO_TWEEN_EASING);
 	frame->displayIndex = frameXML->IntAttribute(ConstValues::A_DISPLAY_INDEX.c_str());
 	frame->zOrder = getNumber(*frameXML, ConstValues::A_Z_ORDER.c_str(), 0.f, 0.f);
 
@@ -410,6 +493,46 @@ SlotFrame* XMLDataParser::parseSlotFrame(const XMLElement *frameXML) const
 
 	return frame;
 }
+
+FFDTimeline* XMLDataParser::parseFFDTimeline(const XMLElement *timelineXML, int duration) const
+{
+    FFDTimeline *timeline = new FFDTimeline();
+    timeline->name = timelineXML->Attribute(ConstValues::A_NAME.c_str());
+    timeline->skinName = timelineXML->Attribute(ConstValues::SKIN.c_str());
+    timeline->slotName = timelineXML->Attribute(ConstValues::SLOT.c_str());
+    timeline->scale = getNumber(*timelineXML, ConstValues::A_SCALE.c_str(), 1.f, 1.f);
+    timeline->offset = timelineXML->FloatAttribute(ConstValues::A_OFFSET.c_str());
+    timeline->duration = duration;
+    
+    for (const XMLElement *frameXML = timelineXML->FirstChildElement(ConstValues::FRAME.c_str());
+         frameXML; frameXML = frameXML->NextSiblingElement(ConstValues::FRAME.c_str()))
+    {
+        FFDFrame *frame = parseFFDFrame(frameXML);
+        timeline->frameList.push_back(frame);
+    }
+    parseTimeline(*timelineXML, *timeline);
+    
+    
+    return timeline;
+}
+
+FFDFrame * XMLDataParser::parseFFDFrame(const XMLElement *frameXML)const
+{
+    FFDFrame* frame = new FFDFrame();
+    parseFrame(*frameXML, *frame);
+    
+    frame->tweenEasing = getNumber(*frameXML, ConstValues::A_TWEEN_EASING.c_str(), NO_TWEEN_EASING, NO_TWEEN_EASING);
+    frame->offset = frameXML->FloatAttribute(ConstValues::A_OFFSET.c_str());
+    
+    for (const XMLElement *vertexXML = frameXML->FirstChildElement(ConstValues::VERTICES.c_str());
+         vertexXML; vertexXML = vertexXML->NextSiblingElement(ConstValues::VERTICES.c_str()))
+    {
+        frame->vertices.push_back(atof(vertexXML->GetText()));
+    }
+
+    return frame;
+}
+
 
 Frame* XMLDataParser::parseMainFrame(const XMLElement *frameXML) const
 {
@@ -425,7 +548,7 @@ TransformFrame* XMLDataParser::parseTransformFrame(const XMLElement *frameXML) c
 
     frame->visible = !getBoolean(*frameXML, ConstValues::A_HIDE.c_str(), false);
     // NaN:no tween, 10:auto tween, [-1, 0):ease in, 0:line easing, (0, 1]:ease out, (1, 2]:ease in out
-    frame->tweenEasing = getNumber(*frameXML, ConstValues::A_TWEEN_EASING.c_str(), AUTO_TWEEN_EASING, NO_TWEEN_EASING);
+    frame->tweenEasing = getNumber(*frameXML, ConstValues::A_TWEEN_EASING.c_str(), NO_TWEEN_EASING, NO_TWEEN_EASING);
     frame->tweenRotate = frameXML->IntAttribute(ConstValues::A_TWEEN_ROTATE.c_str());
     frame->tweenScale = getBoolean(*frameXML, ConstValues::A_TWEEN_SCALE.c_str(), true);
 
@@ -482,17 +605,35 @@ void XMLDataParser::parseFrame(const XMLElement &frameXML, Frame &frame) const
     }
 
 	// curve data
-	if (frameXML.FindAttribute(ConstValues::A_CURVE.c_str()))
+//	if (frameXML.FindAttribute(ConstValues::A_CURVE.c_str()))
 	{
-		frame.curve = new CurveData();
-		for (const XMLElement *curveXML = frameXML.FirstChildElement(ConstValues::A_CURVE.c_str()); 
-			curveXML; curveXML = frameXML.NextSiblingElement(ConstValues::A_CURVE.c_str()))
+        std::vector<Point> curvePoint;
+        float p_x = 0.f;
+        float p_y = 0.f;
+        int scanIndex = 0;
+		for (const XMLElement *curveXML = frameXML.FirstChildElement(ConstValues::A_CURVE.c_str());
+			curveXML; curveXML = curveXML->NextSiblingElement(ConstValues::A_CURVE.c_str()))
 		{
-			float x = curveXML->FloatAttribute(ConstValues::A_X.c_str());
-			float y = curveXML->FloatAttribute(ConstValues::A_Y.c_str());
-			
-			frame.curve->_pointList.push_back(new Point(x, y));
+            if ((scanIndex & 1) == 0)
+            {
+                p_x = atof(curveXML->GetText());
+            }
+            else
+            {
+                p_y = atof(curveXML->GetText());
+                curvePoint.push_back(Point(p_x,p_y));
+            }
+            
+            scanIndex++;
 		}
+        if (curvePoint.size() > 0)
+        {
+            frame.curve = new CurveData();
+            for (auto value : curvePoint)
+            {
+                frame.curve->_pointList.push_back(value);
+            }
+        }
 	}
 }
 

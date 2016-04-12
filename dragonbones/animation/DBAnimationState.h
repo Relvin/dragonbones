@@ -21,6 +21,8 @@ class DBArmature;
 class DBAnimation;
 class DBTimelineStateMgr;
 class DBSlotTimelineStateMgr;
+class DBFFDTimelineStateMgr;
+class DBFFDTimelineState;
 
 class DBAnimationState
 : public cocos2d::Ref
@@ -41,9 +43,6 @@ public:
     DBAnimationState* fadeOut(float fadeTotalTime, bool pausePlayhead);
     DBAnimationState* play();
     DBAnimationState* stop();
-    bool getMixingTransform(const std::string &timelineName) const;
-    DBAnimationState* addMixingTransform(const std::string &timelineName, bool recursive = true);
-    DBAnimationState* removeMixingTransform(const std::string &timelineName, bool recursive = true);
     DBAnimationState* removeAllMixingTransform();
     
     bool getIsComplete() const;
@@ -86,13 +85,17 @@ public:
     void updateTimelineStates();
     void addTimelineState(const std::string &timelineName);
     void addSlotTimelineState(const std::string &timelineName);
+    void addFFDTimelineState(const std::string &skinName, const std::string & slotName, const std::string &timelineName);
     
     void removeTimelineState(DBTimelineState *timelineState);
     void removeSlotTimelineState(DBSlotTimelineState *timelineState);
+    void removeFFDTimelineState(DBFFDTimelineState *timelineState);
     void advanceFadeTime(float passedTime);
     void advanceTimelinesTime(float passedTime);
     void updateMainTimeline(bool isThisComplete);
     void hideBones();
+    
+    inline int getTotalTime () {return this->_totalTime;};
     
 public:
     bool additiveBlending;
@@ -130,8 +133,7 @@ private:
     
     DBTimelineStateMgr* _timelineStateMgr;
     DBSlotTimelineStateMgr* _slotTimelineStateMgr;
-    std::vector<std::string> _mixingTransforms;
-//    std::vector<DBSlotTimelineState*> _slotTimelineStateList;
+    DBFFDTimelineStateMgr* _ffdTimelineStateMgr;
     std::vector<std::string> _boneMasks;
     
     AnimationData *_clip;

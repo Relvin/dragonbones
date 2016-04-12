@@ -4,6 +4,7 @@
 #include "DragonBones.h"
 #include "TransformTimeline.h"
 #include "SlotTimeline.h"
+#include "FFDTimeline.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -15,7 +16,7 @@ public:
 		,frameRate(30)
 		,fadeTime(0.f)
 		,playTimes(0)
-		,tweenEasing(USE_FRAME_TWEEN_EASING)
+		,tweenEasing(NO_TWEEN_EASING)
 		,autoTween(true)
 		,lastFrameDuration(0)
     {}
@@ -46,6 +47,12 @@ public:
 			slotTimelineList.push_back(new SlotTimeline());
 			*(slotTimelineList[i]) = *(copyData.slotTimelineList[i]);
 		}
+        
+        for (size_t i = 0, l = ffdTimelineList.size(); i < l; ++i)
+        {
+            ffdTimelineList.push_back(new FFDTimeline());
+            *(ffdTimelineList[i]) = *(copyData.ffdTimelineList[i]);
+        }
         
         // copy
         hideTimelineList = copyData.hideTimelineList;
@@ -84,6 +91,17 @@ public:
 		}
 		return nullptr;
 	}
+    FFDTimeline *getFFDTimeline(const std::string &timelineName) const
+    {
+        for (size_t i = 0, l = ffdTimelineList.size(); i < l; ++i)
+        {
+            if (ffdTimelineList[i]->name == timelineName)
+            {
+                return ffdTimelineList[i];
+            }
+        }
+        return nullptr;
+    }
     
 private:
     void _dispose()
@@ -98,10 +116,17 @@ private:
 			slotTimelineList[i]->dispose();
 			delete slotTimelineList[i];
 		}
+        for (size_t i = 0, l = ffdTimelineList.size(); i < l; ++i)
+        {
+            ffdTimelineList[i]->dispose();
+            delete ffdTimelineList[i];
+        }
+        
         
 		slotTimelineList.clear();
         timelineList.clear();
         hideTimelineList.clear();
+        ffdTimelineList.clear();
     }
 
 public:
@@ -118,6 +143,7 @@ public:
 	std::vector<std::string> hideTimelineList;
 	std::vector<TransformTimeline*> timelineList;
 	std::vector<SlotTimeline*> slotTimelineList;
+    std::vector<FFDTimeline*> ffdTimelineList;
 };
 NAME_SPACE_DRAGON_BONES_END
 #endif  // DRAGONBONES_OBJECTS_ANIMATION_DATA_H

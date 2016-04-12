@@ -12,6 +12,7 @@
 #include "animation/DBSlotTimelineState.h"
 #include "animation/DBAnimationState.h"
 #include "objects/SlotFrame.h"
+#include "objects/MeshData.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -41,6 +42,7 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     }
     
     this->_slotData = slotData;
+    this->_name = this->_slotData->name;
     this->_textureAtlasName = textureAtlasName;
     _originZOrder = this->_slotData->zOrder;
     int displayIndex = slotData->displayIndex;
@@ -48,6 +50,7 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     displayIndex = displayIndex < 0 ? 0 : displayIndex;
     displayIndex = displayIndex > slotData->displayDataList.size() ? slotData->displayDataList.size() - 1 : displayIndex;
     DisplayData *displayData = nullptr;
+    this->_displayIndex = displayIndex;
     if (displayIndex >= 0)
     {
         displayData = slotData->displayDataList[displayIndex];
@@ -58,16 +61,20 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     {
         origin = displayData->transform;
         Node* displayNode = nullptr;
-        if (displayData->type == DisplayType::DT_IMAGE)
-        {
-            _display = DBSkin::create(displayData,textureAtlasName);
-            displayNode = _display;
+        switch (displayData->type) {
+            case DisplayType::DT_IMAGE:
+            case DisplayType::DT_MESH:
+                _display = DBSkin::create(displayData,textureAtlasName);
+                displayNode = _display;
+                break;
+            case DisplayType::DT_ARMATURE:
+                _childArmature = DBArmature::create(displayData->name/*,""*/,textureAtlasName);
+                displayNode = _childArmature;
+                break;
+            default:
+                break;
         }
-        else if (displayData->type == DisplayType::DT_ARMATURE)
-        {
-            _childArmature = DBArmature::create(displayData->name/*,""*/,textureAtlasName);
-            displayNode = _childArmature;
-        }
+        
         if (displayNode)
         {
             
@@ -159,7 +166,7 @@ void DBSlot::updateDisplayTransform()
 void DBSlot::arriveAtFrame( Frame *frame, const DBSlotTimelineState *timelineState, DBAnimationState *animationState, bool isCross )
 {
     // TODO:
-    bool displayControl = animationState->displayControl && animationState->containsBoneMask(this->getName());
+    bool displayControl = animationState->displayControl /*&& animationState->containsBoneMask(this->getName())*/;
     if (displayControl)
     {
         SlotFrame *slotFrame = static_cast<SlotFrame*>(frame);
@@ -277,6 +284,15 @@ void DBSlot::setTweenZOrder(float zOrder)
 {
     this->_tweenZOrder = zOrder;
     this->setLocalZOrder(this->_originZOrder + this->_tweenZOrder);
+}
+
+MeshData* DBSlot::getMeshData(const std::string &name)
+{
+    if (_slotData && _displayIndex >= 0 && _displayIndex < _slotData->displayDataList.size())
+    {
+        return dynamic_cast<MeshData* >(_slotData->displayDataList[_displayIndex]);
+    }
+    return nullptr;
 }
 
 NAME_SPACE_DRAGON_BONES_END

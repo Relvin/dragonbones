@@ -28,6 +28,10 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
+#ifndef EPSINON
+#define EPSINON 0.000001
+#endif
+
 const float PI = 3.14159265358979323846f;
 const float ANGLE_TO_RADIAN = PI / 180.f;
 const float RADIAN_TO_ANGLE = 180.f / PI;
@@ -94,7 +98,7 @@ inline int indexOf(std::vector<T> &vector, const T &value)
     return -1;
 }
 
-enum class DisplayType {DT_IMAGE, DT_ARMATURE, DT_FRAME, DT_TEXT, DT_1, DT_2, DT_3, DT_4, DT_5};
+enum class DisplayType {DT_IMAGE, DT_ARMATURE,DT_MESH ,DT_FRAME ,DT_TEXT, DT_1, DT_2, DT_3, DT_4, DT_5};
 inline DisplayType getDisplayTypeByString(std::string displayType)
 {
     if (displayType == "image")
@@ -112,6 +116,10 @@ inline DisplayType getDisplayTypeByString(std::string displayType)
     else if (displayType == "text")
     {
         return DisplayType::DT_TEXT;
+    }
+    else if (displayType == "mesh")
+    {
+        return DisplayType::DT_MESH;
     }
 
     return DisplayType::DT_IMAGE;

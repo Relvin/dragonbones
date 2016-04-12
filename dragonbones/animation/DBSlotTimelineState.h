@@ -59,10 +59,10 @@ public:
     void fadeIn(DBSlot *slot, DBAnimationState *animationState, SlotTimeline *timelineData);
     const std::string & getName();
     void resetTimelineState();
-    
-    
-private:
     void update(float progress);
+    inline bool getIsComplete() const { return _isComplete; }
+private:
+    
     void updateMultipleFrame(float progress);
     void updateToNextFrame(int currentPlayTimes);
     void updateTween();
