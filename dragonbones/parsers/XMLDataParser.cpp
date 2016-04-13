@@ -23,6 +23,7 @@
 #include "objects/MeshData.h"
 #include "objects/FFDTimeline.h"
 #include "objects/FFDFrame.h"
+#include "objects/IKData.h"
 // textures
 #include "textures/TextureData.h"
 #include "textures/TextureAtlasData.h"
@@ -174,7 +175,14 @@ ArmatureData* XMLDataParser::parseArmatureData(const XMLElement *armatureXML) co
         BoneData *boneData = parseBoneData(boneXML);
         armatureData->boneDataList.push_back(boneData);
     }
-	
+    
+    for (const XMLElement *ikXML = armatureXML->FirstChildElement(ConstValues::IK.c_str());
+         ikXML; ikXML = ikXML->NextSiblingElement(ConstValues::IK.c_str()))
+    {
+        IKData *ikData = parseIKData(ikXML);
+        armatureData->ikDataList.push_back(ikData);
+    }
+    
 	for (const XMLElement *slotXML = armatureXML->FirstChildElement(ConstValues::SLOT.c_str()); 
 		slotXML; slotXML = slotXML->NextSiblingElement(ConstValues::SLOT.c_str()))
 	{
@@ -264,6 +272,20 @@ SlotData* XMLDataParser::parseSlotDisplayData(const XMLElement *slotXML) const
 	return slotData;
 }
 
+IKData* XMLDataParser::parseIKData(const dragonBones::XMLElement *IKXML) const
+{
+    IKData* ikData = new IKData();
+    ikData->name = IKXML->Attribute(ConstValues::A_NAME.c_str());
+    ikData->target = IKXML->Attribute(ConstValues::A_TARGET.c_str());
+    
+    ikData->weight = getNumber(*IKXML,ConstValues::A_WEIGHT.c_str(),1.f,1.f);
+    
+    ikData->bendPositive = getBoolean(*IKXML, ConstValues::A_BENDPOSITIVE.c_str(), true);
+    ikData->chain = getNumber(*IKXML,ConstValues::A_CHAIN.c_str(),0.f,0.f);
+    ikData->bone = IKXML->Attribute(ConstValues::A_BONES.c_str());
+    return ikData;
+}
+
 SlotData* XMLDataParser::parseSlotData(const XMLElement *slotXML) const
 {
     SlotData *slotData = new SlotData();
@@ -309,12 +331,6 @@ DisplayData* XMLDataParser::parseDisplayData(const XMLElement *displayXML) const
 MeshData* XMLDataParser::parseMeshData(const dragonBones::XMLElement *MeshXML) const
 {
     MeshData* meshData = new MeshData();
-    for (const XMLElement *edgeXML = MeshXML->FirstChildElement(ConstValues::EDGES.c_str());
-         edgeXML; edgeXML = edgeXML->NextSiblingElement(ConstValues::EDGES.c_str()))
-    {
-        int edge = atoi(edgeXML->GetText());
-        meshData->addEdge(edge);
-    }
     
     for (const XMLElement *triangleXML = MeshXML->FirstChildElement(ConstValues::TRIANGLES.c_str());
          triangleXML; triangleXML = triangleXML->NextSiblingElement(ConstValues::TRIANGLES.c_str()))

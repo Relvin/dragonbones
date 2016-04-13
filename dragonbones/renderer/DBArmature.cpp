@@ -13,6 +13,7 @@
 #include "objects/Frame.h"
 #include "events/DBEventData.h"
 #include "animation/DBAnimationState.h"
+#include "renderer/DBIKConstraint.h"
 
 
 NAME_SPACE_DRAGON_BONES_BEGIN
@@ -27,6 +28,7 @@ DBArmature::DBArmature()
     _boneDic.clear();
     _topBoneList.clear();
     _slotDic.clear();
+    _ikList.clear();
 }
 
 
@@ -37,6 +39,7 @@ DBArmature::~DBArmature()
     _boneDic.clear();
     _topBoneList.clear();
     _slotDic.clear();
+    _ikList.clear();
 }
 
 DBArmature* DBArmature::create(const std::string &dragonBonesName)
@@ -231,6 +234,19 @@ void DBArmature::createSkin(const std::string &textureName)
     }
 }
 
+void DBArmature::buildIK()
+{
+    IKData* ikConstraintData;
+
+    for (int i = 0, len = _pArmatureData->ikDataList.size(); i < len; i++)
+    {
+        ikConstraintData = _pArmatureData->ikDataList[i];
+        DBIKConstraint* ikConstraint = DBIKConstraint::create(ikConstraintData, this);
+        _ikList.pushBack(ikConstraint);
+    }
+
+}
+
 void DBArmature::update(float delta)
 {
     _pAnimation->advanceTime(delta);
@@ -238,7 +254,7 @@ void DBArmature::update(float delta)
     const bool isFading = _pAnimation->_isFading;
     
     for(const auto &bone : _topBoneList) {
-        bone->update(delta);
+        bone->update(isFading);
     }
     
     for (auto& element : _slotDic)
@@ -264,6 +280,81 @@ void DBArmature::update(float delta)
     }
 
 }
+
+
+void DBArmature::updateBoneCache()
+{
+#if 0
+    _boneList.reverse();
+    var temp:Object = { };
+    var ikConstraintsCount:int = _ikList.length;
+    var arrayCount:int = ikConstraintsCount + 1;
+    var i:int;
+    var len:int;
+    var j:int;
+    var jLen:int;
+    var bone:Bone;
+    var currentBone:Bone;
+    
+    _boneIKList = new Vector.<Vector.<Bone>>();
+    while (_boneIKList.length < arrayCount)
+    {
+        _boneIKList[_boneIKList.length] = new Vector.<Bone>();
+    }
+#endif
+    
+    
+#if 0
+//    temp[_boneList[0].name] = 0;
+    
+    std::vector<std::string> temp;
+    temp.clear();
+    temp
+    for (int i = 0, len = _ikList.size(); i < len; i++)
+    {
+//        temp[_ikList[i].bones[0].name] = i+1;
+        temp.push_back(_ikList.at(i)->getBoneByIndex(0)->getName());
+    }
+
+    for (i = 0, len = _boneList.length; i < len; i++)
+    {
+        
+        bone = _boneList[i];
+        currentBone = bone;
+        while (currentBone)
+        {
+            if (currentBone.parent == null)
+            {
+                temp[currentBone.name] = 0;
+            }
+            if (temp.hasOwnProperty(currentBone.name))
+            {
+                _boneIKList[temp[currentBone.name]].push(bone);
+                break;
+            }
+            currentBone = currentBone.parent;
+        }
+    }
+#endif
+}
+
+
+#if 0
+void getIKTargetData(bone:Bone):Array
+{
+    var target:Array = [];
+    var ik:IKConstraint;
+    for (var i:int = 0, len:int = _ikList.length; i < len; i++)
+    {
+        ik = _ikList[i];
+        if(bone.name == ik.target.name){
+            target.push(ik);
+        }
+    }
+    return target;
+}
+
+#endif
 
 void DBArmature::onEnter()
 {

@@ -111,4 +111,11 @@ const std::string ConstValues::A_SCALE_Y_OFFSET = "scYOffset";
 
 const std::string ConstValues::A_CURVE = "curve";
 
+const std::string ConstValues::A_TARGET = "target";
+const std::string ConstValues::A_WEIGHT = "weight";
+const std::string ConstValues::A_BONES = "bone";
+const std::string ConstValues::A_BENDPOSITIVE = "bendPositive";
+const std::string ConstValues::A_CHAIN = "chain";
+
+
 NAME_SPACE_DRAGON_BONES_END

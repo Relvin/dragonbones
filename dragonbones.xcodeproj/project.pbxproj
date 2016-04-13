@@ -183,6 +183,14 @@
 		AD60698D1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */; };
 		AD60698E1C9668FC00CCC818 /* DBAnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD60698B1C9668FC00CCC818 /* DBAnimationState.h */; };
 		AD60698F1C9668FC00CCC818 /* DBAnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD60698B1C9668FC00CCC818 /* DBAnimationState.h */; };
+		AD7F91301CBE3E6700FA959C /* IKData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7F912E1CBE3E6700FA959C /* IKData.cpp */; };
+		AD7F91311CBE3E6700FA959C /* IKData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7F912E1CBE3E6700FA959C /* IKData.cpp */; };
+		AD7F91321CBE3E6700FA959C /* IKData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7F912F1CBE3E6700FA959C /* IKData.h */; };
+		AD7F91331CBE3E6700FA959C /* IKData.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7F912F1CBE3E6700FA959C /* IKData.h */; };
+		AD7F91361CBE499200FA959C /* DBIKConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7F91341CBE499200FA959C /* DBIKConstraint.cpp */; };
+		AD7F91371CBE499200FA959C /* DBIKConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7F91341CBE499200FA959C /* DBIKConstraint.cpp */; };
+		AD7F91381CBE499200FA959C /* DBIKConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7F91351CBE499200FA959C /* DBIKConstraint.h */; };
+		AD7F91391CBE499200FA959C /* DBIKConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7F91351CBE499200FA959C /* DBIKConstraint.h */; };
 		AD930A681CB535570005F930 /* DBFFDTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A661CB535570005F930 /* DBFFDTimelineState.cpp */; };
 		AD930A691CB535570005F930 /* DBFFDTimelineState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD930A661CB535570005F930 /* DBFFDTimelineState.cpp */; };
 		AD930A6A1CB535570005F930 /* DBFFDTimelineState.h in Headers */ = {isa = PBXBuildFile; fileRef = AD930A671CB535570005F930 /* DBFFDTimelineState.h */; };
@@ -215,10 +223,6 @@
 		ADC6A7B91CB38BA900653F7F /* MeshData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC6A7B61CB38BA900653F7F /* MeshData.cpp */; };
 		ADC6A7BA1CB38BA900653F7F /* MeshData.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7B71CB38BA900653F7F /* MeshData.h */; };
 		ADC6A7BB1CB38BA900653F7F /* MeshData.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7B71CB38BA900653F7F /* MeshData.h */; };
-		ADC6A7BE1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */; };
-		ADC6A7BF1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */; };
-		ADC6A7C01CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */; };
-		ADC6A7C11CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -327,6 +331,10 @@
 		AD5C8D151C9A51D8007CFDDC /* DBSlotTimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSlotTimelineState.h; sourceTree = "<group>"; };
 		AD60698A1C9668FC00CCC818 /* DBAnimationState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBAnimationState.cpp; sourceTree = "<group>"; };
 		AD60698B1C9668FC00CCC818 /* DBAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAnimationState.h; sourceTree = "<group>"; };
+		AD7F912E1CBE3E6700FA959C /* IKData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IKData.cpp; sourceTree = "<group>"; };
+		AD7F912F1CBE3E6700FA959C /* IKData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKData.h; sourceTree = "<group>"; };
+		AD7F91341CBE499200FA959C /* DBIKConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBIKConstraint.cpp; sourceTree = "<group>"; };
+		AD7F91351CBE499200FA959C /* DBIKConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBIKConstraint.h; sourceTree = "<group>"; };
 		AD930A661CB535570005F930 /* DBFFDTimelineState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBFFDTimelineState.cpp; sourceTree = "<group>"; };
 		AD930A671CB535570005F930 /* DBFFDTimelineState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBFFDTimelineState.h; sourceTree = "<group>"; };
 		AD930A6C1CB537C60005F930 /* FFDTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFDTimeline.cpp; sourceTree = "<group>"; };
@@ -343,8 +351,6 @@
 		ADAF1F611C7F252200000F53 /* DBSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSkin.h; sourceTree = "<group>"; };
 		ADC6A7B61CB38BA900653F7F /* MeshData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshData.cpp; sourceTree = "<group>"; };
 		ADC6A7B71CB38BA900653F7F /* MeshData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshData.h; sourceTree = "<group>"; };
-		ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DBAutoPolygon.cpp; sourceTree = "<group>"; };
-		ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAutoPolygon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -524,6 +530,8 @@
 				AD930A6D1CB537C60005F930 /* FFDTimeline.h */,
 				AD930A721CB539E20005F930 /* FFDFrame.cpp */,
 				AD930A731CB539E20005F930 /* FFDFrame.h */,
+				AD7F912E1CBE3E6700FA959C /* IKData.cpp */,
+				AD7F912F1CBE3E6700FA959C /* IKData.h */,
 			);
 			path = objects;
 			sourceTree = "<group>";
@@ -567,8 +575,8 @@
 				AD2290F11C63361E0017A24D /* DBSlot.h */,
 				ADAF1F601C7F252200000F53 /* DBSkin.cpp */,
 				ADAF1F611C7F252200000F53 /* DBSkin.h */,
-				ADC6A7BC1CB3B7EA00653F7F /* DBAutoPolygon.cpp */,
-				ADC6A7BD1CB3B7EA00653F7F /* DBAutoPolygon.h */,
+				AD7F91341CBE499200FA959C /* DBIKConstraint.cpp */,
+				AD7F91351CBE499200FA959C /* DBIKConstraint.h */,
 			);
 			path = renderer;
 			sourceTree = "<group>";
@@ -676,6 +684,7 @@
 				AD13ED6E1C5F39F700562146 /* Matrix.h in Headers */,
 				AD0B5A051C7061BB007F2C1F /* DBBase.h in Headers */,
 				AD97C5341C98FC7A00331850 /* DBTimelineState.h in Headers */,
+				AD7F91381CBE499200FA959C /* DBIKConstraint.h in Headers */,
 				AD13ED6A1C5F39F700562146 /* BaseFactory.h in Headers */,
 				AD13ED601C5F39F700562146 /* DragonBonesHeaders.h in Headers */,
 				AD13ED901C5F39F700562146 /* TransformTimeline.h in Headers */,
@@ -711,6 +720,7 @@
 				AD930A6A1CB535570005F930 /* DBFFDTimelineState.h in Headers */,
 				AD13ED7C1C5F39F700562146 /* CurveData.h in Headers */,
 				AD13EDB61C5F39F700562146 /* DBCCRenderHeaders.h in Headers */,
+				AD7F91321CBE3E6700FA959C /* IKData.h in Headers */,
 				AD13ED0C1C5F39F700562146 /* diyfp.h in Headers */,
 				AD13EDB21C5F39F700562146 /* DBCCLuaUtils.h in Headers */,
 				AD13ED881C5F39F700562146 /* SlotFrame.h in Headers */,
@@ -720,7 +730,6 @@
 				AD13ED8A1C5F39F700562146 /* SlotTimeline.h in Headers */,
 				AD930A701CB537C60005F930 /* FFDTimeline.h in Headers */,
 				AD13ED181C5F39F700562146 /* stack.h in Headers */,
-				ADC6A7C01CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */,
 				AD13ED701C5F39F700562146 /* Point.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -764,6 +773,7 @@
 				AD13ED6F1C5F39F700562146 /* Matrix.h in Headers */,
 				AD0B5A061C7061BB007F2C1F /* DBBase.h in Headers */,
 				AD97C5351C98FC7A00331850 /* DBTimelineState.h in Headers */,
+				AD7F91391CBE499200FA959C /* DBIKConstraint.h in Headers */,
 				AD13ED6B1C5F39F700562146 /* BaseFactory.h in Headers */,
 				AD13ED611C5F39F700562146 /* DragonBonesHeaders.h in Headers */,
 				AD13ED911C5F39F700562146 /* TransformTimeline.h in Headers */,
@@ -799,6 +809,7 @@
 				AD930A6B1CB535570005F930 /* DBFFDTimelineState.h in Headers */,
 				AD13ED7D1C5F39F700562146 /* CurveData.h in Headers */,
 				AD13EDB71C5F39F700562146 /* DBCCRenderHeaders.h in Headers */,
+				AD7F91331CBE3E6700FA959C /* IKData.h in Headers */,
 				AD13ED0D1C5F39F700562146 /* diyfp.h in Headers */,
 				AD13EDB31C5F39F700562146 /* DBCCLuaUtils.h in Headers */,
 				AD13ED891C5F39F700562146 /* SlotFrame.h in Headers */,
@@ -808,7 +819,6 @@
 				AD13ED8B1C5F39F700562146 /* SlotTimeline.h in Headers */,
 				AD930A711CB537C60005F930 /* FFDTimeline.h in Headers */,
 				AD13ED191C5F39F700562146 /* stack.h in Headers */,
-				ADC6A7C11CB3B7EA00653F7F /* DBAutoPolygon.h in Headers */,
 				AD13ED711C5F39F700562146 /* Point.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -897,13 +907,13 @@
 				AD13EDB01C5F39F700562146 /* DBCCLuaUtils.cpp in Sources */,
 				AD97C5321C98FC7A00331850 /* DBTimelineState.cpp in Sources */,
 				ADADA1B61C62FEDD00B15A4F /* DBBone.cpp in Sources */,
+				AD7F91361CBE499200FA959C /* DBIKConstraint.cpp in Sources */,
 				AD13EDBE1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
 				AD930A6E1CB537C60005F930 /* FFDTimeline.cpp in Sources */,
 				AD13ED681C5F39F700562146 /* BaseFactory.cpp in Sources */,
 				AD4570F31CAB7A5600A5F37C /* BinaryParser.cpp in Sources */,
 				AD13ED961C5F39F700562146 /* ConstValues.cpp in Sources */,
 				AD13EDE51C62019F00562146 /* DBArmature.cpp in Sources */,
-				ADC6A7BE1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */,
 				AD2290F21C63361E0017A24D /* DBSlot.cpp in Sources */,
 				AD13ED9E1C5F39F700562146 /* XMLDataParser.cpp in Sources */,
 				ADADA1A21C62E93C00B15A4F /* DBAnimation.cpp in Sources */,
@@ -912,6 +922,7 @@
 				AD13EDAC1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
 				AD13ED341C5F39F700562146 /* dbtinyxml2.cpp in Sources */,
 				AD0B5A031C7061BB007F2C1F /* DBBase.cpp in Sources */,
+				AD7F91301CBE3E6700FA959C /* IKData.cpp in Sources */,
 				AD13ED921C5F39F700562146 /* BaseDataParser.cpp in Sources */,
 				AD930A681CB535570005F930 /* DBFFDTimelineState.cpp in Sources */,
 				AD60698C1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */,
@@ -929,13 +940,13 @@
 				AD13EDB11C5F39F700562146 /* DBCCLuaUtils.cpp in Sources */,
 				AD97C5331C98FC7A00331850 /* DBTimelineState.cpp in Sources */,
 				ADADA1B71C62FEDD00B15A4F /* DBBone.cpp in Sources */,
+				AD7F91371CBE499200FA959C /* DBIKConstraint.cpp in Sources */,
 				AD13EDBF1C5F39F700562146 /* DBCCUtils.cpp in Sources */,
 				AD930A6F1CB537C60005F930 /* FFDTimeline.cpp in Sources */,
 				AD13ED691C5F39F700562146 /* BaseFactory.cpp in Sources */,
 				AD4570F41CAB7A5600A5F37C /* BinaryParser.cpp in Sources */,
 				AD13ED971C5F39F700562146 /* ConstValues.cpp in Sources */,
 				AD13EDE61C62019F00562146 /* DBArmature.cpp in Sources */,
-				ADC6A7BF1CB3B7EA00653F7F /* DBAutoPolygon.cpp in Sources */,
 				AD2290F31C63361E0017A24D /* DBSlot.cpp in Sources */,
 				AD13ED9F1C5F39F700562146 /* XMLDataParser.cpp in Sources */,
 				ADADA1A31C62E93C00B15A4F /* DBAnimation.cpp in Sources */,
@@ -944,6 +955,7 @@
 				AD13EDAD1C5F39F700562146 /* DBCCFactory.cpp in Sources */,
 				AD13ED351C5F39F700562146 /* dbtinyxml2.cpp in Sources */,
 				AD0B5A041C7061BB007F2C1F /* DBBase.cpp in Sources */,
+				AD7F91311CBE3E6700FA959C /* IKData.cpp in Sources */,
 				AD13ED931C5F39F700562146 /* BaseDataParser.cpp in Sources */,
 				AD930A691CB535570005F930 /* DBFFDTimelineState.cpp in Sources */,
 				AD60698D1C9668FC00CCC818 /* DBAnimationState.cpp in Sources */,

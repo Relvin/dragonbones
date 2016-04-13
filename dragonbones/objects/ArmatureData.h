@@ -5,6 +5,7 @@
 #include "BoneData.h"
 #include "SkinData.h"
 #include "AnimationData.h"
+#include "IKData.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 class ArmatureData
@@ -25,6 +26,13 @@ public:
         {
             boneDataList.push_back(new BoneData());
             *(boneDataList[i]) = *(copyData.boneDataList[i]);
+        }
+        
+        ikDataList.reserve(copyData.ikDataList.size());
+        for (size_t i = 0, l = ikDataList.size(); i < l; ++i)
+        {
+            ikDataList.push_back(new IKData());
+            *(ikDataList[i]) = *(copyData.ikDataList[i]);
         }
         
         skinDataList.reserve(copyData.skinDataList.size());
@@ -55,6 +63,11 @@ public:
             boneDataList[i]->dispose();
             delete boneDataList[i];
         }
+        for (size_t i = 0, l = ikDataList.size(); i < l; ++i)
+        {
+            ikDataList[i]->dispose();
+            delete ikDataList[i];
+        }
         for (size_t i = 0, l = skinDataList.size(); i < l; ++i)
         {
             skinDataList[i]->dispose();
@@ -72,6 +85,7 @@ public:
         }
         
         boneDataList.clear();
+        ikDataList.clear();
         skinDataList.clear();
 		slotDataList.clear();
         animationDataList.clear();
@@ -243,6 +257,7 @@ public:
 	std::vector<BoneData*> boneDataList;
 	std::vector<SkinData*> skinDataList;
 	std::vector<SlotData*> slotDataList;
+    std::vector<IKData*> ikDataList;
 	std::vector<AnimationData*> animationDataList;
 };
 NAME_SPACE_DRAGON_BONES_END

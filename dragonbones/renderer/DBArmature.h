@@ -24,6 +24,7 @@ NAME_SPACE_DRAGON_BONES_BEGIN
 
 class Frame;
 class DBEventDataMgr;
+class DBIKConstraint;
 
 class DBArmature
 : public Node
@@ -54,8 +55,10 @@ public:
     
     void createSkin(const std::string &textureName);
     
-    void update(float delta);
+    void buildIK();
     
+    void update(float delta);
+    void updateBoneCache();
     virtual void onEnter();
     
     void arriveAtFrame(Frame *frame, DBAnimationState *animationState, bool isCross);
@@ -74,6 +77,8 @@ private:
     cocos2d::Map<std::string, DBBone*> _boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
     cocos2d::Vector<DBBone*> _topBoneList;
     cocos2d::Map<std::string,DBSlot*> _slotDic;
+    cocos2d::Vector<DBIKConstraint*> _ikList;
+    std::vector<cocos2d::Vector<DBBone*>> _boneIKList;
     DBEventDataMgr* _eventDataMgr;
     
 };

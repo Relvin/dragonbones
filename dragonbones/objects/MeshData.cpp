@@ -18,7 +18,6 @@ MeshData::MeshData()
     _vectices.clear();
     _triangles.clear();
     _UVs.clear();
-    _edges.clear();
 }
 
 MeshData::~MeshData()
@@ -26,7 +25,6 @@ MeshData::~MeshData()
     _vectices.clear();
     _triangles.clear();
     _UVs.clear();
-    _edges.clear();
 }
 
 void MeshData::updateVertices(int offset, const std::vector<float> &vectices)
@@ -94,11 +92,6 @@ void MeshData::addUV(dragonBones::Point UV)
 void MeshData::addTriangle(int triangle)
 {
     this->_triangles.push_back(triangle);
-}
-
-void MeshData::addEdge(int edge)
-{
-    this->_edges.push_back(edge);
 }
 
 void MeshData::setWidht(float widht)

@@ -34,6 +34,7 @@ bool DBBone::initWithBoneData(BoneData* boneData)
     _name = boneData->name;
     this->inheritRotation = boneData->inheritRotation;
     this->inheritScale = boneData->inheritScale;
+    this->_length = boneData->length;
     origin = boneData->transform;
     _boneData = boneData;
     
@@ -50,6 +51,9 @@ DBBone::DBBone()
 ,_isColorChanged(false)
 ,_needUpdate(2)
 ,_tween()
+,_length(0.f)
+,_rotationIK(0.f)
+,_isIKConstraint(false)
 {
 
     inheritScale = false;
@@ -178,14 +182,14 @@ void DBBone::calculateParentTransform( Transform &transform, Matrix &matrix )
     }
 }
 
-void DBBone::update(float delta)
+void DBBone::update(bool isFading)
 {
     
     static int boneCount = 0;
     _needUpdate --;
     
     DBBone* parentBone = dynamic_cast<DBBone*>(_parentBone);
-    if (delta || _needUpdate > 0 || (parentBone && parentBone->_needUpdate > 0))
+    if (isFading || _needUpdate > 0 || (parentBone && parentBone->_needUpdate > 0))
     {
         _needUpdate = 1;
     }
@@ -237,7 +241,7 @@ void DBBone::update(float delta)
        (!ifExistOffsetRotation || applyOffsetRotationToChild))
     {
         _globalTransformForChild = global;
-        _globalTransformMatrixForChild = globalTransformMatrix;
+        _globalTransformMatrixForChild = _globalTransformMatrix;
     }
     else
     {
@@ -277,7 +281,7 @@ void DBBone::update(float delta)
         DBBone *childBone = static_cast<DBBone*>(obj);
         if (childBone)
         {
-            childBone->update(delta);
+            childBone->update(isFading);
         }
     }
 }
@@ -470,6 +474,20 @@ void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelin
 
 }
 
+void DBBone::adjustGlobalTransformMatrixByIK()
+{
+    DBBone* parentBone = dynamic_cast<DBBone*>(_parentBone);
+    if(!parentBone)
+    {
+        return;
+    }
+    
+    global.setRotation(this->_rotationIK);
+    global.toMatrix(_globalTransformMatrix,true);
+    _globalTransformForChild.setRotation(_rotationIK);
+    _globalTransformForChild.toMatrix( _globalTransformMatrixForChild,true);
+}
+
 void DBBone::hideSlots()
 {
     for (auto slot : _slotList)
@@ -478,5 +496,14 @@ void DBBone::hideSlots()
     }
 }
 
+void DBBone::setRotationIK(float rotationIK)
+{
+    this->_rotationIK = rotationIK;
+}
+
+void DBBone::setIsIKConstraint(bool isIKConstraint)
+{
+    this->_isIKConstraint = isIKConstraint;
+}
 
 NAME_SPACE_DRAGON_BONES_END

@@ -29,6 +29,7 @@ class ColorTransform;
 class MeshData;
 class FFDTimeline;
 class FFDFrame;
+class IKData;
 
 class XMLDataParser : public BaseDataParser
 {
@@ -47,6 +48,7 @@ private:
     BoneData* parseBoneData(const XMLElement *boneXML) const;
     SkinData* parseSkinData(const XMLElement *skinXML) const;
 	SlotData* parseSlotDisplayData(const XMLElement *slotXML) const;
+    IKData* parseIKData(const XMLElement *IKXML) const;
     SlotData* parseSlotData(const XMLElement *slotXML) const;
     DisplayData* parseDisplayData(const XMLElement *displayXML) const;
     MeshData* parseMeshData(const XMLElement *MeshXML) const;

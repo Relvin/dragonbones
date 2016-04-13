@@ -116,6 +116,11 @@ public:
     static const std::string A_SCALE_X_OFFSET;
     static const std::string A_SCALE_Y_OFFSET;
 	static const std::string A_CURVE;
+    static const std::string A_TARGET;
+    static const std::string A_WEIGHT;
+    static const std::string A_BONES;
+    static const std::string A_BENDPOSITIVE;
+    static const std::string A_CHAIN;
     
 private:
     DRAGON_BONES_DISALLOW_COPY_AND_ASSIGN(ConstValues);

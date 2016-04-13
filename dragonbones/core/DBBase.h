@@ -204,7 +204,7 @@ public:
     bool getInheritTranslation();
     void setInheritTranslation(bool inheritTranslation);
     
-    const Transform& getGlobalTransform() const;
+    Transform& getGlobalTransform() const;
     void setGlobalTransform(const Transform& global);
     
     const Transform& getOriginTransform() const;
@@ -223,10 +223,10 @@ protected:
     bool inheritTranslation;
     
 //    std::string name;
-    Transform global;
+    mutable Transform global;
     Transform origin;
     Transform offset;
-    Matrix globalTransformMatrix;
+    Matrix _globalTransformMatrix;
     
     void *userData;
     

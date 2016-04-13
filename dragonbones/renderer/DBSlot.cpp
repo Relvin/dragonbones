@@ -127,8 +127,8 @@ void DBSlot::update(float delta)
     const float x = origin.x + offset.x + tweenPivot.x;
     const float y = origin.y + offset.y + tweenPivot.y;
     const Matrix &parentMatrix = parentBone->getGlobalTransformMatrix();
-    globalTransformMatrix.tx = global.x = parentMatrix.a * x + parentMatrix.c * y + parentMatrix.tx;
-    globalTransformMatrix.ty = global.y = parentMatrix.d * y + parentMatrix.b * x + parentMatrix.ty;
+    _globalTransformMatrix.tx = global.x = parentMatrix.a * x + parentMatrix.c * y + parentMatrix.tx;
+    _globalTransformMatrix.ty = global.y = parentMatrix.d * y + parentMatrix.b * x + parentMatrix.ty;
     
     if (inheritRotation)
     {
@@ -152,10 +152,10 @@ void DBSlot::update(float delta)
         global.scaleY = origin.scaleY * offset.scaleY;
     }
     
-    globalTransformMatrix.a = global.scaleX * cos(global.skewY);
-    globalTransformMatrix.b = global.scaleX * sin(global.skewY);
-    globalTransformMatrix.c = -global.scaleY * sin(global.skewX);
-    globalTransformMatrix.d = global.scaleY * cos(global.skewX);
+    _globalTransformMatrix.a = global.scaleX * cos(global.skewY);
+    _globalTransformMatrix.b = global.scaleX * sin(global.skewY);
+    _globalTransformMatrix.c = -global.scaleY * sin(global.skewX);
+    _globalTransformMatrix.d = global.scaleY * cos(global.skewX);
     updateDisplayTransform();
 }
 

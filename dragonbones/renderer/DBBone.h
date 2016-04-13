@@ -39,7 +39,7 @@ public:
     
     virtual void calculateRelativeParentTransform() override;
     
-    void update(float needUpdate) override;
+    void update(bool isFading);
     void blendingTimeline();
     
     
@@ -57,8 +57,15 @@ public:
     
     void addSlot(DBSlot *slot);
     void removeSlot(DBSlot *slot);
-    void hideSlots();
     
+    void hideSlots();
+    inline float getLength() {return this->_length;};
+    
+    void adjustGlobalTransformMatrixByIK();
+    inline float getRotationIK () {return this->_rotationIK;};
+    void setRotationIK(float rotationIK);
+    inline bool getIsIKConstraint() {return this->_isIKConstraint;};
+    void setIsIKConstraint(bool isIKConstraint);
 private:
     
     BoneData* _boneData;
@@ -86,6 +93,9 @@ private:
 
     Transform _tempGlobalTransformForChild;
     Matrix _tempGlobalTransformMatrixForChild;
+    float _length;
+    float _rotationIK;
+    bool _isIKConstraint;
 
     
 };

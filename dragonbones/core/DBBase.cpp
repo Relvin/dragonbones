@@ -93,7 +93,7 @@ void DBBase::updateGlobal( Transform &transform, Matrix &matrix )
         global.scaleX *= transform.scaleX;
         global.scaleY *= transform.scaleY;
     }
-    global.toMatrix(globalTransformMatrix, true);
+    global.toMatrix(_globalTransformMatrix, true);
 }
 
 bool DBBase::getInheritRotation()
@@ -125,7 +125,7 @@ void DBBase::setInheritTranslation(bool inheritTranslation)
     this->inheritTranslation = inheritTranslation;
 }
 
-const Transform& DBBase::getGlobalTransform() const
+Transform& DBBase::getGlobalTransform() const
 {
     return this->global;
 }
@@ -155,12 +155,12 @@ void DBBase::setOffsetTransform(const Transform& offset)
 
 const Matrix& DBBase::getGlobalTransformMatrix() const
 {
-    return this->globalTransformMatrix;
+    return this->_globalTransformMatrix;
 }
 
 void DBBase::setGlobalTransformMatrix(const Matrix& matrix)
 {
-    this->globalTransformMatrix = matrix;
+    this->_globalTransformMatrix = matrix;
 }
 
 

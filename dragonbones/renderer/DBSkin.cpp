@@ -10,7 +10,6 @@
 #include "DBCCFactory.h"
 #include "objects/DisplayData.h"
 #include "objects/MeshData.h"
-#include "renderer/DBAutoPolygon.h"
 
 USING_NS_CC;
 

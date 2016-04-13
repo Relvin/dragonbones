@@ -29,7 +29,7 @@ public:
     void addVectex(Point vectex);
     void addUV(Point UV);
     void addTriangle(int triangle);
-    void addEdge(int edge);
+    
     void setWidht(float widht);
     void setHeight(float height);
     
@@ -52,7 +52,7 @@ public:
     mutable std::vector<int> _triangles;
     mutable std::vector<Point> _UVs;
     mutable std::vector<Point> _orgVectices;
-    std::vector<int> _edges;
+    
     float _width;
     float _height;
     bool updated;
