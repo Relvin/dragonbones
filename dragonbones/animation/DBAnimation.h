@@ -41,6 +41,9 @@ public:
     
     void dispose();
     void clear();
+    DBAnimationState* playOnce(
+                                  const std::string &animationName
+                                  );
     
     DBAnimationState* gotoAndPlay(
                                 const std::string &animationName,

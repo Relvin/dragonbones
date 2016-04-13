@@ -137,6 +137,13 @@ void DBAnimation::clear()
 //    }
 }
 
+DBAnimationState* DBAnimation::playOnce(
+                           const std::string &animationName
+                           )
+{
+    return this->gotoAndPlay(animationName,-1,-1,1);
+}
+
 DBAnimationState* DBAnimation::gotoAndPlay(
                                        const std::string &animationName,
                                        float fadeInTime,

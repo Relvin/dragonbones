@@ -43,6 +43,12 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     
     this->_slotData = slotData;
     this->_name = this->_slotData->name;
+    
+//    if (_name != "pifeng")
+//    {
+//        return false;
+//    }
+    
     this->_textureAtlasName = textureAtlasName;
     _originZOrder = this->_slotData->zOrder;
     int displayIndex = slotData->displayIndex;
@@ -51,6 +57,7 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     displayIndex = displayIndex > slotData->displayDataList.size() ? slotData->displayDataList.size() - 1 : displayIndex;
     DisplayData *displayData = nullptr;
     this->_displayIndex = displayIndex;
+    _originDisplayIndex = this->_displayIndex;
     if (displayIndex >= 0)
     {
         displayData = slotData->displayDataList[displayIndex];
@@ -97,6 +104,7 @@ DBSlot::DBSlot()
 //, _blendMode(BlendMode::BM_NORMAL)
 , _childArmature(nullptr)
 , _textureAtlasName ("")
+, _originDisplayIndex (-1)
 
 {
     
@@ -194,7 +202,6 @@ void DBSlot::arriveAtFrame( Frame *frame, const DBSlotTimelineState *timelineSta
 
 void DBSlot::changeDisplay(int displayIndex)
 {
-
     if (displayIndex < 0)
     {
         this->setVisible(false);
@@ -236,7 +243,6 @@ void DBSlot::changeDisplay(int displayIndex)
 //            updateChildArmatureAnimation();
 //        }
         this->setVisible(true);
-        
     }
 
 }
@@ -247,7 +253,7 @@ void DBSlot::updateDisplayVisible(bool visible)
     DBBone* _bone = dynamic_cast<DBBone *>(_parentBone);
     if (_display && _bone)
     {
-        _display->setVisible(_bone->isVisible() && this->isVisible());
+        _display->setVisible(_bone->isVisible() && this->isVisible() && visible);
     }
 }
 
@@ -293,6 +299,13 @@ MeshData* DBSlot::getMeshData(const std::string &name)
         return dynamic_cast<MeshData* >(_slotData->displayDataList[_displayIndex]);
     }
     return nullptr;
+}
+
+void DBSlot::resetToOrigin()
+{
+    changeDisplay(_originDisplayIndex);
+    updateDisplayColor(0,0,0,0,1,1,1,1,true);
+    this->updateDisplayVisible(true);
 }
 
 NAME_SPACE_DRAGON_BONES_END

@@ -55,6 +55,17 @@ void MeshData::updateVertices(int offset, const std::vector<float> &vectices)
     updated = true;
 }
 
+void MeshData::resetVertices()
+{
+    for (int i = 0;i < _vectices.size();i++)
+    {
+        _vectices[i].vectex.x = _orgVectices[i].x;
+        _vectices[i].vectex.y = _orgVectices[i].y;
+    }
+    
+    updated = true;
+}
+
 std::vector<Point> &MeshData::getVectices() const
 {
     return this->_orgVectices;

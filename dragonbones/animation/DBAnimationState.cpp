@@ -501,7 +501,6 @@ void DBAnimationState::addFFDTimelineState(const std::string &skinName, const st
     if(slot /*&& slot.displayList.length > 0*/)
     {
         
-        
         cocos2d::Vector<DBFFDTimelineState*> timelineStateList = this->_ffdTimelineStateMgr->getAllTimelineState();
         for (size_t i = 0, l = timelineStateList.size(); i < l; ++i)
         {

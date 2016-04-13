@@ -45,6 +45,8 @@ public:
     std::vector<int>& getTriangles() const;
     std::vector<Point>& getUVs() const;
     inline int getTriangleCount() const {return this->_triangles.size() / 3;};
+    
+    void resetVertices();
 
     mutable std::vector<VECTEX_UV> _vectices;
     mutable std::vector<int> _triangles;

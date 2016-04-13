@@ -103,6 +103,10 @@ DBFFDTimelineState::~DBFFDTimelineState()
 
 void DBFFDTimelineState::resetTimelineState()
 {
+    if (_mesh)
+    {
+        _mesh->resetVertices();
+    }
     _slot = nullptr;
     _mesh = nullptr;
     _armature = nullptr;
@@ -132,9 +136,20 @@ void DBFFDTimelineState::fadeIn(dragonBones::MeshData *mesh, dragonBones::DBAnim
     _blendEnabled = false;
     
     _currentFrameIndex = -1;
+    _currentFramePosition = 0;
+    _currentFrameDuration = 0;
     _currentTime = -1;
     _tweenEasing = NO_TWEEN_EASING;
     _weight = 1;
+    _offset = 0;
+    
+    
+    _tweenEasing = 0.f;
+    _tweenCurve = nullptr;
+    _tweenVertices = false;
+    _updateMode = 0;
+    
+    
     switch(_timelineData->frameList.size())
     {
         case 0:
@@ -374,13 +389,42 @@ void DBFFDTimelineState::updateToNextFrame(int currentPlayTimes)
     else
     {
         _tweenVertices = false;
+        _offset = currentFrame->offset;
+        int end = currentFrame->offset + currentFrame->vertices.size();
+        float curVertex = 0.f;
+        _durationVertices.clear();
+        
+        bool needUpdate = false;
+        for (int i = _offset; i < end; i++)
+        {
+            curVertex = 0;
+            if (currentFrame->offset <= i && currentFrame->vertices.size() + currentFrame->offset > i)
+            {
+                curVertex = currentFrame->vertices[i - currentFrame->offset];
+            }
+            _durationVertices.push_back(curVertex);
+            if ((_durationVertices[i - _offset] < - EPSINON) || (_durationVertices[i - _offset] > EPSINON))
+            {
+                needUpdate = true;
+            }
+        }
+        if (needUpdate)
+        {
+            _mesh->updateVertices(_offset, _durationVertices);
+        }
+        else if (_durationVertices.size() == 0)
+        {
+            _mesh->resetVertices();
+        }
+
+        
     }
 }
 
 void DBFFDTimelineState::updateTween()
 {
     FFDFrame* currentFrame = dynamic_cast<FFDFrame *>(_timelineData->frameList[_currentFrameIndex]);
-    if( _animationState->displayControl)
+    if(_tweenVertices && _animationState->displayControl)
     {
         float progress = (_currentTime - _currentFramePosition) / (float)(_currentFrameDuration);
         if (_tweenCurve != nullptr)

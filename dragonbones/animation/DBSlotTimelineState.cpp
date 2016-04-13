@@ -508,6 +508,10 @@ void DBSlotTimelineState::updateSingleFrame()
 
 void DBSlotTimelineState::resetTimelineState()
 {
+    if (_slot)
+    {
+        _slot->resetToOrigin();
+    }
     _slot = nullptr;
     _armature = nullptr;
     _animation = nullptr;

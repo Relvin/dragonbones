@@ -49,6 +49,8 @@ public:
     
     MeshData* getMeshData(const std::string& name);
     
+    void resetToOrigin();
+    
 private:
     DBSkin* _display;
     SlotData* _slotData;
@@ -60,6 +62,7 @@ private:
     float _originZOrder;
     DBArmature* _childArmature;
     std::string _textureAtlasName;
+    int _originDisplayIndex ;
     
 };
 
