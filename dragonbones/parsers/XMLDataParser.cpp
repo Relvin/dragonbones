@@ -331,11 +331,11 @@ MeshData* XMLDataParser::parseMeshData(const dragonBones::XMLElement *MeshXML) c
         
         if ((scanIndex & 1) == 0)
         {
-            p_x = atof(vertexXML->GetText());
+            p_x = atof(vertexXML->GetText()) / _armatureScale;
         }
         else
         {
-            p_y = atof(vertexXML->GetText());
+            p_y = atof(vertexXML->GetText()) / _armatureScale;
             meshData->_orgVectices.push_back(Point(p_x,p_y));
         }
         
@@ -361,8 +361,8 @@ MeshData* XMLDataParser::parseMeshData(const dragonBones::XMLElement *MeshXML) c
         scanIndex++;
     }
     
-    meshData->setWidht(MeshXML->FloatAttribute(ConstValues::A_WIDTH.c_str()));
-    meshData->setHeight(MeshXML->FloatAttribute(ConstValues::A_HEIGHT.c_str()));
+    meshData->setWidht(MeshXML->FloatAttribute(ConstValues::A_WIDTH.c_str()) / _armatureScale);
+    meshData->setHeight(MeshXML->FloatAttribute(ConstValues::A_HEIGHT.c_str()) / _armatureScale);
     return meshData;
 }
 
@@ -527,7 +527,7 @@ FFDFrame * XMLDataParser::parseFFDFrame(const XMLElement *frameXML)const
     for (const XMLElement *vertexXML = frameXML->FirstChildElement(ConstValues::VERTICES.c_str());
          vertexXML; vertexXML = vertexXML->NextSiblingElement(ConstValues::VERTICES.c_str()))
     {
-        frame->vertices.push_back(atof(vertexXML->GetText()));
+        frame->vertices.push_back(atof(vertexXML->GetText()) / _armatureScale);
     }
 
     return frame;

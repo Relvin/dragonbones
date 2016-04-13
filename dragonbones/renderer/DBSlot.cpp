@@ -44,7 +44,7 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     this->_slotData = slotData;
     this->_name = this->_slotData->name;
     
-//    if (_name != "pifeng")
+//    if (_name != "leg_r")
 //    {
 //        return false;
 //    }

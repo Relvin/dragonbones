@@ -78,6 +78,9 @@ bool DBSkin::initWithTextureData(const ITextureAtlas *textureAtlas, const Textur
     
     auto texture = dbccTextureAtlas->getTexture();
     assert(texture);
+#if 0
+    Sprite::initWithFile("res/Ubbie/leg_r.png");
+#else
     if (textureData->getSpriteFrame())
     {
         if (!Sprite::initWithSpriteFrame(textureData->getSpriteFrame()))
@@ -119,7 +122,7 @@ bool DBSkin::initWithTextureData(const ITextureAtlas *textureAtlas, const Textur
             return false;
         }
     }
-    
+#endif
     // sprite
     this->updateBaseInfo();
     
@@ -190,7 +193,7 @@ void DBSkin::buildPolygonInfo()
         do
         {
             CC_BREAK_IF(meshData == nullptr);
-            
+    
             Point offset;
             SpriteFrame* spriteFrame = this->getSpriteFrame();
             Size textureSize = this->getTexture()->getContentSize();
@@ -258,7 +261,7 @@ void DBSkin::buildPolygonInfo()
             cocos2d::PolygonInfo polygonInfo;
             polygonInfo.triangles = {verts, indices, vdx, idx};
             
-            polygonInfo.rect = cocos2d::Rect(0,0,meshData->getWidht(),meshData->getHeight());
+            polygonInfo.rect = cocos2d::Rect(0,0,meshData->getWidht() ,meshData->getHeight());
             this->setPolygonInfo(polygonInfo);
             
         }while(0);
