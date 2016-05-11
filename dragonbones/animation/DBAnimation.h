@@ -105,6 +105,8 @@ protected:
     DBArmature *_armature;
     DBAnimationState *_animationState;
     
+    bool _updateAnimationStage;
+    
     
 private:
     DRAGON_BONES_DISALLOW_COPY_AND_ASSIGN(DBAnimation);

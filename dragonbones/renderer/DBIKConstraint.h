@@ -33,8 +33,16 @@ public:
     void compute1(DBBone* bone,DBBone* target,float weight);
     Point compute2(DBBone* bone,DBBone* child,float targetX,float targetY,int benDirection,float weightA);
     float normalize(float rotation);
-    DBBone* getBoneByIndex(int index) {return this->_bones.at(index);};
+    DBBone* getBoneByIndex(int index) {
+        if (index >= 0 && index < _bones.size())
+        {
+            return this->_bones.at(index);
+        }
+        return nullptr;
+    };
     
+    inline DBBone* getTargetBone() {return this->_target;};
+    inline int getBoneSize() {return this->_bones.size();};
 private:
     
     IKData* _ikdata;

@@ -62,9 +62,9 @@ public:
     virtual void onEnter();
     
     void arriveAtFrame(Frame *frame, DBAnimationState *animationState, bool isCross);
-    
+    cocos2d::Vector<DBIKConstraint*> getIKTargetData(DBBone *bone);
     DBEventDataMgr* getEventDataManager() const;
-    
+    inline bool getSkewEnable() {return this->_skewEnable;};
 protected:
     
 private:
@@ -78,8 +78,9 @@ private:
     cocos2d::Vector<DBBone*> _topBoneList;
     cocos2d::Map<std::string,DBSlot*> _slotDic;
     cocos2d::Vector<DBIKConstraint*> _ikList;
-    std::vector<cocos2d::Vector<DBBone*>> _boneIKList;
+    
     DBEventDataMgr* _eventDataMgr;
+    bool _skewEnable;
     
 };
 

@@ -105,6 +105,7 @@ _isFading(false)
 ,autoTween(true)
 ,_armature(nullptr)
 ,_animationState(nullptr)
+, _updateAnimationStage(true)
 {
     
 }
@@ -247,6 +248,7 @@ DBAnimationState* DBAnimation::gotoAndPlay(
         _animationState = DBAnimationState::create();
         CC_SAFE_RETAIN(_animationState);
     }
+    _updateAnimationStage = true;
     _animationState->resetTimelineStateList();
     _animationState->setLayer(layer);
     _animationState->setGroup(group);
@@ -353,11 +355,11 @@ void DBAnimation::advanceTime(float passedTime)
     bool isFading = false;
     passedTime *= _timeScale;
     
-    if (_animationState)
+    if (_animationState && _updateAnimationStage)
     {
         if (_animationState->advanceTime(passedTime))
         {
-            
+            _updateAnimationStage = false;
         }
         else if (_animationState->getFadeState() != DBAnimationState::FadeState::FADE_COMPLETE)
         {

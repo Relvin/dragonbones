@@ -18,7 +18,7 @@ public:
 		parent.toMatrix(helpParentTransformMatrix, true);
 
 		helpParentTransformMatrix.invert();
-
+//        helpTransformMatrix.concat(helpParentTransformMatrix);
 		matrixToTransform(helpTransformMatrix, transform, transform.scaleX * parent.scaleX >= 0, transform.scaleY * parent.scaleY >= 0);
 	}
 

@@ -20,6 +20,7 @@ NAME_SPACE_DRAGON_BONES_BEGIN
 
 class DBArmature;
 class DBSlot;
+class DBIKConstraint;
 
 class DBBone
 : public cocos2d::Node
@@ -66,6 +67,10 @@ public:
     void setRotationIK(float rotationIK);
     inline bool getIsIKConstraint() {return this->_isIKConstraint;};
     void setIsIKConstraint(bool isIKConstraint);
+    void setIkConstraint(DBIKConstraint *ikConstraint);
+    void operationInvalidUpdate(DBBone* bone);
+    virtual void updateGlobal(Transform &transform, Matrix &matrix) override;
+    float getParentBoneRotation();
 private:
     
     BoneData* _boneData;
@@ -96,6 +101,8 @@ private:
     float _length;
     float _rotationIK;
     bool _isIKConstraint;
+    
+    DBIKConstraint *_ikConstraint;
 
     
 };

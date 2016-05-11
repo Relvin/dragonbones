@@ -151,6 +151,7 @@ DragonBonesData* XMLDataParser::parseDragonBonesData(const void *rawDragonBonesD
 
 	DragonBonesData *dragonBonesData = new DragonBonesData();
     dragonBonesData->name = dragonBonesXML->Attribute(ConstValues::A_NAME.c_str());
+    dragonBonesData->version = version;
 	dragonBonesData->isGlobalData = _isGlobalData = 
 		(strcmp(dragonBonesXML->Attribute(ConstValues::A_IS_GLOBAL.c_str()), "0") == 0) ? false : true;
     

@@ -24,6 +24,7 @@ DBArmature::DBArmature()
 , _pAnimation (nullptr)
 , _pSkinData (nullptr)
 , _eventDataMgr (nullptr)
+, _skewEnable (false)
 {
     _boneDic.clear();
     _topBoneList.clear();
@@ -83,6 +84,13 @@ bool DBArmature::initWithName(const std::string &name,const std::string &texture
     {
         return false;
     }
+    
+    float version = atof(dragonBonesData->version.c_str());
+    if (version >= 4.5)
+    {
+        this->_skewEnable = true;
+    }
+    
     _pArmatureData = dragonBonesData->getArmatureData(name);
     if (!_pArmatureData)
     {
@@ -103,6 +111,8 @@ bool DBArmature::initWithName(const std::string &name,const std::string &texture
         createBone(_pArmatureData->boneDataList.at(i));
     }
 
+    buildIK();
+    updateBoneCache();
     createSkin(textureName);
     
     
@@ -284,77 +294,57 @@ void DBArmature::update(float delta)
 
 void DBArmature::updateBoneCache()
 {
-#if 0
-    _boneList.reverse();
-    var temp:Object = { };
-    var ikConstraintsCount:int = _ikList.length;
-    var arrayCount:int = ikConstraintsCount + 1;
-    var i:int;
-    var len:int;
-    var j:int;
-    var jLen:int;
-    var bone:Bone;
-    var currentBone:Bone;
     
-    _boneIKList = new Vector.<Vector.<Bone>>();
-    while (_boneIKList.length < arrayCount)
-    {
-        _boneIKList[_boneIKList.length] = new Vector.<Bone>();
-    }
-#endif
-    
-    
-#if 0
-//    temp[_boneList[0].name] = 0;
-    
-    std::vector<std::string> temp;
+    std::map<std::string,int> temp;
     temp.clear();
-    temp
+    
     for (int i = 0, len = _ikList.size(); i < len; i++)
     {
-//        temp[_ikList[i].bones[0].name] = i+1;
-        temp.push_back(_ikList.at(i)->getBoneByIndex(0)->getName());
+        temp[_ikList.at(i)->getBoneByIndex(0)->getName()] = i;
     }
 
-    for (i = 0, len = _boneList.length; i < len; i++)
+    for (auto iter : _boneDic)
     {
         
-        bone = _boneList[i];
-        currentBone = bone;
+        DBBone* bone = iter.second;
+        DBBone* currentBone = bone;
         while (currentBone)
         {
-            if (currentBone.parent == null)
+            if (currentBone->getParentBone() == nullptr)
             {
-                temp[currentBone.name] = 0;
+                
             }
-            if (temp.hasOwnProperty(currentBone.name))
+            else if ([&](){
+                std::map<std::string,int>::iterator temIter = temp.find(currentBone->getName());
+                if (temIter != temp.end())
+                {
+                    bone->setIkConstraint(_ikList.at(temIter->second));
+                    return true;
+                }
+                return false;
+            }())
             {
-                _boneIKList[temp[currentBone.name]].push(bone);
+                
                 break;
             }
-            currentBone = currentBone.parent;
+            currentBone = dynamic_cast<DBBone *>(currentBone->getParentBone());
         }
     }
-#endif
 }
 
-
-#if 0
-void getIKTargetData(bone:Bone):Array
+cocos2d::Vector<DBIKConstraint*> DBArmature::getIKTargetData(DBBone *bone)
 {
-    var target:Array = [];
-    var ik:IKConstraint;
-    for (var i:int = 0, len:int = _ikList.length; i < len; i++)
+    cocos2d::Vector<DBIKConstraint*> targetIKList;
+    DBIKConstraint* ik = nullptr;
+    for (int i = 0, len = _ikList.size(); i < len; i++)
     {
-        ik = _ikList[i];
-        if(bone.name == ik.target.name){
-            target.push(ik);
+        ik = _ikList.at(i);
+        if(bone->getName() == ik->getTargetBone()->getName()){
+            targetIKList.pushBack(ik);
         }
     }
-    return target;
+    return targetIKList;
 }
-
-#endif
 
 void DBArmature::onEnter()
 {

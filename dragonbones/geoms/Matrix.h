@@ -58,6 +58,22 @@ public:
         tx = copyData.tx;
         ty = copyData.ty;
     }
+    void concat(const Matrix &mat)
+    {
+        const float a0 = a;
+        const float b0 = b;
+        const float c0 = c;
+        const float d0 = d;
+        const float tx0 = tx;
+        const float ty0 = ty;
+        
+        a = a0 * mat.a + b0 * mat.c;
+        b = a0 * mat.b + b0 * mat.d;
+        c = c0 * mat.a + d0 * mat.c;
+        d = c0 * mat.b + d0 * mat.d;
+        tx = tx0 * mat.a + ty0 * mat.c + mat.tx;
+        ty = tx0 * mat.b + ty0 * mat.d + mat.ty;
+    }
     virtual ~Matrix() {}
     
     inline void invert()
