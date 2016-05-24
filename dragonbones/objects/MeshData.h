@@ -25,23 +25,24 @@ public:
     
     MeshData();
     void updateVertices(int offset,const std::vector<float >& vectices);
+    void resetVisitData();
     virtual ~MeshData();
     void addVectex(Point vectex);
     void addUV(Point UV);
     void addTriangle(int triangle);
     
-    void setWidht(float widht);
+    void setWidth(float width);
     void setHeight(float height);
     
-    inline float getWidht() const {return this->_width;};
+    inline float getWidth() const {return this->_width;};
     inline float getHeight() const {return this->_height;};
     
     int getIndexInVectices(const Point& point) const;
     int getIndexInVectices(float x, float y) const;
     
-    const Point& getUVByIndex(int index) const;
+    Point getUVByIndex(int index) const;
     std::vector<Point>& getVectices() const;
-    const Point& getVectexByIndex(int index) const;
+    Point getVectexByIndex(int index) const;
     std::vector<int>& getTriangles() const;
     std::vector<Point>& getUVs() const;
     inline int getTriangleCount() const {return this->_triangles.size() / 3;};

@@ -210,7 +210,7 @@ void DBSkin::buildPolygonInfo()
             unsigned short idx = 0;
             unsigned short vdx = 0;
             
-            float width = meshData->getWidht();
+            float width = meshData->getWidth();
             float height = meshData->getHeight();
             
             for(;idx < triangleVerts.size();idx++)
@@ -260,7 +260,7 @@ void DBSkin::buildPolygonInfo()
             cocos2d::PolygonInfo polygonInfo;
             polygonInfo.triangles = {verts, indices, vdx, idx};
             
-            polygonInfo.rect = cocos2d::Rect(0,0,meshData->getWidht() ,meshData->getHeight());
+            polygonInfo.rect = cocos2d::Rect(0,0,meshData->getWidth() ,meshData->getHeight());
             this->setPolygonInfo(polygonInfo);
             
         }while(0);

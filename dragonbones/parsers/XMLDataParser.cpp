@@ -378,7 +378,7 @@ MeshData* XMLDataParser::parseMeshData(const dragonBones::XMLElement *MeshXML) c
         scanIndex++;
     }
     
-    meshData->setWidht(MeshXML->FloatAttribute(ConstValues::A_WIDTH.c_str()) / _armatureScale);
+    meshData->setWidth(MeshXML->FloatAttribute(ConstValues::A_WIDTH.c_str()) / _armatureScale);
     meshData->setHeight(MeshXML->FloatAttribute(ConstValues::A_HEIGHT.c_str()) / _armatureScale);
     return meshData;
 }

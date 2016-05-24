@@ -20,14 +20,17 @@
 #include "objects/TransformFrame.h"
 #include "objects/Timeline.h"
 #include "objects/TransformTimeline.h"
+#include "objects/FFDTimeline.h"
 #include "objects/AnimationData.h"
 #include "objects/DisplayData.h"
 #include "objects/SlotData.h"
 #include "objects/SkinData.h"
 #include "objects/BoneData.h"
+#include "objects/MeshData.h"
 #include "objects/ArmatureData.h"
 #include "objects/DragonBonesData.h"
 #include "objects/SlotFrame.h"
+#include "objects/FFDFrame.h"
 #include "dragonbones_generated.h"
 
 
@@ -113,6 +116,16 @@ ArmatureData* BinaryParser::parseArmatureDataFromBinary(const ArmatureOption * a
         }
     }
     
+    auto ikDataList = armatureOption->ikDataList();
+    if (ikDataList)
+    {
+        for (int idx = 0;idx < ikDataList->size();idx ++)
+        {
+            IKData *ikData = parseIKDataFromBinary(ikDataList->Get(idx));
+            armatureData->ikDataList.push_back(ikData);
+        }
+    }
+    
     armatureData->sortBoneDataList();
     
     auto animationDataList = armatureOption->animationDataList();
@@ -162,23 +175,80 @@ SlotData* BinaryParser::parseSlotDataFromBinary(const dragonBones::SlotDataOptio
     {
         for (int idx = 0;idx < displayDataList->size();idx++)
         {
-            DisplayData *displayData = parseDisplayDataFromBinary(displayDataList->Get(idx));
+            DisplayData *displayData = parseMainDisplayDataFromBinary(displayDataList->Get(idx));
             slotData->displayDataList.push_back(displayData);
+        }
+    }
+    auto meshDataList = slotDataOption->meshDataList();
+    if (meshDataList)
+    {
+        for (int idx = 0;idx < meshDataList->size();idx++)
+        {
+            MeshData *meshData = parseMeshDataFromBinary(meshDataList->Get(idx));
+            slotData->displayDataList.push_back(meshData);
         }
     }
     return slotData;
 }
 
-DisplayData* BinaryParser::parseDisplayDataFromBinary(const DisplayDataOption* displayDataOption) const
+MeshData* BinaryParser::parseMeshDataFromBinary(const MeshDataOption* meshDataOption) const
+{
+    MeshData *meshData = new MeshData();
+    this->parseDisplayDataFromBinary(meshData, meshDataOption->displayData());
+    meshData->setWidth(meshDataOption->width());
+    meshData->setHeight(meshDataOption->height());
+    auto triangles = meshDataOption->triangles();
+    if (triangles)
+    {
+        for (int idx = 0; idx < triangles->size();idx++)
+        {
+            meshData->addTriangle(triangles->Get(idx));
+        }
+    }
+    
+    auto vectices = meshDataOption->vectices();
+    if (vectices)
+    {
+        for (int idx = 0; idx < vectices->size();idx++)
+        {
+            auto pointOpt = vectices->Get(idx);
+            Point vectice(pointOpt->x(),pointOpt->y());
+            meshData->addVectex(vectice);
+        }
+    }
+    
+    auto uvs = meshDataOption->uvs();
+    if (uvs)
+    {
+        for (int idx = 0; idx < uvs->size();idx++)
+        {
+            auto pointOpt = uvs->Get(idx);
+            Point uv(pointOpt->x(),pointOpt->y());
+            meshData->addUV(uv);
+        }
+    }
+    meshData->resetVisitData();
+    
+    return meshData;
+}
+
+DisplayData* BinaryParser::parseMainDisplayDataFromBinary(const DisplayDataOption* displayDataOption) const
 {
     DisplayData *displayData = new DisplayData();
+    this->parseDisplayDataFromBinary(displayData, displayDataOption);
+    return displayData;
+}
+
+
+void BinaryParser::parseDisplayDataFromBinary(DisplayData *displayData,const DisplayDataOption* displayDataOption) const
+{
     parseFlatStringToString(displayDataOption->name(), displayData->name);
     displayData->type = (DisplayType)displayDataOption->type();
     parseFlatStringToString(displayDataOption->slotName(), displayData->slotName);
     parseTransformFromBinary(displayDataOption->transform(), displayData->transform);
     parsePointFromBinary(displayDataOption->pivot(), displayData->pivot);
   
-    return displayData;
+    
 
 }
 
@@ -197,6 +267,18 @@ SkinData* BinaryParser::parseSkinDataFromBinary(const SkinDataOption* skinDataOp
     }
     
     return skinData;
+}
+
+IKData*  BinaryParser::parseIKDataFromBinary(const IKDataOption* ikDataOption) const
+{
+    IKData* ikData = new IKData();
+    parseFlatStringToString(ikDataOption->name(), ikData->name);
+    parseFlatStringToString(ikDataOption->target(), ikData->target);
+    parseFlatStringToString(ikDataOption->bone(), ikData->bone);
+    ikData->chain = ikDataOption->chain();
+    ikData->weight = ikDataOption->weight();
+    ikData->bendPositive = ikDataOption->bendPositive();
+    return ikData;
 }
 
 AnimationData* BinaryParser::parseAnimationDataFromBinary(const AnimationDataOption *animationDataOption) const
@@ -233,6 +315,16 @@ AnimationData* BinaryParser::parseAnimationDataFromBinary(const AnimationDataOpt
         {
             SlotTimeline *timeline = parseSlotTimelineFromBinary(slotTimelineList->Get(idx));
             animationData->slotTimelineList.push_back(timeline);
+        }
+    }
+    
+    auto ffdTimelineList = animationDataOption->ffdTimelineList();
+    if (ffdTimelineList)
+    {
+        for (int idx = 0; idx < ffdTimelineList->size();idx++)
+        {
+            FFDTimeline *timeline = parseFFDTimelineFromBinary(ffdTimelineList->Get(idx));
+            animationData->ffdTimelineList.push_back(timeline);
         }
     }
     
@@ -311,6 +403,48 @@ SlotTimeline* BinaryParser::parseSlotTimelineFromBinary(const SlotTimelineOption
     return slotTimeline;
 }
 
+FFDTimeline* BinaryParser::parseFFDTimelineFromBinary(const dragonBones::FFDTimelineOption *timelineOption) const
+{
+    FFDTimeline* ffdTimeline = new FFDTimeline();
+    auto timelist = timelineOption->timeline()->ffdFrameList();
+    if (timelist)
+    {
+        for (int idx = 0;idx < timelist->size();idx++)
+        {
+            FFDFrame *frame = parseFFDFrameFromBinary(timelist->Get(idx));
+            ffdTimeline->frameList.push_back(frame);
+        }
+    }
+    
+    parseFlatStringToString(timelineOption->name(), ffdTimeline->name);
+    parseFlatStringToString(timelineOption->skinName(), ffdTimeline->skinName);
+    parseFlatStringToString(timelineOption->slotName(), ffdTimeline->slotName);
+    ffdTimeline->duration = timelineOption->timeline()->duration();
+    ffdTimeline->scale = timelineOption->timeline()->scale();
+    ffdTimeline->offset = timelineOption->offset();
+    return ffdTimeline;
+}
+
+FFDFrame* BinaryParser::parseFFDFrameFromBinary(const dragonBones::FFDFrameOption *ffdFrameOption) const
+{
+    FFDFrame* ffdFrame = new FFDFrame();
+    parseFrameFromBinary(ffdFrameOption->frame(), ffdFrame);
+
+    ffdFrame->tweenEasing = ffdFrameOption->tweenEasing();
+    ffdFrame->offset = ffdFrameOption->offset();
+    
+    auto vectices = ffdFrameOption->vertices();
+    if (vectices)
+    {
+        for (int idx = 0;idx < vectices->size();idx++)
+        {
+            ffdFrame->vertices.push_back(vectices->Get(idx));
+        }
+    }
+    
+    return ffdFrame;
+}
+
 Frame* BinaryParser::parseMainFrameFromBinary(const FrameOption *frameOption) const
 {
     Frame *frame = new Frame();
@@ -329,6 +463,18 @@ void BinaryParser::parseFrameFromBinary(const FrameOption *frameOption, Frame *f
     parseFlatStringToString(frameOption->event(),frame->event);
     parseFlatStringToString(frameOption->sound(),frame->sound);
 
+    auto curveOption = frameOption->curve();
+    if(curveOption)
+    {
+        frame->curve = new CurveData();
+        
+        for (int idx = 0; idx < curveOption->pointList()->size();idx++)
+        {
+            auto potOption = curveOption->pointList()->Get(idx);
+            Point point (potOption->x(),potOption->y());
+            frame->curve->_pointList.push_back(point);
+        }
+    }
 }
 
 TransformFrame* BinaryParser::parseTransformFrameFromBinary(const TransformFrameOption *transformFrameOption) const

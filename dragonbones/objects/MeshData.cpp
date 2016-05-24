@@ -64,6 +64,16 @@ void MeshData::resetVertices()
     updated = true;
 }
 
+void MeshData::resetVisitData()
+{
+    this->_vectices.clear();
+    for (int idx = 0;idx < this->_orgVectices.size();idx++ )
+    {
+        VECTEX_UV vec_uv = {this->_orgVectices.at(idx),this->_UVs.at(idx)};
+        _vectices.push_back(vec_uv);
+    }
+}
+
 std::vector<Point> &MeshData::getVectices() const
 {
     return this->_orgVectices;
@@ -94,9 +104,9 @@ void MeshData::addTriangle(int triangle)
     this->_triangles.push_back(triangle);
 }
 
-void MeshData::setWidht(float widht)
+void MeshData::setWidth(float width)
 {
-    this->_width = widht;
+    this->_width = width;
 }
 
 void MeshData::setHeight(float height)
@@ -122,7 +132,7 @@ int MeshData::getIndexInVectices(float x, float y) const
     return 0;
 }
 
-const Point& MeshData::getVectexByIndex(int index) const
+Point MeshData::getVectexByIndex(int index) const
 {
     if (index <= _orgVectices.size())
     {
@@ -138,7 +148,7 @@ const Point& MeshData::getVectexByIndex(int index) const
     return Point(0,0);
 }
 
-const Point& MeshData::getUVByIndex(int index) const
+Point MeshData::getUVByIndex(int index) const
 {
     if (_UVs.size() > index)
     {
@@ -146,5 +156,6 @@ const Point& MeshData::getUVByIndex(int index) const
     }
     return Point(0,0);
 }
+
 
 NAME_SPACE_DRAGON_BONES_END
