@@ -5,28 +5,33 @@ LOCAL_MODULE := dragonbones_static
 LOCAL_MODULE_FILENAME := libdragonbones
 
 
-LOCAL_SRC_FILES := ../../../3rd/tinyxml2/dbtinyxml2.cpp \
-				   ../../../animation/Animation.cpp \
-                   ../../../animation/AnimationState.cpp \
-				   ../../../animation/SlotTimelineState.cpp \
-                   ../../../animation/TimelineState.cpp \
-                   ../../../animation/WorldClock.cpp \
-                   ../../../core/Armature.cpp \
-                   ../../../core/Bone.cpp \
-                   ../../../core/DBObject.cpp \
-                   ../../../core/Slot.cpp \
-                   ../../../events/EventData.cpp \
-                   ../../../factories/BaseFactory.cpp \
-                   ../../../parsers/BaseDataParser.cpp \
-                   ../../../parsers/ConstValues.cpp \
-                   ../../../parsers/JSONDataParser.cpp \
-                   ../../../parsers/XMLDataParser.cpp \
-                   ../DBCCArmature.cpp \
-                   ../DBCCArmatureNode.cpp \
+LOCAL_SRC_FILES := ../../3rd/tinyxml2/dbtinyxml2.cpp \
+                   ../../animation/DBAnimation.cpp \
+                   ../../animation/DBAnimationState.cpp \
+                   ../../animation/DBFFDTimelineState.cpp \
+                   ../../animation/DBSlotTimelineState.cpp \
+                   ../../animation/DBTimelineState.cpp \
+                   ../../core/DBBase.cpp \
+                   ../../events/DBEventData.cpp \
+                   ../../factories/BaseFactory.cpp \
+                   ../../objects/FFDFrame.cpp \
+                   ../../objects/FFDTimeline.cpp \
+                   ../../objects/IKData.cpp \
+                   ../../objects/MeshData.cpp \
+                   ../../parsers/BaseDataParser.cpp \
+                   ../../parsers/BinaryParser.cpp \
+                   ../../parsers/ConstValues.cpp \
+                   ../../parsers/JSONDataParser.cpp \
+                   ../../parsers/XMLDataParser.cpp \
+                   ../DBAnimation.cpp \
+                   ../DBArmature.cpp \
+                   ../DBBone.cpp \
                    ../DBCCFactory.cpp \
                    ../DBCCLuaUtils.cpp \
-                   ../DBCCSlot.cpp \
-				   ../DBCCUtils.cpp
+                   ../DBCCUtils.cpp \
+                   ../DBIKConstraint.cpp \
+                   ../DBSkin.cpp \
+                   ../DBSlot.cpp
 
 
 LOCAL_C_INCLUDES := \
