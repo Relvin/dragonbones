@@ -1,5 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
+include $(CLEAR_VARS)
+
 LOCAL_MODULE := dragonbones_static
 
 LOCAL_MODULE_FILENAME := libdragonbones
@@ -23,7 +25,6 @@ LOCAL_SRC_FILES := ../../3rd/tinyxml2/dbtinyxml2.cpp \
                    ../../parsers/ConstValues.cpp \
                    ../../parsers/JSONDataParser.cpp \
                    ../../parsers/XMLDataParser.cpp \
-                   ../DBAnimation.cpp \
                    ../DBArmature.cpp \
                    ../DBBone.cpp \
                    ../DBCCFactory.cpp \
@@ -34,13 +35,11 @@ LOCAL_SRC_FILES := ../../3rd/tinyxml2/dbtinyxml2.cpp \
                    ../DBSlot.cpp
 
 
-LOCAL_C_INCLUDES := \
-$(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../../.. 
+LOCAL_C_INCLUDES :=     $(LOCAL_PATH)/.. \
+                        $(LOCAL_PATH)/../.. 
 
-LOCAL_EXPORT_C_INCLUDES := \
-$(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../../.. 
+LOCAL_EXPORT_C_INCLUDES :=    $(LOCAL_PATH)/.. \
+                              $(LOCAL_PATH)/../..
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 

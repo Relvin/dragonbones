@@ -8,7 +8,7 @@
 
 #include "DBAnimationState.h"
 
-#include <cstdlib>
+//#include <cstdlib>
 
 #include "animation/DBTimelineState.h"
 #include "animation/DBSlotTimelineState.h"
@@ -220,7 +220,7 @@ void DBAnimationState::addBoneToBoneMask( const std::string &boneName )
 
 void DBAnimationState::removeBoneFromBoneMask(const std::string &boneName)
 {
-    auto iterator = std::find(_boneMasks.cbegin(), _boneMasks.cend(), boneName);
+    auto iterator = std::find(_boneMasks.begin(), _boneMasks.end(), boneName);
     if (iterator != _boneMasks.cend())
     {
         _boneMasks.erase(iterator);
