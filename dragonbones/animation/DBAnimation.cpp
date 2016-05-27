@@ -7,7 +7,7 @@
 //
 
 #include "DBAnimation.h"
-#include "DBArmature.h"
+#include "renderer/DBArmature.h"
 
 #include "renderer/DBSlot.h"
 #include "animation/DBAnimationState.h"

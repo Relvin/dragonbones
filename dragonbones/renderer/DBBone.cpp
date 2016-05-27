@@ -196,7 +196,7 @@ void DBBone::update(bool isFading)
         _needUpdate = 1;
         this->setPosition(global.x,-global.y);
         
-        //#define showBone 1
+//#define showBone 1
 #ifdef showBone
         cocos2d::Sprite* boneSprite = dynamic_cast<cocos2d::Sprite*>(this->getChildByTag(1001));
         if (!boneSprite)
@@ -222,12 +222,12 @@ void DBBone::update(bool isFading)
         
         blendingTimeline();
         
-        // 计算global
+        // 
         Transform parentGlobalTransform;
         Matrix parentGlobalTransformMatrix;
         updateGlobal(parentGlobalTransform, parentGlobalTransformMatrix);
         
-        // 计算globalForChild
+        // 
         bool ifExistOffsetTranslation = offset.x != 0 || offset.y != 0;
         bool ifExistOffsetScale = offset.scaleX != 1 || offset.scaleY != 1;
         bool ifExistOffsetRotation = offset.skewX != 0 || offset.skewY != 0;
@@ -303,7 +303,6 @@ void DBBone::updateGlobal(Transform &transform, Matrix &matrix)
     
     calculateRelativeParentTransform();
     
-    // 计算parent bone的绝对坐标
     calculateParentTransform(transform, matrix);
     
     bool scaleXF = global.scaleX * transform.scaleX > 0;
@@ -484,7 +483,7 @@ void DBBone::invalidUpdate()
     for(const auto &obj: _childBones) {
         DBBone *childBone = static_cast<DBBone*>(obj);
         if(childBone->getNeedUpdate() != 2){
-//            operationInvalidUpdate(childBone); // modify by Relvin 多余
+//            operationInvalidUpdate(childBone); // modify by Relvin 
             childBone->invalidUpdate();
         }
     }
@@ -518,7 +517,6 @@ void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelin
     animationState->getMixingTransform(this->getName())*/;
     
     // && timelineState->_weight > 0
-    // TODO: 需要修正混合动画干扰关键帧数据的问题，如何正确高效的判断混合动画？
     if (displayControl)
     {
         

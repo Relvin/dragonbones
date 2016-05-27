@@ -23,6 +23,9 @@ distribution.
 
 #include "dbtinyxml2.h"
 
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+
 #include <new>        // yes, this one new style header, is in the Android SDK.
 #   if defined(ANDROID_NDK) || (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
 #   include <stddef.h>

@@ -107,7 +107,7 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
     Transform parentGlobal = parent->getGlobalTransform();
     Transform childGlobal = child->getGlobalTransform();
 
-    //添加斜切后的算法，现在用的
+   
     if (weightA == 0) {
         return Point(parentGlobal.getRotation(),childGlobal.getRotation());
     }
@@ -115,10 +115,10 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
     
     Transform childOrigin = child->getOriginTransform();
     Point tt;
-    /**父的绝对坐标**/
+    
     Point p1(parentGlobal.x,parentGlobal.y);
     
-    /**子的绝对坐标**/
+   
     Point p2(childGlobal.x,childGlobal.y);
     float psx = parentGlobal.scaleX;
     float psy = parentGlobal.scaleY;
@@ -128,11 +128,11 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
     float cx = childOrigin.x*psx;
     float cy = childOrigin.y*psy;
     
-    float initalRotation = atan2(cy, cx);//差值等于子在父落点到父的角度
+    float initalRotation = atan2(cy, cx);
     
     float childX = p2.x-p1.x;
     float childY = p2.y-p1.y;
-    /**d1的长度**/
+    
     float len1 = sqrt(childX * childX + childY* childY);
     float parentAngle;
     float childAngle;
@@ -166,7 +166,7 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
         tt.y = childAngle* weightA+initalRotation;//+tt.x;
     }
     else
-    {//一旦父已经扭曲，子重新计算长度
+    {
         do {
             float l1 = len1;
             float tx = targetX-p1.x;

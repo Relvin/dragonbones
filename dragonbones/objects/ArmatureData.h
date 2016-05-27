@@ -153,7 +153,7 @@ public:
 		{
 			slotDataList[i]->dispose();
 		}
-		SkinData *skinData;
+		SkinData *skinData = nullptr;
 		if (skinName.empty() && skinDataList.size() > 0)
 		{
 			skinData = skinDataList[0];

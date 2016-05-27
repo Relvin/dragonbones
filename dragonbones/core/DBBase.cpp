@@ -73,10 +73,10 @@ void DBBase::updateGlobal( Transform &transform, Matrix &matrix )
 {
     calculateRelativeParentTransform();
     
-    // 计算parent bone的绝对坐标
+    
     calculateParentTransform(transform, matrix);
     
-    // 计算绝对坐标
+    
     float x = global.x;
     float y = global.y;
     
