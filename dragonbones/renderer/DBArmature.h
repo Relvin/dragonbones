@@ -55,6 +55,8 @@ public:
     
     void createSkin(const std::string &textureName);
     
+    inline void setSpeed(float speed) {_pAnimation->setTimeScale(speed);};
+    
     void buildIK();
     
     void update(float delta);
