@@ -6,7 +6,7 @@ def getXml2XmlbRuntime():
     if(os.name == 'posix'):
         return './mac/xmlToBinary '
     else:
-        return './win32/xmlToBinary.exe '
+        return 'win32\\xmlToBinary.exe '
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
