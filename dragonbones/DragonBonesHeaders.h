@@ -29,8 +29,14 @@
 #include "textures/ITextureAtlas.h"
 
 // events
+#include "events/DBEventData.h"
 
-
+//renderer
+#include "renderer/DBArmature.h"
+#include "renderer/DBBone.h"
+#include "renderer/DBSkin.h"
+#include "renderer/DBSlot.h"
+#include "renderer/DBCCFactory.h"
 // animation
 
 // core
