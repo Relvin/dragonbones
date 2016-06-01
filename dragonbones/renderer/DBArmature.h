@@ -33,6 +33,8 @@ class DBArmature
 public:
     
     
+    static DBArmature* createWithFileName(const std::string &dragonBoneFileName,const std::string &textureFilename,const std::string &dragonBoneName);
+    static DBArmature* createWithFileName(const std::string &dragonBonesFileName,const std::string &textureFilename,const std::string &dragonBonesName,const std::string &texture);
     
     static DBArmature* create(const std::string &dragonBonesName);
     

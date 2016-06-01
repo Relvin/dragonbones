@@ -43,6 +43,25 @@ DBArmature::~DBArmature()
     _ikList.clear();
 }
 
+DBArmature* DBArmature::createWithFileName(const std::string &dragonBoneFileName,const std::string &textureFilename,const std::string &dragonBoneName)
+{
+    return DBArmature::createWithFileName(dragonBoneFileName,textureFilename,dragonBoneName,dragonBoneName);
+}
+
+DBArmature* DBArmature::createWithFileName(const std::string &dragonBonesFileName,const std::string &textureFilename,const std::string &dragonBonesName,const std::string &texture)
+{
+    dragonBones::DBCCFactory::getInstance()->loadDragonBonesData(dragonBonesFileName,dragonBonesName);
+    dragonBones::DBCCFactory::getInstance()->loadTextureAtlas(textureFilename,texture);
+    DBArmature* armature = new (std::nothrow) DBArmature();
+    if (armature && armature->initWithName(dragonBonesName,texture))
+    {
+        armature->autorelease();
+        return armature;
+    }
+    CC_SAFE_DELETE(armature);
+    return nullptr;
+}
+
 DBArmature* DBArmature::create(const std::string &dragonBonesName)
 {
     DBArmature* armature = new (std::nothrow) DBArmature();
