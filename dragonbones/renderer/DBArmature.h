@@ -25,11 +25,15 @@ NAME_SPACE_DRAGON_BONES_BEGIN
 class Frame;
 class DBEventDataMgr;
 class DBIKConstraint;
+class DBEventData;
 
 class DBArmature
 : public Node
 {
 public:
+    
+    
+    
     static DBArmature* create(const std::string &dragonBonesName);
     
     static DBArmature* create(const std::string &dragonBonesName,const std::string &texture);
@@ -67,8 +71,11 @@ public:
     cocos2d::Vector<DBIKConstraint*> getIKTargetData(DBBone *bone);
     DBEventDataMgr* getEventDataManager() const;
     inline bool getSkewEnable() {return this->_skewEnable;};
-protected:
     
+    void setEventCallback(const std::function<void(const DBEventData*)>& callback) { _dbEventCallback = callback; }
+    const std::function<void(const DBEventData*)>& getEventCallback() const { return _dbEventCallback; }
+protected:
+    std::function<void(const DBEventData*)> _dbEventCallback;
 private:
     
     DragonBonesData* _pDragonBonesData;
@@ -83,6 +90,7 @@ private:
     
     DBEventDataMgr* _eventDataMgr;
     bool _skewEnable;
+    
     
 };
 

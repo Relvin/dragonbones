@@ -270,11 +270,6 @@ void DBArmature::update(float delta)
     for (auto& element : _slotDic)
     {
         element.second->update(delta);
-        
-        //        if (slot->_isShowDisplay && slot->_childArmature)
-        //        {
-        //            slot->_childArmature->advanceTime(passedTime);
-        //        }
     }
     //
     
@@ -283,7 +278,11 @@ void DBArmature::update(float delta)
         auto dataList = _eventDataMgr->getAllData();
         for (size_t i = 0, l = dataList.size(); i < l; ++i)
         {
-//            _eventDispatcher->dispatchEvent(_eventDataList[i]);
+            DBEventData* eventData = dataList.at(i);
+            if (_dbEventCallback)
+            {
+                _dbEventCallback(eventData);
+            }
         }
         _eventDataMgr->removeAllEventData();
         
