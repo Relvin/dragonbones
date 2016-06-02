@@ -21,6 +21,7 @@ class DBSlotTimelineState;
 class DBAnimationState;
 class DBArmature;
 class DBSkin;
+class MeshData;
 class DBSlot
 : public cocos2d::Node
 , public DBBase

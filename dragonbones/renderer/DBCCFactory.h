@@ -4,6 +4,7 @@
 #include "DragonBonesHeaders.h"
 #include "DBCCRenderHeaders.h"
 #include "cocos2d.h"
+#include "factories/BaseFactory.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 class DBCCFactory : public BaseFactory
