@@ -195,8 +195,8 @@ MeshData* BinaryParser::parseMeshDataFromBinary(const MeshDataOption* meshDataOp
 {
     MeshData *meshData = new MeshData();
     this->parseDisplayDataFromBinary(meshData, meshDataOption->displayData());
-    meshData->setWidth(meshDataOption->width());
-    meshData->setHeight(meshDataOption->height());
+    meshData->setWidth(meshDataOption->width() / _armatureScale);
+    meshData->setHeight(meshDataOption->height() / _armatureScale);
     auto triangles = meshDataOption->triangles();
     if (triangles)
     {
@@ -212,7 +212,7 @@ MeshData* BinaryParser::parseMeshDataFromBinary(const MeshDataOption* meshDataOp
         for (int idx = 0; idx < vectices->size();idx++)
         {
             auto pointOpt = vectices->Get(idx);
-            Point vectice(pointOpt->x(),pointOpt->y());
+            Point vectice(pointOpt->x() / _armatureScale,pointOpt->y() / _armatureScale);
             meshData->addVectex(vectice);
         }
     }
@@ -438,7 +438,7 @@ FFDFrame* BinaryParser::parseFFDFrameFromBinary(const dragonBones::FFDFrameOptio
     {
         for (int idx = 0;idx < vectices->size();idx++)
         {
-            ffdFrame->vertices.push_back(vectices->Get(idx));
+            ffdFrame->vertices.push_back(vectices->Get(idx) / _armatureScale);
         }
     }
     
