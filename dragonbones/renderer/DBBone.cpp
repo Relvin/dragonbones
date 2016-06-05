@@ -44,7 +44,6 @@ bool DBBone::initWithBoneData(BoneData* boneData)
 
 DBBone::DBBone()
 : _boneData (nullptr)
-, _pArmature (nullptr)
 , displayController("")
 ,applyOffsetTranslationToChild(true)
 ,applyOffsetRotationToChild(true)
@@ -141,146 +140,44 @@ void DBBone::removeSlot(DBSlot* slot)
     _slotList.eraseObject(slot);
 }
 
-void DBBone::setArmature(DBArmature *armature)
+void DBBone::advanceTime(bool isFading)
 {
-    if (_pArmature == armature)
-        return;
-    if (_armature)
-    {
-        
-    }
-    
-    _pArmature = armature;
-}
-
-void DBBone::calculateParentTransform( Transform &transform, Matrix &matrix )
-{
-    DBBone* parentBone = dynamic_cast<DBBone* >(_parentBone);
-    if (parentBone && (inheritTranslation || inheritRotation || inheritScale))
-    {
-        
-        transform = parentBone->_globalTransformForChild;
-        matrix = parentBone->_globalTransformMatrixForChild;
-
-        if (!inheritTranslation || !inheritRotation || !inheritScale)
-        {
-            if (!inheritTranslation)
-            {
-                transform.x = 0.f;
-                transform.y = 0.f;
-            }
-            if (!inheritScale)
-            {
-                transform.scaleX = 1.f;
-                transform.scaleY = 1.f;
-            }
-            if (!inheritRotation)
-            {
-                transform.skewX = 0.f;
-                transform.skewY = 0.f;
-            }
-            transform.toMatrix(matrix, true);
-        }
-    }
-}
-
-void DBBone::update(bool isFading)
-{
-    
-    static int boneCount = 0;
     _needUpdate --;
     
     DBBone* parentBone = dynamic_cast<DBBone*>(_parentBone);
     if (isFading || _needUpdate > 0 || (parentBone && parentBone->_needUpdate > 0))
     {
         _needUpdate = 1;
-        this->setPosition(global.x,-global.y);
-        
-//#define showBone 1
-#ifdef showBone
-        cocos2d::Sprite* boneSprite = dynamic_cast<cocos2d::Sprite*>(this->getChildByTag(1001));
-        if (!boneSprite)
-        {
-            boneSprite = cocos2d::Sprite::create("res/bone.png");
-            this->addChild(boneSprite);
-            boneSprite->setGlobalZOrder(100);
-            boneSprite->setTag(1001);
-            boneSprite->setAnchorPoint(cocos2d::Vec2(0,0));
-            boneSprite->setColor(cocos2d::Color3B(172,172,172));
-            boneCount++;
-            printf("bone count = %d\n",boneCount);
-        }
-        if(_boneData->length)
-        {
-            boneSprite->setScaleX(_boneData->length / 15.0f);
-            
-        }
-        boneSprite->setRotationSkewX(global.skewX * RADIAN_TO_ANGLE);
-        boneSprite->setRotationSkewY(global.skewY * RADIAN_TO_ANGLE);
-#endif
-        
-        
-        blendingTimeline();
-        
-        // 
-        Transform parentGlobalTransform;
-        Matrix parentGlobalTransformMatrix;
-        updateGlobal(parentGlobalTransform, parentGlobalTransformMatrix);
-        
-        // 
-        bool ifExistOffsetTranslation = offset.x != 0 || offset.y != 0;
-        bool ifExistOffsetScale = offset.scaleX != 1 || offset.scaleY != 1;
-        bool ifExistOffsetRotation = offset.skewX != 0 || offset.skewY != 0;
-        
-        if(	(!ifExistOffsetTranslation || applyOffsetTranslationToChild) &&
-           (!ifExistOffsetScale || applyOffsetScaleToChild) &&
-           (!ifExistOffsetRotation || applyOffsetRotationToChild))
-        {
-            _globalTransformForChild = global;
-            _globalTransformMatrixForChild = _globalTransformMatrix;
-        }
-        else
-        {
-            
-            _globalTransformForChild.x = origin.x + _tween.x;
-            _globalTransformForChild.y = origin.y + _tween.y;
-            _globalTransformForChild.scaleX = origin.scaleX * _tween.scaleX;
-            _globalTransformForChild.scaleY = origin.scaleY * _tween.scaleY;
-            _globalTransformForChild.skewX = origin.skewX + _tween.skewX;
-            _globalTransformForChild.skewY = origin.skewY + _tween.skewY;
-            
-            if(applyOffsetTranslationToChild)
-            {
-                _globalTransformForChild.x += offset.x;
-                _globalTransformForChild.y += offset.y;
-            }
-            if(applyOffsetScaleToChild)
-            {
-                _globalTransformForChild.scaleX *= offset.scaleX;
-                _globalTransformForChild.scaleY *= offset.scaleY;
-            }
-            if(applyOffsetRotationToChild)
-            {
-                _globalTransformForChild.skewX += offset.skewX;
-                _globalTransformForChild.skewY += offset.skewY;
-            }
-            
-            _globalTransformForChild.toMatrix(_globalTransformMatrixForChild, true);
-//            _globalTransformMatrixForChild.concat(parentGlobalTransformMatrix);
-            
-            Transform::matrixToTransform(
-                                         _globalTransformMatrixForChild,
-                                         _globalTransformForChild,
-                                         _globalTransformForChild.scaleX * parentGlobalTransform.scaleX >= 0,
-                                         _globalTransformForChild.scaleY * parentGlobalTransform.scaleY >= 0);
-        }
+        updataLocalTransform();
+        updateGlobalTransform();
     }
     
     this->setRotationIK(global.getRotation());
-    if(this->getIsIKConstraint() && _ikConstraint)
+}
+
+void DBBone::update(bool isFading)
+{
+    
+    if(this->getIsIKConstraint())
     {
-        _ikConstraint->compute();
+        if (_ikConstraint)
+        {
+            DBBone* bone = _ikConstraint->getBoneByIndex(0);
+            if (bone && bone->getName() == this->getName())
+            {
+                this->advanceTime(isFading);
+                if (_ikConstraint->getBoneSize() > 1)
+                {
+                    _ikConstraint->getBoneByIndex(1)->advanceTime(isFading);
+                }
+                _ikConstraint->compute();
+            }
+        }
+        
         this->adjustGlobalTransformMatrixByIK();
+    }
+    else{
+        this->advanceTime(isFading);
     }
     
     for(const auto &obj: _childBones) {
@@ -288,61 +185,170 @@ void DBBone::update(bool isFading)
         if (childBone)
         {
             childBone->update(isFading);
-
+            
         }
     }
 }
 
+void DBBone::updateGlobalTransform()
+{
+    
+    this->setPosition(global.x,-global.y);
+    
+    #define showBone 1
+#ifdef showBone
+    do{
+        if (this->getName() != "车轮" && this->getName() != "车架" && this->getName() != "root")
+        {
+            return;
+        }
+        static int boneCount = 0;
+        cocos2d::Sprite* boneSprite = dynamic_cast<cocos2d::Sprite*>(this->getChildByTag(1001));
+        if (!boneSprite)
+        {
+            boneSprite = cocos2d::Sprite::create("res/Bicycle/车轮.png");
+            this->addChild(boneSprite);
+            boneSprite->setGlobalZOrder(100);
+            boneSprite->setTag(1001);
+            boneSprite->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
+            boneSprite->setColor(cocos2d::Color3B(172,172,172));
+            boneCount++;
+            printf("bone count = %d\n",boneCount);
+        }
+//        if(_boneData->length)
+//        {
+//            boneSprite->setScaleX(_boneData->length / 15.0f);
+//            
+//        }
+        boneSprite->setRotationSkewX(global.skewX * RADIAN_TO_ANGLE);
+        boneSprite->setRotationSkewY(global.skewY * RADIAN_TO_ANGLE);
+    }
+    while (0);
+#endif
+    
+    
+    //
+    Transform parentGlobalTransform;
+    Matrix parentGlobalTransformMatrix;
+    updateGlobal(parentGlobalTransform, parentGlobalTransformMatrix);
+    
+    //
+    bool ifExistOffsetTranslation = offset.x != 0 || offset.y != 0;
+    bool ifExistOffsetScale = offset.scaleX != 1 || offset.scaleY != 1;
+    bool ifExistOffsetRotation = offset.skewX != 0 || offset.skewY != 0;
+    
+    if(	(!ifExistOffsetTranslation || applyOffsetTranslationToChild) &&
+       (!ifExistOffsetScale || applyOffsetScaleToChild) &&
+       (!ifExistOffsetRotation || applyOffsetRotationToChild))
+    {
+        _globalTransformForChild = global;
+        _globalTransformMatrixForChild = _globalTransformMatrix;
+    }
+    else
+    {
+        
+        _globalTransformForChild.x = origin.x + _tween.x;
+        _globalTransformForChild.y = origin.y + _tween.y;
+        _globalTransformForChild.scaleX = origin.scaleX * _tween.scaleX;
+        _globalTransformForChild.scaleY = origin.scaleY * _tween.scaleY;
+        _globalTransformForChild.skewX = origin.skewX + _tween.skewX;
+        _globalTransformForChild.skewY = origin.skewY + _tween.skewY;
+        
+        if(applyOffsetTranslationToChild)
+        {
+            _globalTransformForChild.x += offset.x;
+            _globalTransformForChild.y += offset.y;
+        }
+        if(applyOffsetScaleToChild)
+        {
+            _globalTransformForChild.scaleX *= offset.scaleX;
+            _globalTransformForChild.scaleY *= offset.scaleY;
+        }
+        if(applyOffsetRotationToChild)
+        {
+            _globalTransformForChild.skewX += offset.skewX;
+            _globalTransformForChild.skewY += offset.skewY;
+        }
+        
+        _globalTransformForChild.toMatrix(_globalTransformMatrixForChild, true);
+        _globalTransformMatrixForChild.concat(parentGlobalTransformMatrix);
+        
+        Transform::matrixToTransform(
+                                     _globalTransformMatrixForChild,
+                                     _globalTransformForChild,
+                                     _globalTransformForChild.scaleX * parentGlobalTransform.scaleX >= 0,
+                                     _globalTransformForChild.scaleY * parentGlobalTransform.scaleY >= 0);
+    }
+    
+    
+}
+
+
 void DBBone::updateGlobal(Transform &transform, Matrix &matrix)
 {
-    if (!_pArmature->getSkewEnable() || true)
+    if (!_armature->getSkewEnable())
     {
         DBBase::updateGlobal(transform,matrix);
         return;
     }
+
+    calculateParentTransform(transform,matrix);
     
-    calculateRelativeParentTransform();
-    
-    calculateParentTransform(transform, matrix);
-    
-    bool scaleXF = global.scaleX * transform.scaleX > 0;
-    bool scaleYF = global.scaleY * transform.scaleY > 0;
-    float relativeRotation = global.getRotation();
-    float relativeScaleX = global.scaleX;
-    float relativeScaleY = global.scaleY;
-    float parentRotation = getParentBoneRotation();
-    
-    Transform localTransform = global;
-    if (this->inheritScale && !inheritRotation)
+    DBBone* parentBone = dynamic_cast<DBBone* >(_parentBone);
+    if(parentBone && (inheritTranslation || inheritRotation || inheritScale))
     {
-        if (parentRotation != 0)
+        
+        transform = parentBone->_globalTransformForChild;
+        matrix = parentBone->_globalTransformMatrixForChild;
+        
+        
+        bool scaleXF = global.scaleX * transform.scaleX > 0;
+        bool scaleYF = global.scaleY * transform.scaleY > 0;
+        float relativeRotation = global.getRotation();
+        float relativeScaleX = global.scaleX;
+        float relativeScaleY = global.scaleY;
+        float parentRotation = getParentBoneRotation();
+        
+        Transform localTransform = global;
+        if (this->inheritScale && !inheritRotation)
         {
-            localTransform.setRotation(localTransform.getRotation() - parentRotation);
+            if (parentRotation != 0)
+            {
+                localTransform.setRotation(localTransform.getRotation() - parentRotation);
+            }
         }
-    }
-    localTransform.toMatrix(_globalTransformMatrix,true);
-//    _globalTransformMatrix.concat(matrix);
-    
-    if (inheritScale)
-    {
-        Transform::matrixToTransform(_globalTransformMatrix, global,
-                                     scaleXF, scaleYF);
-    }
-    else
-    {
-        Point tmpPoint;
-        _globalTransformMatrix.transformPoint(tmpPoint);
+        localTransform.toMatrix(_globalTransformMatrix,true);
+        _globalTransformMatrix.concat(matrix);
         
-        global.x = tmpPoint.x;
-        global.y = tmpPoint.y;
+        if (inheritScale)
+        {
+            Transform::matrixToTransform(_globalTransformMatrix, global,
+                                         scaleXF, scaleYF);
+        }
+        else
+        {
+            Point tmpPoint;
+            _globalTransformMatrix.transformPoint(tmpPoint);
+            
+            global.x = tmpPoint.x;
+            global.y = tmpPoint.y;
+            
+            global.scaleX = localTransform.scaleX;
+            global.scaleY = localTransform.scaleY;
+            global.setRotation(localTransform.getRotation() + (inheritRotation ? parentRotation : 0));
+            
+            global.toMatrix(_globalTransformMatrix, true);
+        }
+
         
-        global.scaleX = localTransform.scaleX;
-        global.scaleY = localTransform.scaleY;
-        global.setRotation(localTransform.getRotation() + (inheritRotation ? parentRotation : 0));
-        
-        global.toMatrix(_globalTransformMatrix, true);
     }
 
+}
+
+void DBBone::updataLocalTransform()
+{
+    blendingTimeline();
+    calculateRelativeParentTransform();
 }
 
 void DBBone::blendingTimeline()
@@ -402,7 +408,7 @@ void DBBone::blendingTimeline()
             const float weight = timelineState->getWeight();
             
             //timelineState
-            if (weight && timelineState->getBlendEnabled())
+            if (weight)
             {
                 const Transform &transform = timelineState->getTransform();
                 const Point &pivot = timelineState->getPivot();
@@ -447,6 +453,7 @@ void DBBone::calculateRelativeParentTransform()
     global.skewY = origin.skewY + _tween.skewY + offset.skewY;
     global.x = origin.x + _tween.x + offset.x;
     global.y = origin.y + _tween.y + offset.y;
+    
 }
 
 // static method
@@ -491,7 +498,7 @@ void DBBone::invalidUpdate()
 
 void DBBone::operationInvalidUpdate(DBBone* bone)
 {
-    cocos2d::Vector<DBIKConstraint*> ikList = this->_pArmature->getIKTargetData(bone);
+    cocos2d::Vector<DBIKConstraint*> ikList = this->_armature->getIKTargetData(bone);
     DBIKConstraint* ik = nullptr;
     DBBone* bo = nullptr;
     for (int i = 0, len = ikList.size(); i < len; i++)
@@ -523,9 +530,9 @@ void DBBone::arriveAtFrame(TransformFrame *frame, const DBTimelineState *timelin
         if (!frame->event.empty())
         {
             
-            DBEventData *eventData = _pArmature->getEventDataManager()->getUnusedEventData();
+            DBEventData *eventData = _armature->getEventDataManager()->getUnusedEventData();
             eventData->setType(DBEventData::EventType::BONE_FRAME_EVENT);
-            eventData->setArmature(_pArmature);
+            eventData->setArmature(_armature);
             eventData->setBone(this);
             eventData->setAnimationState(animationState);
             eventData->setFrameLabel(frame->event);
@@ -565,11 +572,9 @@ void DBBone::adjustGlobalTransformMatrixByIK()
     {
         return;
     }
-    
-    global.setRotation(this->_rotationIK);
-    global.toMatrix(_globalTransformMatrix,true);
-    _globalTransformForChild.setRotation(_rotationIK);
-    _globalTransformForChild.toMatrix( _globalTransformMatrixForChild,true);
+    updataLocalTransform();
+    global.setRotation(this->_rotationIK - getParentBoneRotation());
+    updateGlobalTransform();
 }
 
 void DBBone::hideSlots()

@@ -44,10 +44,10 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     this->_slotData = slotData;
     this->_name = this->_slotData->name;
     
-//    if (_name != "leg_r")
-//    {
-//        return false;
-//    }
+    if (_name != "车轮")
+    {
+        return false;
+    }
     
     this->_textureAtlasName = textureAtlasName;
     _originZOrder = this->_slotData->zOrder;
@@ -61,7 +61,6 @@ bool DBSlot::initWithSlotData(SlotData* slotData,const std::string & textureAtla
     if (displayIndex >= 0)
     {
         displayData = slotData->displayDataList[displayIndex];
-        
     }
     
     if (displayData)
@@ -117,46 +116,42 @@ DBSlot::~DBSlot()
 
 void DBSlot::update(float delta)
 {
-    DBBone *parentBone = dynamic_cast<DBBone *>(_parentBone);
-    if (!parentBone || (parentBone->getNeedUpdate() <= 0 && _needUpdate == false))
+    if (!_parentBone || (_parentBone->getNeedUpdate() <= 0 && _needUpdate == false))
     {
         return;
     }
+    Transform parentGlobalTransform;
+    Matrix parentGlobalTransformMatrix;
+    updateGlobal(parentGlobalTransform, parentGlobalTransformMatrix);
 
-    Point tweenPivot = parentBone->getTweenPivot();
-    const float x = origin.x + offset.x + tweenPivot.x;
-    const float y = origin.y + offset.y + tweenPivot.y;
-    const Matrix &parentMatrix = parentBone->getGlobalTransformMatrix();
-    _globalTransformMatrix.tx = global.x = parentMatrix.a * x + parentMatrix.c * y + parentMatrix.tx;
-    _globalTransformMatrix.ty = global.y = parentMatrix.d * y + parentMatrix.b * x + parentMatrix.ty;
-    
-    if (inheritRotation)
-    {
-        global.skewX = origin.skewX + offset.skewX + parentBone->getGlobalTransform().skewX;
-        global.skewY = origin.skewY + offset.skewY + parentBone->getGlobalTransform().skewY;
-    }
-    else
-    {
-        global.skewX = origin.skewX + offset.skewX;
-        global.skewY = origin.skewY + offset.skewY;
-    }
-    
-    if (inheritScale)
-    {
-        global.scaleX = origin.scaleX * offset.scaleX * parentBone->getGlobalTransform().scaleX;
-        global.scaleY = origin.scaleY * offset.scaleY * parentBone->getGlobalTransform().scaleY;
-    }
-    else
-    {
-        global.scaleX = origin.scaleX * offset.scaleX;
-        global.scaleY = origin.scaleY * offset.scaleY;
-    }
-    
-    _globalTransformMatrix.a = global.scaleX * cos(global.skewY);
-    _globalTransformMatrix.b = global.scaleX * sin(global.skewY);
-    _globalTransformMatrix.c = -global.scaleY * sin(global.skewX);
-    _globalTransformMatrix.d = global.scaleY * cos(global.skewX);
     updateDisplayTransform();
+}
+
+void DBSlot::updateGlobal(Transform &transform, Matrix &matrix)
+{
+    calculateRelativeParentTransform();
+    global.toMatrix(_globalTransformMatrix,true);
+    
+    calculateParentTransform(transform,matrix);
+    if (_parentBone)
+    {
+        _globalTransformMatrix.concat(matrix);
+    }
+    
+    Transform::matrixToTransform(_globalTransformMatrix,global,true,true);
+}
+
+void DBSlot::calculateRelativeParentTransform()
+{
+    global.scaleX = origin.scaleX *  offset.scaleX;
+    global.scaleY = origin.scaleY * offset.scaleY;
+    global.skewX = origin.skewX + offset.skewX;
+    global.skewY = origin.skewY + offset.skewY;
+    DBBone *parentBone = dynamic_cast<DBBone *>(_parentBone);
+    const Point& pivot = parentBone->getTweenPivot();
+    global.x = origin.x + offset.x + pivot.x;
+    global.y = origin.y + offset.y + pivot.y;
+    
 }
 
 void DBSlot::updateDisplayTransform()
@@ -167,6 +162,8 @@ void DBSlot::updateDisplayTransform()
         _display->setScaleY(global.scaleY);
         _display->setRotationSkewX(global.skewX * RADIAN_TO_ANGLE);
         _display->setRotationSkewY(global.skewY * RADIAN_TO_ANGLE);
+        
+        CCLOG("skew = %f,%f",global.skewX,global.skewY);
         _display->setPosition(global.x , -global.y);
     }
 }

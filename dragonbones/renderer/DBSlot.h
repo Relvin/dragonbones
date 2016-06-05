@@ -37,6 +37,9 @@ public:
     virtual void update(float delta);
     void updateDisplayTransform();
     
+    void updateGlobal(Transform &transform, Matrix &matrix);
+    void calculateRelativeParentTransform();
+    
     void arriveAtFrame( Frame *frame, const DBSlotTimelineState *timelineState, DBAnimationState *animationState, bool isCross );
     
     void changeDisplay(int displayIndex);

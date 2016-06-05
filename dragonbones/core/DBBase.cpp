@@ -7,8 +7,8 @@
 //
 
 #include "DBBase.h"
-//#include "Armature.h"
-//#include "core/Bone.h"
+#include "renderer/DBArmature.h"
+#include "renderer/DBBone.h"
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
@@ -40,22 +40,22 @@ void DBBase::dispose()
     }
 }
 
-cocos2d::Node* DBBase::getArmature() const
+DBArmature* DBBase::getArmature() const
 {
     return _armature;
 }
 
-cocos2d::Node* DBBase::getParentBone() const
+DBBone* DBBase::getParentBone() const
 {
     return _parentBone;
 }
 
-void DBBase::setArmature(cocos2d::Node *armature)
+void DBBase::setArmature(DBArmature *armature)
 {
     _armature = armature;
 }
 
-void DBBase::setParentBone(cocos2d::Node *bone)
+void DBBase::setParentBone(DBBone *bone)
 {
     _parentBone = bone;
 }
@@ -66,7 +66,15 @@ void DBBase::calculateRelativeParentTransform()
 
 void DBBase::calculateParentTransform( Transform &transform, Matrix &matrix )
 {
-
+    if (_parentBone && (inheritTranslation || inheritRotation || inheritScale))
+    {
+        transform = _parentBone->getGlobalTransformForChild();
+        matrix = _parentBone->getGlobalTransformMatrixForChild();
+    }
+    else
+    {
+        global.toMatrix(_globalTransformMatrix,true);
+    }
 }
 
 void DBBase::updateGlobal( Transform &transform, Matrix &matrix )
@@ -134,7 +142,7 @@ void DBBase::setGlobalTransform(const Transform& global)
     this->global = global;
 }
 
-const Transform& DBBase::getOriginTransform() const
+Transform& DBBase::getOriginTransform() const
 {
     return this->origin;
 }

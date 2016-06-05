@@ -16,7 +16,8 @@
 
 NAME_SPACE_DRAGON_BONES_BEGIN
 
-
+class DBArmature;
+class DBBone;
 
 template <class T>
 class MultData {
@@ -185,11 +186,11 @@ public:
     virtual ~DBBase();
     virtual void dispose();
     
-    virtual cocos2d::Node* getArmature() const;
-    virtual cocos2d::Node* getParentBone() const;
+    virtual DBArmature* getArmature() const;
+    virtual DBBone* getParentBone() const;
     
-    virtual void setArmature(cocos2d::Node *armature);
-    virtual void setParentBone(cocos2d::Node *bone);
+    virtual void setArmature(DBArmature *armature);
+    virtual void setParentBone(DBBone *bone);
     // change
     virtual void calculateRelativeParentTransform();
     virtual void calculateParentTransform(Transform &transform, Matrix &matrix);
@@ -207,7 +208,7 @@ public:
     Transform& getGlobalTransform() const;
     void setGlobalTransform(const Transform& global);
     
-    const Transform& getOriginTransform() const;
+    Transform& getOriginTransform() const;
     void setOriginTransform(const Transform& origin);
     
     const Transform& getOffsetTransform() const;
@@ -224,14 +225,14 @@ protected:
     
 //    std::string name;
     mutable Transform global;
-    Transform origin;
+    mutable Transform origin;
     Transform offset;
     Matrix _globalTransformMatrix;
     
     void *userData;
     
-    cocos2d::Node *_armature;
-    cocos2d::Node *_parentBone;
+    DBArmature *_armature;
+    DBBone *_parentBone;
     
     
 private:

@@ -260,6 +260,17 @@ void DBSkin::buildPolygonInfo()
             cocos2d::PolygonInfo polygonInfo;
             polygonInfo.triangles = {verts, indices, vdx, idx};
             
+//            {
+//                /**Vertex data pointer.*/
+//                V3F_C4B_T2F* verts;
+//                /**Index data pointer.*/
+//                unsigned short* indices;
+//                /**The number of vertices.*/
+//                ssize_t vertCount;
+//                /**The number of indices.*/
+//                ssize_t indexCount;
+//            };
+            
             polygonInfo.rect = cocos2d::Rect(0,0,meshData->getWidth() ,meshData->getHeight());
             this->setPolygonInfo(polygonInfo);
             

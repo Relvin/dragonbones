@@ -35,12 +35,11 @@ public:
     void addChildBone(DBBone *child);
     void removeChildBone(DBBone *bone, bool recursion);
     
-    void setArmature(DBArmature *armature);
-    void calculateParentTransform( Transform &transform, Matrix &matrix ) override;
     
     virtual void calculateRelativeParentTransform() override;
     
     void update(bool isFading);
+    void advanceTime(bool isFading);
     void blendingTimeline();
     
     
@@ -71,10 +70,15 @@ public:
     void operationInvalidUpdate(DBBone* bone);
     virtual void updateGlobal(Transform &transform, Matrix &matrix) override;
     float getParentBoneRotation();
+    
+    const Transform& getGlobalTransformForChild() {return this->_globalTransformForChild;};
+    const Matrix& getGlobalTransformMatrixForChild() {return this->_globalTransformMatrixForChild;};
+    
+    void updataLocalTransform();
+    void updateGlobalTransform();
 private:
     
     BoneData* _boneData;
-    DBArmature* _pArmature;
     
     std::string displayController;
     bool applyOffsetTranslationToChild;

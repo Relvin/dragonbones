@@ -84,8 +84,15 @@ void DBIKConstraint::compute()
             int bend = _animationCacheBend != 0 ? _animationCacheBend : _bendDirection;
             float weig = _animationCacheWeight >= 0 ? _animationCacheWeight : _weight;
             Point tt = compute2(_bones.at(0),_bones.at(1),_target->getGlobalTransform().x,_target->getGlobalTransform().y, bend, weig);
-            _bones.at(0)->setRotationIK(tt.x);
-            _bones.at(1)->setRotationIK(tt.y+tt.x);
+            float b0Rotation = _bones.at(0)->getOriginTransform().getRotation();
+            DBBone* b0Parent = dynamic_cast<DBBone *>(_bones.at(0)->getParentBone());
+            float rotationIK0 = b0Rotation+(tt.x-b0Rotation)*weig+b0Parent->getRotationIK();
+            
+            _bones.at(0)->setRotationIK(rotationIK0);
+            
+            float b1Rotation = _bones.at(1)->getOriginTransform().getRotation();
+            float rotationIK1 = b1Rotation+(tt.y-b1Rotation)*weig+rotationIK0;
+            _bones.at(1)->setRotationIK(rotationIK1);
             break;
         }
             
@@ -113,22 +120,41 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
     }
     
     
-    Transform childOrigin = child->getOriginTransform();
     Point tt;
     
     Point p1(parentGlobal.x,parentGlobal.y);
     
    
     Point p2(childGlobal.x,childGlobal.y);
-    float psx = parentGlobal.scaleX;
-    float psy = parentGlobal.scaleY;
-    float csx = childGlobal.scaleX;
-    float csy = childGlobal.scaleY;
     
-    float cx = childOrigin.x*psx;
-    float cy = childOrigin.y*psy;
     
-    float initalRotation = atan2(cy, cx);
+    Matrix matrix ;
+    DBBone *ppBone = nullptr ;
+    if (parent->getParentBone())
+    {
+        ppBone = dynamic_cast<DBBone *>(parent->getParentBone());
+    }
+    
+    if (ppBone)
+    {
+        ppBone->getGlobalTransform().toMatrix(matrix);
+    }
+    
+    Matrix tempMatrix = matrix;
+    tempMatrix.invert();
+    Point targetPoint ;
+    tempMatrix.transformPoint(targetPoint,targetX,targetY,true);
+    targetX = targetPoint.x;
+    targetY = targetPoint.y;
+    tempMatrix.transformPoint(p1,p1.x,p1.y,true);
+    tempMatrix.transformPoint(p2,p2.x,p2.y,true);
+    
+    
+    Transform parentOrigin = parent->getOriginTransform();
+    Transform childOrigin = child->getOriginTransform();
+    float psx = parentOrigin.scaleX;
+    float psy = parentOrigin.scaleY;
+    float csx = childOrigin.scaleX;
     
     float childX = p2.x-p1.x;
     float childY = p2.y-p1.y;
@@ -136,34 +162,49 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
     float len1 = sqrt(childX * childX + childY* childY);
     float parentAngle;
     float childAngle;
+    int sign = 1;
+    float offset1 = 0;
+    float offset2 = 0;
+    if (psx < 0) {
+        psx = -psx;
+        offset1 = PI;
+        sign = -1;
+    } else {
+        offset1 = 0;
+        sign = 1;
+    }
+    if (psy < 0) {
+        psy = -psy;
+        sign = -sign;
+    }
+    if (csx < 0) {
+        csx = -csx;
+        offset2 = PI;
+    } else{
+        offset2 = 0;
+    }
+    _bendDirection = sign* _bendDirection;
     
     
     if (abs(psx - psy) <= 0.001)
     {
+        
         float childlength = child->getLength();
         float len2 = childlength * csx;
         targetX = targetX - p1.x;
         targetY = targetY - p1.y;
         float cosDenom = 2 * len1 * len2;
-        if (cosDenom < 0.0001) {
-            float temp = atan2(targetY, targetX);
-            tt.x = temp  * weightA - initalRotation;
-            tt.y = temp  * weightA + initalRotation;//+ tt.x ;
-            normalize(tt.x);
-            normalize(tt.y);
-            return tt;
-        }
         float cos = (targetX * targetX + targetY * targetY - len1 * len1 - len2 * len2) / cosDenom;
+        
         if (cos < -1)
             cos = -1;
         else if (cos > 1)
             cos = 1;
+        
         childAngle = acos(cos) * _bendDirection;//o2
         float adjacent = len1 + len2 * cos;  //ae
         float opposite = len2 * sin(childAngle);//be
         parentAngle = atan2(targetY * adjacent - targetX * opposite, targetX * adjacent + targetY * opposite);//o1
-        tt.x = parentAngle * weightA-initalRotation;
-        tt.y = childAngle* weightA+initalRotation;//+tt.x;
     }
     else
     {
@@ -194,17 +235,15 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
                     float y1 = sqrt(dd - r * r) * _bendDirection;
                     parentAngle = ta - atan2(y1, r);
                     childAngle = atan2(y1 / psy, (r - l1) / psx);
-                    tt.x = parentAngle* weightA-initalRotation;
-                    tt.y = childAngle* weightA+initalRotation;//+tt.x;
                     break;
                 }
             }
             float minAngle = 0;
-            float minDist = 0.f;//Number.MAX_VALUE;
+            float minDist = FLT_MAX;//Number.MAX_VALUE;
             float minX = 0;
             float minY = 0;
             float maxAngle = 0;
-            float maxDist = FLT_MAX;
+            float maxDist = 0;
             float maxX = 0;
             float maxY = 0;
             float x2 = l1 + a;
@@ -244,15 +283,15 @@ Point DBIKConstraint::compute2(DBBone* parent,DBBone* child,float targetX,float 
                 parentAngle = ta - atan2(maxY * _bendDirection, maxX);
                 childAngle = maxAngle * _bendDirection;
             }
-            tt.x = parentAngle* weightA-initalRotation;
-            tt.y = childAngle* weightA+initalRotation;//;
         }
         while (0);
         
     }
-    
-    
-    
+    float cx = childOrigin.x;
+    float cy = childOrigin.y*psy;
+    float initalRotation = atan2(cy, cx)*sign;
+    tt.x = parentAngle - initalRotation + offset1;
+    tt.y = (childAngle+initalRotation) * sign + offset2;
     normalize(tt.x);
     normalize(tt.y);
     return tt;

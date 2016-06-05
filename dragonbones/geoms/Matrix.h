@@ -60,37 +60,44 @@ public:
     }
     void concat(const Matrix &mat)
     {
-        const float a0 = a;
-        const float b0 = b;
-        const float c0 = c;
-        const float d0 = d;
-        const float tx0 = tx;
-        const float ty0 = ty;
+        const auto aA = a;
+        const auto bA = b;
+        const auto cA = c;
+        const auto dA = d;
+        const auto txA = tx;
+        const auto tyA = ty;
+        const auto aB = mat.a;
+        const auto bB = mat.b;
+        const auto cB = mat.c;
+        const auto dB = mat.d;
+        const auto txB = mat.tx;
+        const auto tyB = mat.ty;
         
-        a = a0 * mat.a + b0 * mat.c;
-        b = a0 * mat.b + b0 * mat.d;
-        c = c0 * mat.a + d0 * mat.c;
-        d = c0 * mat.b + d0 * mat.d;
-        tx = tx0 * mat.a + ty0 * mat.c + mat.tx;
-        ty = tx0 * mat.b + ty0 * mat.d + mat.ty;
+        a = aA * aB + bA * cB;
+        b = aA * bB + bA * dB;
+        c = cA * aB + dA * cB;
+        d = cA * bB + dA * dB;
+        tx = aB * txA + cB * tyA + txB;
+        ty = dB * tyA + bB * txA + tyB;
     }
     virtual ~Matrix() {}
     
     inline void invert()
     {
-        const float a0 = a;
-        const float b0 = b;
-        const float c0 = c;
-        const float d0 = d;
-        const float tx0 = tx;
-        const float ty0 = ty;
-        const float determinant = 1 / (a0 * d0 - b0 * c0);
-        a = determinant * d0;
-        b = -determinant * b0;
-        c = -determinant * c0;
-        d = determinant * a0;
-        tx = determinant * (c0 * ty0 - d0 * tx0);
-        ty = determinant * (b0 * tx0 - a0 * ty0);
+        const auto aA = a;
+        const auto bA = b;
+        const auto cA = c;
+        const auto dA = d;
+        const auto txA = tx;
+        const auto tyA = ty;
+        const auto n = aA * dA - bA * cA;
+        
+        a = dA / n;
+        b = -bA / n;
+        c = -cA / n;
+        d = aA / n;
+        tx = (cA * tyA - dA * txA) / n;
+        ty = -(aA * tyA - bA * txA) / n;
     }
     
     inline void transformPoint(Point &point)
@@ -99,6 +106,18 @@ public:
         float y = point.y;
         point.x = a * x + c * y + tx;
         point.y = d * y + b * x + ty;
+    }
+    
+    inline void transformPoint(Point& result, float x, float y,bool delta = false) const
+    {
+        result.x = a * x + c * y;
+        result.y = b * x + d * y;
+        
+        if (!delta)
+        {
+            result.x += tx;
+            result.y += ty;
+        }
     }
 
 public:
