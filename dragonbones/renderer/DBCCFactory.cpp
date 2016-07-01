@@ -50,20 +50,22 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
     {
         return existDragonBonesData;
     }
-	cocos2d::Data data = cocos2d::FileUtils::getInstance()->getDataFromFile(dragonBonesFilePath);
-    if (data.getSize() == 0)
-    {
-		CCLOG("read file [%s] error!", dragonBonesFilePath.c_str());
-        return nullptr;
-    }
+	
 	DragonBonesData *dragonBonesData = nullptr;
 	const std::string filePosfix = getFilePosfix(dragonBonesFilePath);
 	if (".JSON" == filePosfix)
 	{
-		dragonBonesData = JSONDataParser::parseDragonBonesData(reinterpret_cast<char*>(data.getBytes()));
+		std::string data = cocos2d::FileUtils::getInstance()->getStringFromFile(dragonBonesFilePath);
+		dragonBonesData = JSONDataParser::parseDragonBonesData(data.c_str());
 	}
 	else if (".XML" == filePosfix)
 	{
+		cocos2d::Data data = cocos2d::FileUtils::getInstance()->getDataFromFile(dragonBonesFilePath);
+		if (data.getSize() == 0)
+		{
+			CCLOG("read file [%s] error!", dragonBonesFilePath.c_str());
+			return nullptr;
+		}
 
 #ifdef COCOS2D_DEBUG
         timeval t_beg,t_end;
@@ -88,6 +90,13 @@ DragonBonesData* DBCCFactory::loadDragonBonesData(const std::string &dragonBones
 	}
     else if (".XMLB" == filePosfix)
     {
+    	cocos2d::Data data = cocos2d::FileUtils::getInstance()->getDataFromFile(dragonBonesFilePath);
+		if (data.getSize() == 0)
+		{
+			CCLOG("read file [%s] error!", dragonBonesFilePath.c_str());
+			return nullptr;
+		}
+    	
 #ifdef COCOS2D_DEBUG
         timeval t_beg,t_end;
         gettimeofday(&t_beg, NULL);
