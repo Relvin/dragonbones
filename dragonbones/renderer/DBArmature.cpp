@@ -86,6 +86,18 @@ DBArmature* DBArmature::create(const std::string &dragonBonesName,const std::str
     return nullptr;
 }
 
+DBArmature* DBArmature::createWithData(const std::string& dragonBonesName, const std::string& dragonbonesDataName)
+{
+	DBArmature* armature = new (std::nothrow) DBArmature();
+	if (armature && armature->initWithDataName(dragonBonesName, dragonbonesDataName))
+	{
+		armature->autorelease();
+		return armature;
+	}
+	CC_SAFE_DELETE(armature);
+	return nullptr;
+}
+
 
 bool DBArmature::initWithName(const std::string &name)
 {
@@ -148,6 +160,63 @@ bool DBArmature::initWithName(const std::string &name,const std::string &texture
     
     return true;
 }
+
+bool DBArmature::initWithDataName(const std::string& name, const std::string& dataName)
+	{
+		CC_SAFE_RELEASE_NULL(_eventDataMgr);
+		_eventDataMgr = DBEventDataMgr::create();
+		CC_SAFE_RETAIN(_eventDataMgr);
+
+		DragonBonesData* dragonBonesData = DBCCFactory::getInstance()->getDragonBonesData(dataName);
+		if (!dragonBonesData)
+		{
+			return false;
+		}
+
+		float version = atof(dragonBonesData->version.c_str());
+		if (version >= 4.5)
+		{
+			this->_skewEnable = true;
+		}
+
+		_pArmatureData = dragonBonesData->getArmatureData(name);
+		if (!_pArmatureData)
+		{
+			_pArmatureData = dragonBonesData->getArmatureDataFirst();
+			if (!_pArmatureData)
+			{
+				return false;
+			}
+		}
+
+		_name = name;
+		DBAnimation* animation = DBAnimation::create(this);
+		this->setAnimation(animation);
+		animation->setAnimationDataList(_pArmatureData->animationDataList);
+
+		for (size_t i = 0, l = _pArmatureData->boneDataList.size(); i < l; ++i)
+		{
+			createBone(_pArmatureData->boneDataList.at(i));
+		}
+
+		buildIK();
+		updateBoneCache();
+		createSkin(dataName);
+
+
+		this->setCascadeColorEnabled(true);
+		this->setCascadeOpacityEnabled(true);
+
+
+		// update armature pose
+		getAnimation()->play();
+		update(0);
+		getAnimation()->stop();
+
+		dragonBonesData->retain();
+
+		return true;
+	}
 
 void DBArmature::setDragonBonesData(dragonBones::DragonBonesData *data)
 {
