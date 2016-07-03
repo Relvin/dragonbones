@@ -37,15 +37,16 @@ public:
     static DBArmature* createWithFileName(const std::string &dragonBonesFileName,const std::string &textureFilename,const std::string &dragonBonesName,const std::string &texture);
     
     static DBArmature* create(const std::string &dragonBonesName);
-    
     static DBArmature* create(const std::string &dragonBonesName,const std::string &texture);
     
+    static DBArmature* createWithData(const std::string &dragonBonesName, const std::string &dragonbonesDataName);
     
     DBArmature();
     virtual ~DBArmature();
     
     virtual bool initWithName(const std::string &name);
     virtual bool initWithName(const std::string &name,const std::string &textureName);
+    virtual bool initWithDataName(const std::string &name, const std::string &dataName);
     
     void setDragonBonesData(dragonBones::DragonBonesData* data);
     
